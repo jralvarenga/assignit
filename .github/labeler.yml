@@ -4,3 +4,5 @@ mobile:
   - mobile/**/*
 languages:
   - languages/**/*
+env:
+  - env/**/*
