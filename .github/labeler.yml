@@ -2,5 +2,5 @@ web:
   - web/**/*
 mobile:
   - mobile/**/*
-translation:
+languages:
   - languages/**/*
