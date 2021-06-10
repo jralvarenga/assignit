@@ -21,7 +21,7 @@ It's builded with React Native, Gatsby and Firebase as backend service
 | :--------------------- | :------------------------: |
 | [web](web)             |        Gatsby App          |
 | [mobile](mobile)       |     React Native app       |
-| [translations](translations)  |     Proyect translations       |
+| [languages](languages)  |     Proyect translations       |
 | [emulators](emulators) |    Firebase emulators      |
 
 ## Branches
