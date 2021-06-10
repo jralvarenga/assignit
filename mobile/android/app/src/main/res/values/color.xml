@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="primary" type="color">#ec4242</item>
+    <item name="primary_dark" type="color">#ec4242</item>
+    <item name="background" type="color">#fff</item>
+    <item name="status_bar_color" type="color">#ec4242</item>
+    <color name="white">#FFF</color>
+</resources>

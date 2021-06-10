@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Assignit</string>
+    <string name="facebook_app_id">245989243961103</string>
+    <string name="default_notification_channel_id">assignit_channel_1</string>
+</resources>
