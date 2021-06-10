@@ -1,6 +1,12 @@
-# Assignit
+<a href="https://assignit.vercel.app"><p align="center">
+  <img height=100 src="https://raw.githubusercontent.com/jralvarenga/assignit/master/assets/assignit_logo.svg" />
+</p></a>
 
-> Keep all your tasks or assigments organized.
+<p align="center">
+  <strong>Keep all your tasks or assigments organized 📅💫</strong>
+</p>
+
+---
 
 ## Description
 
@@ -15,7 +21,7 @@ It's builded with React Native, Gatsby and Firebase as backend service
 | :--------------------- | :------------------------: |
 | [web](web)             |        Gatsby App          |
 | [mobile](mobile)       |     React Native app       |
-| [translations](language)  |     Proyect translations       |
+| [translations](translations)  |     Proyect translations       |
 | [emulators](emulators) |    Firebase emulators      |
 
 ## Branches
@@ -26,4 +32,5 @@ It's builded with React Native, Gatsby and Firebase as backend service
 ## Develop and contribute
 
 - Go to [web](web) or [mobile](mobile) and follow the instructions
+- To add a new language translation go to [translations](translations) and follow its instructions
 - ALWAYS START FIREBASE EMULATOR to read and write any data, go to [emulators](emulators) and follow instructions

@@ -1,0 +1,21 @@
+[debug] [2021-06-10T20:24:58.209Z] ----------------------------------------------------------------------
+[debug] [2021-06-10T20:24:58.212Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\jralv\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-06-10T20:24:58.212Z] CLI Version:   9.12.1
+[debug] [2021-06-10T20:24:58.212Z] Platform:      win32
+[debug] [2021-06-10T20:24:58.212Z] Node Version:  v15.10.0
+[debug] [2021-06-10T20:24:58.213Z] Time:          Thu Jun 10 2021 14:24:58 GMT-0600 (hora estándar central)
+[debug] [2021-06-10T20:24:58.214Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-06-10T20:24:58.222Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-06-10T20:24:58.223Z] > authorizing via signed-in user (jralvarenga161@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\jralv\Documents\apps\assignit\emulators
+
