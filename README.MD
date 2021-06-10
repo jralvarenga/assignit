@@ -33,6 +33,7 @@ It's builded with React, React Native, Gatsby and Firebase as backend service
 
 ## Develop and contribute
 
+- We use yarn for everything, DO NOT USE NPM
 - Go to [web](web) or [mobile](mobile) and follow the instructions
 - To add a new language translation go to [languages](languages) and follow its instructions
 - ALWAYS START FIREBASE EMULATOR to read and write any data, go to [emulators](emulators) and follow instructions
