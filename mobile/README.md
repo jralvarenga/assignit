@@ -1,29 +1,36 @@
 ## Configuration
 
-To install all this run
+Clone this repo and cd into ./mobile to start editing the react native app
+
+To install the proyect dependencies run
 
 ````bash
 yarn
 ````
 
-- This app uses Firebase for its backend, to configure firebase go [here](https://firebase.google.com/) and add an Android and IOS application
-- You need to add the debug.keystore to ./android/app, once added get the SHA-1 and Key Hashes from the keystore for the Google sign in and Facebook sign in
-- For Google sign in go to your firebase configuration and add the SHA-1 key
-- For Facebook sign in go to [Facebook Console](https://developers.facebook.com/apps/?show_reminder=true), create and android and ios app and add the key hashes
-- For more information, go to [Facebook Sign In](https://github.com/thebergamo/react-native-fbsdk-next/) and [Google Sign In](https://github.com/react-native-google-signin/google-signin)
-- The api key for Google Calendar API go [here](https://console.cloud.google.com/) and select the proyect, go to API and Credentials and select calendar API
+### Global
+
+- You need a firebase proyect to edit this proyect
+- You need the Google Calendar API key to work in this proyect
+- Configure Google and Facebook auth
 
 ### Android
 
-For Android all the config. is set properly for this proyect
+- You need to add the google-services.json provided by firebase into ./android/app
+- Open Android Studio, sync & configure the proyect, run ./gradre clean if necesary
+- You need to create a debug.keystore to work in this proyect 
+- And you're all set
 
-It has a debug.keystore linked to firebase, you can change it or use other keystore
+### IOS
 
-## IOS
+> Keep in mind this proyect has been built only for android at the moment, it needs to be configure for IOS
 
-This proyect has been builded in Android so it needs to be configured from the begining for IOS
+- You need to add the GoogleService-info.plist into ./ios/assignit
+- Open XCode, sync & configure the ios proyect
+- Configure all the RN dependencies that need an extra setup for ios
+- You're all set
 
-This dependencies need deep config in ./ios directory
+### Extra setup dependencies
 
 - [React Native Firebase](https://rnfirebase.io/)
 - [Facebook Sign In](https://github.com/thebergamo/react-native-fbsdk-next/)

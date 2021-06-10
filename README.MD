@@ -10,9 +10,11 @@
 
 ## Description
 
-Assignit is an app to keep your task, events and assignments organized in every place integrated with Google Calendar 
+Assignit is an app to keep your task, events and assignments organized in every place integrated with Google Calendar.
 
-It's builded with React Native, Gatsby and Firebase as backend service
+You can add assignments (tasks, events, etc.) to your subjects (task group), add new assignments, view them in your Assignit Agenda or Google Calendar, see your stadistics and more.
+
+It's builded with React, React Native, Gatsby and Firebase as backend service
 
 ## Proyect Structure
 
@@ -32,5 +34,5 @@ It's builded with React Native, Gatsby and Firebase as backend service
 ## Develop and contribute
 
 - Go to [web](web) or [mobile](mobile) and follow the instructions
-- To add a new language translation go to [translations](translations) and follow its instructions
+- To add a new language translation go to [languages](languages) and follow its instructions
 - ALWAYS START FIREBASE EMULATOR to read and write any data, go to [emulators](emulators) and follow instructions
