@@ -1,11 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Assignment, Subject, UserDoc } from '../interface/interfaces'
-import * as RNLocalize from 'react-native-localize'
+import { API_KEY } from '@env'
 import { theme } from '../services/theme'
 import { cancelNoti } from './notifications'
-
-const API_KEY: string = 'AIzaSyCL5O-GXC9tkzJ37KSDPPMteqwPtmw-sjM'
-const CLIENT_ID: string = '744064944166-89l8kffqk6o5gc21ala9c3gnru3ruh6u.apps.googleusercontent.com'
 
 export const createCalendar = async(accessToken: string) => {
   const headers = {

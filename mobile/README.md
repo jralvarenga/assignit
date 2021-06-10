@@ -1,22 +1,10 @@
-# Assignit
-
-> Keep all your tasks or assigments organized.
-
-## Proyect Description
-
-Assignit is build in [React native](https://reactnative.dev/) with [Firebase](https://firebase.google.com/) ([React Native Firebase](https://rnfirebase.io/)), Also uses [Google Calendar API](https://developers.google.com/calendar)
+## Configuration
 
 To install all this run
 
 ````bash
-yarn add
-
-# or just
-
 yarn
 ````
-
-## Configuration
 
 - This app uses Firebase for its backend, to configure firebase go [here](https://firebase.google.com/) and add an Android and IOS application
 - You need to add the debug.keystore to ./android/app, once added get the SHA-1 and Key Hashes from the keystore for the Google sign in and Facebook sign in
@@ -28,6 +16,8 @@ yarn
 ### Android
 
 For Android all the config. is set properly for this proyect
+
+It has a debug.keystore linked to firebase, you can change it or use other keystore
 
 ## IOS
 
