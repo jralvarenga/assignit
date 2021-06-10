@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "poppins";
+  src: local("poppins"),
+    url(../assets/font/poppins.ttf) format("truetype");
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'poppins';
+  font-weight: bold;
+}
+
+:focus {
+  border: 0px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  cursor: grab;
+}
+::-webkit-scrollbar-track {
+  background: inherit;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--main-color); 
+  border-radius: 4px; 
+  transition: 300ms; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-main-color); 
+  background-attachment: fixed; 
+}
