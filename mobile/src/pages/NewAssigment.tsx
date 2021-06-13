@@ -136,7 +136,7 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
     setScreenRender(screenRender + 1)
   }
 
-  const createAssigmentsWithEvents = async() => {
+  /*const createAssigmentsWithEvents = async() => {
     const googleUser = await GoogleSignin.getTokens()
     const accessToken = googleUser.accessToken
     const newAssigments: Assignment[] = await Promise.all(assignments!.map(async(assignment: Assignment) => {
@@ -162,7 +162,7 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
       }
     }))
     return newAssigments
-  }
+  }*/
 
   const createAssigments = async() => {
     const newAssigments: Assignment[] = await Promise.all(assignments!.map(async(assignment: Assignment) => {
@@ -189,13 +189,12 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
       const newProgress = addSubjectProgress(subject, assignments.length)
       subject.progress = newProgress
       await updateProgress(subject, user)
-      if (provider == 'google.com' && googleSync == true) {
+      /*if (provider == 'google.com' && googleSync == true) {
         const newAssignments = await createAssigmentsWithEvents()
         await addNewAssigments(subject, newAssignments, user)
-      } else {
-        const newAssignments = await createAssigments()
-        await addNewAssigments(subject, newAssignments, user)
-      }
+      }*/
+      const newAssignments = await createAssigments()
+      await addNewAssigments(subject, newAssignments, user)
       setLoading(false)
       setRender!(render! + 1)
       navigation.navigate('Home')

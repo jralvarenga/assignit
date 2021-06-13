@@ -47,8 +47,8 @@ const WelcomeIndex = ({ setFalseOpenFirstTime, setOpenFirstTime }: any) => {
         setDisplay2(false)
         setDisplay4(false)
 
-        setDisplay3(true)
-        setCurrentIndex(3)
+        setDisplay4(true)
+        setCurrentIndex(4)
       break;
       case 3:
         setDisplay0(false)
@@ -85,7 +85,7 @@ const WelcomeIndex = ({ setFalseOpenFirstTime, setOpenFirstTime }: any) => {
         <Index0 display={display0} setDisplay={displaySlideHandler} />
         <Index1 display={display1} setDisplay={displaySlideHandler} />
         <Index2 display={display2} setDisplay={displaySlideHandler} />
-        <Index3 display={display3} setDisplay={displaySlideHandler} />
+        {/*<Index3 display={display3} setDisplay={displaySlideHandler} />*/}
         <Index4 display={display4} goToSignIn={goToSignIn} />
       </View>
 
@@ -94,10 +94,9 @@ const WelcomeIndex = ({ setFalseOpenFirstTime, setOpenFirstTime }: any) => {
           <Text style={[styles.font, {fontSize: 14}]}>{t("Skip")}</Text>
         </TouchableOpacity>
         <View style={styles.indexContainer}>
-          {[0, 1, 2, 3, 4].map((item) => (
+          {[0, 1, 2, /*3,*/ 4].map((item) => (
             currentIndex == item ? (
               <TouchableOpacity
-
                 key={item}
                 activeOpacity={0.7}
                 style={[styles.indexCircle, {backgroundColor: '#c9c9c9'}]}

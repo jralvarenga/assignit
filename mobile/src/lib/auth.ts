@@ -12,8 +12,8 @@ export const signIn = async(credential: any, accessToken: string | null, type: s
   if (isNew) {
     switch (type) {
       case 'google':
-        const calendar = await createCalendar(accessToken!)
-        await createUserDocument(currentUser.user, calendar)
+        //const calendar = await createCalendar(accessToken!)
+        await createUserDocument(currentUser.user, { id: "", sumary: "" })
         const notiId1 = repeatNotis(translator)
         const settingsTrue = {
           googleCalendarSync: true,

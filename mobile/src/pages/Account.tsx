@@ -41,13 +41,13 @@ const AccountScreen = ({ navigation }: any) => {
     getSettings()
   }, [user])
 
-  const changeGoogleSync = async () => {
+  /*const changeGoogleSync = async () => {
     const stringSettings = await AsyncStorage.getItem('settings')
     const settings: Settings = JSON.parse(stringSettings!)
     settings.googleCalendarSync = !googleSync
     await AsyncStorage.setItem('settings', JSON.stringify(settings))
     setGoogleSync(!googleSync)
-  }
+  }*/
 
   const deleteAccountHandler = async() => {
     setDeleteAccountLoading(true)
@@ -119,13 +119,13 @@ const AccountScreen = ({ navigation }: any) => {
 
       <View style={styles.infoContainer}>
         <ScrollView style={{ width: '90%' }}>
-          {provider != 'google.com' && (
+          {/*provider != 'google.com' && (
             <View style={{ marginBottom: 30 }}>
               <Text style={[styles.font, { textAlign: 'center' }]}>
                 {t("Your account doesn't support sync with Google Calendar")}
               </Text>
             </View>
-          )}
+          )*/}
           <View style={[styles.infoRow, {marginTop: 0}]}>
             <Text style={[styles.font, { fontSize: 20 }]}>
               {t("Account provider")}
@@ -136,14 +136,14 @@ const AccountScreen = ({ navigation }: any) => {
               <GoogleLogo width={30} height={30} />
             )}
           </View>
-          {provider == 'google.com' && (
+          {/*provider == 'google.com' && (
             <View style={styles.infoRow}>
               <Text style={[styles.font, { fontSize: 20 }]}>
                 {t("Google Calendar sync")}
               </Text>
               <Switch value={googleSync} onValueChange={changeGoogleSync} />
             </View>
-          )}
+          )*/}
           <TouchableRipple onPress={() => navigation.navigate('Stadistics')} borderless rippleColor={theme.colors.surface} style={[styles.infoRow, {borderRadius: 15 }]}>
             <>
             <Text style={[styles.font, { fontSize: 20 }]}>

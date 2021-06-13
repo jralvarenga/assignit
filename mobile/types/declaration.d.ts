@@ -8,4 +8,5 @@ declare module "*.svg" {
 declare module '@env' {
   export const API_KEY: string;
   export const CLIENT_ID: string;
+  export const GOOGLE_WEBCLIENT_ID: string;
 }

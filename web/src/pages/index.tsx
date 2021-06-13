@@ -26,7 +26,7 @@ const HomePage = () => {
   const [showInstallApp, setShowInstallApp] = useState(false)
 
   const handleChangeNextIndex = () => {
-    if (currentIndex < 4) {
+    if (currentIndex < 3) {
       setCurrentIndex(currentIndex + 1)
     } else {
       setCurrentIndex(0)
@@ -76,7 +76,7 @@ const HomePage = () => {
             <div className={classes.bodyBox}>
               <HandleScreenText classes={classes} index={currentIndex} />
               <div className={classes.indexContainer}>
-                {[0, 1, 2, 3, 4].map((i) => (
+                {[0, 1, 2/*, 3*/, 4].map((i) => (
                   currentIndex == i ? (
                     <span
                       key={i}
@@ -125,7 +125,8 @@ const HandleScreenText = ({ index, classes }: { index: number, classes: any }) =
     case 2:
       return <Index2Text classes={classes} />
     case 3:
-      return <Index3Text classes={classes} />
+      return <Index4Text classes={classes} />
+      //return <Index3Text classes={classes} />
     case 4:
       return <Index4Text classes={classes} />
     default:
@@ -142,7 +143,8 @@ const HandleScreenAnimation = ({ index, classes }: { index: number, classes: any
     case 2:
       return <Index2Animation classes={classes} />
     case 3:
-      return <Index3Animation classes={classes} />
+      return <Index4Animation classes={classes} />
+      //return <Index3Animation classes={classes} />
     case 4:
       return <Index4Animation classes={classes} />
     default:
