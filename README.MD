@@ -33,8 +33,11 @@ It's builded with React, React Native, Gatsby and Firebase as backend service
 
 ## Develop and contribute
 
+- DO NOT TOUCH master branch, only use it for reference
 - We use yarn for everything, DO NOT USE NPM
+- Create a branch using dev as base, name it whatever you like
 - Go to [web](web) or [mobile](mobile) and follow the instructions
 - Keep in mind the env variables, go to [env](env) for setup
 - To add a new language translation go to [languages](languages) and follow its instructions
 - ALWAYS START FIREBASE EMULATOR to read and write any data, go to [emulators](emulators) and follow instructions
+- When you're done create a pull request and submit it, we're going to review it
