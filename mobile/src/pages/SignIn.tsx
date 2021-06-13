@@ -12,6 +12,7 @@ import FacebookLogo from '../assets/icons/facebook_icon.svg'
 import { TouchableRipple, Text } from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
 import { theme } from '../services/theme'
+import FailedBumpIcon from '../assets/icons/failedbump_logo.svg'
 
 const { height } = Dimensions.get('screen')
 
@@ -124,7 +125,13 @@ const SignInScreen = () => {
             </Animate>
           </TouchableRipple>
         </View>
+        
+        
        </View>
+       
+        <View style={styles.bottom}>
+          <FailedBumpIcon style={{ marginLeft: '3%' }} width={35} height={30.8} />
+        </View>
     </View>
   )
 }
@@ -150,6 +157,7 @@ const styleSheet = (theme: any) => StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
+    height: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -164,6 +172,12 @@ const styleSheet = (theme: any) => StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  bottom: {
+    width: '100%',
+    height: height * 0.07,
+    display: 'flex',
+    justifyContent: 'center'
+  }
 })
 
 export default SignInScreen

@@ -44,7 +44,7 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
     setAssignments(filteredAssignments)
   }, [route.params.assignments])
 
-  const createAssignmentsWithEvents = async() => {
+  /*const createAssignmentsWithEvents = async() => {
     const googleUser = await GoogleSignin.getTokens()
     const accessToken = googleUser.accessToken
     const newAssignments: Assignment[] = await Promise.all(subject.assignments!.map(async(assignment: Assignment) => {
@@ -70,7 +70,7 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
       }
     }))
     return newAssignments
-  }
+  }*/
 
   const createAssignments = async() => {
     const newAssignments: Assignment[] = await Promise.all(subject.assignments!.map(async(assignment: Assignment) => {
@@ -94,7 +94,7 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
   const createSubjectHandler = async() => {
     setCreateLoad(true)
     try {
-      if (provider == 'google.com' && googleSync == true) {
+      /*if (provider == 'google.com' && googleSync == true) {
         const newAssignments = await createAssignmentsWithEvents()
         subject.assignments = newAssignments
         const progress = {
@@ -105,9 +105,8 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
         
         await createSubject(subject, user)
         setRender(render + 1)
-
-      } else {
-        const newAssignments = await createAssignments()
+      }*/
+      const newAssignments = await createAssignments()
         subject.assignments = newAssignments
         const progress = {
           total: newAssignments.length,
@@ -117,7 +116,6 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
         
         await createSubject(subject, user)
         setRender(render + 1)
-      }
 
       setCreateLoad(false)
       navigation.navigate('Home')
