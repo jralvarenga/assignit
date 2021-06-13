@@ -5,6 +5,7 @@ import androidIcon from '../assets/icons/android_icon.svg'
 import pwaIcon from '../assets/icons/pwa_icon.svg'
 import { Android as PlayStoreIcon, GetApp as GetAppIcon } from '@material-ui/icons';
 import { Link } from 'gatsby'
+import failedbumpLogo from '../assets/icons/failedbump_logo.svg'
 
 interface InstallAppModal {
   open: boolean;
@@ -84,7 +85,7 @@ const InstallAppModal = ({ open, setOpen }: InstallAppModal) => {
           </div>
           <div className={classes.bottom}>
             <Typography style={{ fontWeight: 700, color: theme.palette.text.secondary, fontSize: 16}}>
-              An app by @FailedBump
+              <img src={failedbumpLogo} className={classes.fbLogo} alt="" />
             </Typography>
             <Typography style={{ fontWeight: 700, color: theme.palette.text.secondary, fontSize: 16, textAlign: 'right'}}>
               See our <Link style={{ color: theme.palette.primary.main }} to="/terms-conditions">Terms & Conditions</Link> and <Link style={{ color: theme.palette.primary.main }} to="/privacy-policy">Privacy Policy</Link>
@@ -184,6 +185,11 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 20
     }
   },
+  fbLogo: {
+    width: 40,
+    height: 35.2,
+    cursor: 'pointer'
+  }
 }))
 
 export default InstallAppModal

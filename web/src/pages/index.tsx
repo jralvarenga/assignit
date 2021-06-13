@@ -12,8 +12,8 @@ import {
   Index1Text,
   Index2Animation,
   Index2Text,
-  Index3Animation,
-  Index3Text,
+  //Index3Animation,
+  //Index3Text,
   Index4Animation,
   Index4Text
 } from '../components/WelcomeTextAnimation'
@@ -181,8 +181,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   logoIcon: {
-    width: 50,
-    height: 60,
+    width: 40,
+    height: 50,
     [theme.breakpoints.down('xs')]: {
       width: 30,
       height: 40,

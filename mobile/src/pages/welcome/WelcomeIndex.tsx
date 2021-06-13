@@ -91,7 +91,9 @@ const WelcomeIndex = ({ setFalseOpenFirstTime, setOpenFirstTime }: any) => {
 
       <Animate fade delay={250} containerStyle={styles.footer}>
         <TouchableOpacity onPress={goToSignIn} activeOpacity={0.7} style={styles.skipButton}>
-          <Text style={[styles.font, {fontSize: 14}]}>{t("Skip")}</Text>
+          <Text style={[styles.font, {fontSize: 14}]}>
+            {t("Skip")}
+          </Text>
         </TouchableOpacity>
         <View style={styles.indexContainer}>
           {[0, 1, 2, /*3,*/ 4].map((item) => (
