@@ -29,7 +29,7 @@ It's builded with React, React Native, Gatsby and Firebase as backend service
 ## Branches
 
 - master -> Production branch (DO NOT TOUCH THIS BRANCH)
-- dev -> Dev branch
+- dev -> Dev branch (Copy of master branch)
 
 ## Develop and contribute
 
