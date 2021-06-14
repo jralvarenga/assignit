@@ -29,13 +29,13 @@ It's builded with React, React Native, Gatsby and Firebase as backend service
 ## Branches
 
 - master -> Production branch (DO NOT TOUCH THIS BRANCH)
-- dev -> Dev branch (Copy of master branch)
+- [activity-name] -> Name of the develop or feature it's been working in the branch
 
 ## Develop and contribute
 
 - DO NOT TOUCH master branch, only use it for reference
 - We use yarn for everything, DO NOT USE NPM
-- Create a branch using dev as base, name it whatever you like or use one of the available and contribute to that
+- Create a branch using master as base, name it with the activity you're going to contribute or use one of the available and contribute to that
 - Go to [web](web) or [mobile](mobile) and follow the instructions
 - Keep in mind the env variables, go to [env](env) for setup
 - To add a new language translation go to [languages](languages) and follow its instructions
