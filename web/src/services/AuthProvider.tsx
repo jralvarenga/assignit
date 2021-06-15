@@ -4,10 +4,7 @@ import firebase from '../firebase/config'
 const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }: any) => {
-  //const [renderUser, setRenderUser] = useState
   const [user, setUser] = useState<any>(null)
-  console.log(user);
-  
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {

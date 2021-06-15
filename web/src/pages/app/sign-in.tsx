@@ -3,13 +3,22 @@ import React from 'react'
 import {makeStyles } from '@material-ui/core'
 import googleIcon from '../../assets/icons/google_icon.svg'
 import facebookIcon from '../../assets/icons/facebook_icon.svg'
+import failedbump_logo from '../../assets/icons/failedbump_logo.svg'
 import firebase from '../../firebase/config'
 import Seo from '../../components/seo'
 import { signIn } from '../../lib/auth'
+import { AuthProvider } from '../../interfaces/interfaces'
+import { useAuth } from '../../services/AuthProvider'
+import { navigate } from 'gatsby'
 //import backgroundAnimation from '../../assets/animations/signin-background.json'
 
 const SignIn = () => {
+  const { user }: AuthProvider = useAuth()
   const classes = useStyles()
+  
+  if (user) {
+    navigate('/app/')
+  }
 
   const googleSignIn = async() => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -51,6 +60,10 @@ const SignIn = () => {
           src={backgroundAnimation}
           className={classes.animationContainer}
         />*/}
+      </div>
+
+      <div style={{ position: 'fixed', bottom: 0, width: '100%', marginLeft: 10 }}>
+        <img src={failedbump_logo} className={classes.fbLogo} alt="" />
       </div>
 
     </div>
@@ -127,6 +140,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'row',
     cursor: 'pointer'
+  },
+  fbLogo: {
+    width: 40,
+    height: 35.2,
   }
 }))
 
