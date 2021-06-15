@@ -9,7 +9,12 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-gatsby-cloud`,
+
+    // Material UI
     `gatsby-theme-material-ui`,
+
+    // Manifets
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -22,6 +27,8 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`,
       },
     },
+
+    // SVG loader
     {
       resolve: "gatsby-plugin-react-svg",
       options: {
@@ -30,6 +37,22 @@ module.exports = {
         }
       }
     },
-    `gatsby-plugin-gatsby-cloud`,
+
+    // Firebase config
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        credentials: {
+          apiKey: process.env.API_KEY,
+          authDomain: process.env.AUTH_DOMAIN,
+          projectId: process.env.PROYECT_ID,
+          storageBucket: process.env.STORAGE_BUCKET,
+          messagingSenderId: process.env.MESSAGING_SENDER_ID,
+          appId: process.env.APP_ID,
+          measurementId: process.env.MEASUREMENT_ID
+        }
+      }
+    }
+
   ],
 }
