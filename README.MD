@@ -35,7 +35,7 @@ It's builded with React, React Native, Gatsby and Firebase as backend service
 
 - DO NOT TOUCH master branch, only use it for reference
 - We use yarn for everything, DO NOT USE NPM
-- Create a branch using master as base, name it with the activity you're going to contribute or use one of the available and contribute to that
+- Fork the repo and create a branch using master as base, name it with the activity you're going to contribute or use one of the available and contribute to that
 - Go to [web](web) or [mobile](mobile) and follow the instructions
 - Keep in mind the env variables, go to [env](env) for setup
 - To add a new language translation go to [languages](languages) and follow its instructions
