@@ -14,6 +14,7 @@ const firebaseConfig = {
 
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
+  firebase.firestore().settings({ host: 'localhost:8080', ssl: false })
 }
 
 export default firebase

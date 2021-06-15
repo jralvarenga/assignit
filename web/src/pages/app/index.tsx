@@ -1,10 +1,14 @@
 import React from 'react'
+import { navigate } from 'gatsby'
 import { AuthProvider } from '../../interfaces/interfaces'
 import { useAuth } from '../../services/AuthProvider'
 
 const Index = () => {
   const { user }: AuthProvider = useAuth()
-  console.log(user);
+
+  if (user == null) {
+    navigate('/app/sign-in')
+  }
 
   return (
     <div>hi</div>
