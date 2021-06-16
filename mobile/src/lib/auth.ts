@@ -13,7 +13,7 @@ export const signIn = async(credential: any, accessToken: string | null, type: s
     switch (type) {
       case 'google':
         //const calendar = await createCalendar(accessToken!)
-        await createUserDocument(currentUser.user, { id: "", sumary: "" })
+        await createUserDocument(currentUser.user, { id: "", summary: "" })
         const notiId1 = repeatNotis(translator)
         const settingsTrue = {
           googleCalendarSync: true,
@@ -23,7 +23,7 @@ export const signIn = async(credential: any, accessToken: string | null, type: s
         await AsyncStorage.setItem('settings', JSON.stringify(settingsTrue))
       break;
       case 'facebook':
-        await createUserDocument(currentUser.user, { id: "", sumary: "" })
+        await createUserDocument(currentUser.user, { id: "", summary: "" })
         const notiId2 = repeatNotis(translator)
         const settingsFalse = {
           googleCalendarSync: false,
