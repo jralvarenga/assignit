@@ -10,8 +10,8 @@ import SplashScreen from 'react-native-splash-screen'
 import { ThemeProvider } from './src/services/ThemeProvider'
 import { GOOGLE_WEBCLIENT_ID } from '@env'
 
-//import firestore from '@react-native-firebase/firestore'
-//firestore().settings({ host: 'localhost:8080', ssl: false })
+import firestore from '@react-native-firebase/firestore'
+firestore().settings({ host: 'localhost:8080', ssl: false })
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
