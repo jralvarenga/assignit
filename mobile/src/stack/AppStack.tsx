@@ -19,6 +19,7 @@ import AgendaScreen from '../pages/Agenda'
 import AccountScreen from '../pages/Account'
 import { useTheme } from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
+import ToDoListScreen from '../pages/ToDoList'
 
 const Stack = createStackNavigator()
 const Tab = AnimatedTabBarNavigator()
@@ -59,6 +60,17 @@ const BottomTabNavigator = () => {
           title: t("Agenda"),
           tabBarIcon: ({ focused, color }: any) => (
             <MaterialIcon name="calendar-month" size={25} color={focused ? color : theme.colors.textPaper}
+            />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="ToDo"
+        component={ToDoListScreen}
+        options={{
+          title: t("To Do"),
+          tabBarIcon: ({ focused, color }: any) => (
+            <MaterialIcon name="format-list-checks" size={25} color={focused ? color : theme.colors.textPaper}
             />
           )
         }}
