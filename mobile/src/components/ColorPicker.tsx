@@ -21,6 +21,7 @@ const colors = [
   { id: "9", color: "#5484ed" },
   { id: "10", color: "#51b749" },
   { id: "11", color: "#dc2127" },
+  { id: "12", color: "#ededed" },
 ]
 
 const ColorPicker = ({ visible, setVisible, colorPickerHandler }: ColorPickerProps) => {
@@ -80,7 +81,7 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginRight: '3%',
     borderWidth: 1,
     marginBottom: 5,
-    borderColor: theme.colors.surface
+    borderColor: theme.colors.background
   },
   availableColors: {
     width: '100%',
