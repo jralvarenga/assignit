@@ -56,3 +56,14 @@ export interface ThemeProvider {
   colorScheme?: string,
   setColorScheme?: Function
 }
+
+export interface Task {
+  title: string,
+  id: string
+  reminder: string | false,
+  color: {
+    id: string,
+    color: string
+  },
+  done: boolean
+}
