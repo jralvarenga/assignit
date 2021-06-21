@@ -69,6 +69,27 @@ export const repeatNotis = (translator: Function) => {
   return notiId
 }
 
+export const reminderNoti = (repeatTime: number, body: any) => {
+  const notiId = createNotiId()
+  const user: any = auth().currentUser
+
+  PushNotification.localNotificationSchedule({
+    channelId: "assignit_channel_1",
+    id: notiId,
+    largeIcon: "ic_launcher",
+    ignoreInForeground: false,
+    largeIconUrl: user?.photoURL,
+    bigLargeIconUrl: user?.photoURL,
+    smallIcon: "ic_notification",
+    title: body.title,
+    message: body.body,
+    repeatType: 'time',
+    repeatTime: repeatTime,
+    date: new Date(body.date + repeatTime)
+  })
+  return notiId
+}
+
 export const existAssignmentNotification = (assignments: Assignment[], subjects: Subject[], translator: Function) => {
   const currentDate = new Date()
   currentDate.setHours(0, 0)

@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View, Dimensions } from 'react-native'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import { DatePicker, TimePicker } from '../components/DateTimePicker'
 import { Text, Button, IconButton, TextInput, Checkbox, useTheme } from 'react-native-paper'
 import { dateParams, dateString, timeParams, timeString, useDatetime } from '../hooks/useDateTime'
 import { Assignment, Settings, Subject, SubjectProvider } from '../interface/interfaces'
@@ -315,21 +315,15 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
       </View>
 
       {/* Datetime picker */}
-      <DateTimePickerModal
-        isVisible={showDatePicker}
-        mode="date"
-        is24Hour={true}
-        display="default"
+      <DatePicker
+        visible={showDatePicker}
+        setVisible={setShowDatePicker}
         onConfirm={onDateChange}
-        onCancel={() => setShowDatePicker(false)}
       />
-      <DateTimePickerModal
-        isVisible={showTimePicker}
-        mode="time"
-        is24Hour={false}
-        display="default"
+      <TimePicker
+        visible={showTimePicker}
+        setVisible={setShowTimePicker}
         onConfirm={onTimeChange}
-        onCancel={() => setShowTimePicker(false)}
       />
 
       <AppSnackbar

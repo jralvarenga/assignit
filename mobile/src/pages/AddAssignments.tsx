@@ -1,11 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View, Dimensions, BackHandler } from 'react-native'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { Button, Text, IconButton, TextInput, Snackbar, Checkbox, Dialog, Portal, useTheme } from 'react-native-paper'
+import { DatePicker, TimePicker } from '../components/DateTimePicker'
+import { Button, Text, IconButton, TextInput, Checkbox, Dialog, Portal, useTheme } from 'react-native-paper'
 import { dateParams, dateString, timeParams, timeString, useDatetime } from '../hooks/useDateTime'
 import { Assignment, Subject } from '../interface/interfaces'
 import { createNotiId } from '../hooks/createId'
 import { useTranslation } from 'react-i18next'
+import AppSnackbar from '../components/Snackbar'
 
 const deviceHeight = Dimensions.get('screen').height
 
@@ -266,37 +267,22 @@ const AddAssignmentsScreen = ({ route, navigation }: any) => {
       </View>
 
       {/* Datetime picker */}
-      <DateTimePickerModal
-        isVisible={showDatePicker}
-        mode="date"
-        is24Hour={true}
-        display="default"
+      <DatePicker
+        visible={showDatePicker}
+        setVisible={setShowDatePicker}
         onConfirm={onDateChange}
-        onCancel={() => setShowDatePicker(false)}
       />
-      <DateTimePickerModal
-        isVisible={showTimePicker}
-        mode="time"
-        is24Hour={false}
-        display="default"
+      <TimePicker
+        visible={showTimePicker}
+        setVisible={setShowTimePicker}
         onConfirm={onTimeChange}
-        onCancel={() => setShowTimePicker(false)}
       />
 
-      <Snackbar
+      <AppSnackbar
         visible={showSnackbar}
-        onDismiss={() => setShowSnackbar(false)}
-        style={{ backgroundColor: theme.colors.primary }}
-        action={{
-          label: 'Ok',
-          labelStyle: {
-            ...styles.font,
-            color: theme.colors.background,
-            letterSpacing: 0,
-          },
-        }}>
-        <Text style={[styles.font, {color: theme.colors.background}]}>{snackbarMessage}</Text>
-      </Snackbar>
+        setVisible={setShowSnackbar}
+        text={snackbarMessage}
+      />
 
       { /* Notifications settings */ }
       <Portal>

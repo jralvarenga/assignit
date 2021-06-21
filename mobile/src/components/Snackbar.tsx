@@ -7,10 +7,11 @@ interface SnackbarProps {
   setVisible: Function,
   text: string,
   addTheme?: any,
-  addStyles?: any
+  addStyles?: any,
+  label?: string
 }
 
-const AppSnackbar = ({ visible, setVisible, text, addTheme, addStyles }: SnackbarProps) => {
+const AppSnackbar = ({ visible, setVisible, text, addTheme, addStyles, label }: SnackbarProps) => {
   const theme = useTheme()
   const styles = styleSheet(theme)
 
@@ -21,7 +22,7 @@ const AppSnackbar = ({ visible, setVisible, text, addTheme, addStyles }: Snackba
       theme={{...theme, ...addTheme}}
       style={{ backgroundColor: theme.colors.accent, ...addStyles }}
       action={{
-        label: 'Ok',
+        label: label ? label : 'Ok',
         labelStyle: {
           ...styles.font,
           color: "#fff",

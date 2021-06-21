@@ -65,7 +65,8 @@ export interface Task {
     id: string,
     color: string
   },
-  done: boolean
+  done: boolean,
+  notiId?: number
 }
 
 export interface TasksProvider {
