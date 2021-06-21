@@ -67,3 +67,10 @@ export interface Task {
   },
   done: boolean
 }
+
+export interface TasksProvider {
+  tasks?: Task[],
+  setTasks?: Function,
+  render?: number,
+  setRender?: Function
+}

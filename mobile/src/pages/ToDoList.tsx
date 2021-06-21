@@ -1,14 +1,17 @@
 import { useTheme } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
+import auth from '@react-native-firebase/auth'
 import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
-import { Text, IconButton, TextInput, Checkbox, TouchableRipple, Button, Dialog, Portal } from 'react-native-paper'
+import { Text, IconButton, TextInput, Checkbox, TouchableRipple, Button, Dialog, Portal, ActivityIndicator } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ColorPicker from '../components/ColorPicker'
-import { Task } from '../interface/interfaces'
-import { getDoneTasks, getPendingTasks } from '../lib/tasksLib'
+import { Task, TasksProvider } from '../interface/interfaces'
+import { addNewTask, deleteTask, filterTasks, setTaskStatus } from '../lib/tasksLib'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Animate } from 'react-native-entrance-animation'
+import { useTasks } from '../services/TasksProvider'
+import { createDummyAssignmentId } from '../hooks/createId'
 
 const colors = [
   { id: "1", color: "#a4bdfc" },
@@ -25,80 +28,25 @@ const colors = [
   { id: "12", color: "text" },
 ]
 
-const demoTasks: Task[] = [
-  {
-    title: "My task",
-    color: { id: "11", color: "text" },
-    done: true,
-    id: 'higeqdfgoiryerf2iofwer',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "9", color: "#5484ed" },
-    done: false,
-    id: 'higeqdfgoeiyerf2iofwer',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "11", color: "#dc2127" },
-    done: false,
-    id: 'higeqdfgoiyewrf2iofwer',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "11", color: "#dc2127" },
-    done: false,
-    id: 'higeqdfgoiyerqf2iofwer',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "11", color: "text" },
-    done: false,
-    id: 'higeqdfgoiyerf2iferofwer',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "11", color: "#dc2127" },
-    done: false,
-    id: 'higeqdfgoiyerf2iofwerfw',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "11", color: "#dc2127" },
-    done: true,
-    id: 'higeqdfgoiyerf2iofwewjor',
-    reminder: false
-  },
-  {
-    title: "My task",
-    color: { id: "11", color: "#dc2127" },
-    done: true,
-    id: 'higeqdfgoiyerf2iofwerfewf',
-    reminder: false
-  },
-]
-
 const ToDoListScreen = () => {
   const theme = useTheme()
   const styles = styleSheet(theme)
-  const tasks = demoTasks
-  const [doneTasks, setDoneTasks] = useState<any>([])
-  const [pendingTasks, setPendingTasks] = useState<any>([])
+  const user = auth().currentUser
+  const { tasks, render, setRender, setTasks }: TasksProvider = useTasks()
+  const [doneTasks, setDoneTasks] = useState<any[]>([])
+  const [pendingTasks, setPendingTasks] = useState<any[]>([])
   const [showColorPicker, setShowColorPicker] = useState(false)
+  const [newTaskTitle, setNewTaskTitle] = useState("")
   const [newTaskColor, setNewTaskColor] = useState(colors[10])
+  const [createNewTaskLoad, setCreateNewTaskLoad] = useState(false)
   const [showTask, setShowTask] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task>()
 
   useEffect(() => {
-    setDoneTasks( getDoneTasks(tasks) )
-    setPendingTasks( getPendingTasks(tasks) )
-  }, [])
+    const [pending, done] = filterTasks(tasks!)
+    setDoneTasks(done)
+    setPendingTasks(pending)
+  }, [render, tasks])
 
   const taskColorHandler = (color: any) => {
     setNewTaskColor(color)
@@ -110,6 +58,75 @@ const ToDoListScreen = () => {
     setShowTask(true)
   }
 
+  const createTaskHandler = async() => {
+    if (newTaskTitle == '') {
+      console.log('error')
+      return
+    }
+    setCreateNewTaskLoad(true)
+    const taskData: Task = {
+      title: newTaskTitle,
+      color: newTaskColor,
+      id: createDummyAssignmentId(),
+      done: false,
+      reminder: false
+    }
+    pendingTasks.push(taskData)
+    setPendingTasks(pendingTasks)
+    setNewTaskTitle("")
+    setNewTaskColor(colors[10])
+    try {
+      await addNewTask(taskData, user)
+    } catch (error) {
+      console.log(error)
+    }
+    setCreateNewTaskLoad(false)
+  }
+
+  const changeTaskStatus = async(id: string, status: boolean) => {
+    setCreateNewTaskLoad(true)
+    if (status == true) {
+      const taskIndex = pendingTasks!.map((task) => task.id ).indexOf(id)
+      tasks![taskIndex].done = status
+      doneTasks.push(tasks![taskIndex])
+      setDoneTasks(doneTasks)
+      pendingTasks.splice(taskIndex, 1)
+      setPendingTasks(pendingTasks)
+    } else {
+      const taskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
+      tasks![taskIndex].done = status
+      pendingTasks.push(tasks![taskIndex])
+      setPendingTasks(pendingTasks)
+      doneTasks.splice(taskIndex, 1)
+      setDoneTasks(doneTasks)
+    }
+
+    try {
+      await setTaskStatus(id, status, user)
+    } catch (error) {
+      console.log(error)
+    }
+    setCreateNewTaskLoad(false)
+  }
+
+  const deleteTaskHandler = async(id: string, state: boolean) => {
+    if (state == true) {
+      const taskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
+      doneTasks.splice(taskIndex, 1)
+      setDoneTasks(doneTasks)
+    } else {
+      const taskIndex = pendingTasks!.map((task) => task.id ).indexOf(id)
+      pendingTasks.splice(taskIndex, 1)
+      setPendingTasks(pendingTasks)
+    }
+    setShowTask(false)
+    try {
+      await deleteTask(id, user)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <SafeAreaView>
       <ScrollView style={{ width: '100%', height: '100%' }}>
@@ -119,14 +136,17 @@ const ToDoListScreen = () => {
           <Text style={[styles.font, {fontSize: 32}]}>
             To Do List
           </Text>
+          <ActivityIndicator size="small" animating={createNewTaskLoad} color={theme.colors.primary} />
         </View>
 
         <View style={[styles.addNewContainer]}>
           <TextInput
             mode="outlined"
+            value={newTaskTitle}
+            onChangeText={(value) => setNewTaskTitle(value)}
             label="New task name"
             style={{ width: '50%' }}
-            theme={{ colors: { primary: newTaskColor.color == 'text' ? theme.colors.card : newTaskColor.color } }}
+            theme={{ colors: { primary: newTaskColor.color == 'text' ? theme.colors.text : newTaskColor.color } }}
           />
           <TouchableOpacity
             onPress={() => setShowColorPicker(true)}
@@ -143,22 +163,25 @@ const ToDoListScreen = () => {
             icon='plus'
             color={theme.colors.text}
             size={32}
+            onPress={createTaskHandler}
             style={{ backgroundColor: theme.colors.card }}
           />
         </View>
 
         <View style={styles.listContainer}>
-          {tasks.length == 0 ? (
+          {tasks!.length == 0 ? (
             <Text style={[styles.font, {color: theme.colors.textPaper, marginTop: 15}]}>
               You don't have any task now😢
             </Text>
           ) : (
             <View>
-              <Text style={[styles.font, styles.tasksTitles]}>Tasks</Text>
               {/* PENDING TASKS */}
+              {doneTasks.length != 0 && (
+                <Text style={[styles.font, styles.tasksTitles]}>Tasks</Text>
+              )}
               <View style={{ width: '100%' }}>
                 {pendingTasks.map((task: Task, i: number) => (
-                  <Animate right delay={50 * i} key={i}>
+                  <Animate right key={i}>
                   <TouchableRipple
                     borderless
                     rippleColor={theme.colors.card}
@@ -167,7 +190,7 @@ const ToDoListScreen = () => {
                   ><>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                       <Checkbox
-                        onPress={() => console.log('jaja')}
+                        onPress={() => changeTaskStatus(task.id, true)}
                         status={task.done ? 'checked' : 'unchecked'}
                         theme={{ colors: { primary: task.color.color } }}
                       />
@@ -182,11 +205,13 @@ const ToDoListScreen = () => {
                   </Animate>
                 ))}
               </View>
-              <Text style={[styles.font, styles.tasksTitles]}>Done</Text>
               {/* DONE TASKS */}
+              {doneTasks.length != 0 && (
+                <Text style={[styles.font, styles.tasksTitles]}>Done</Text>
+              )}
               <View style={{ width: '100%' }}>
                 {doneTasks.map((task: Task, i: number) => (
-                  <Animate right delay={50 * i} key={i}>
+                  <Animate right key={i}>
                   <TouchableRipple
                     borderless
                     rippleColor={theme.colors.card}
@@ -195,7 +220,7 @@ const ToDoListScreen = () => {
                   ><>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                       <Checkbox
-                        onPress={() => console.log('jaja')}
+                        onPress={() => changeTaskStatus(task.id, false)}
                         status={task.done ? 'checked' : 'unchecked'}
                         theme={{ colors: { primary: task.color.color == 'text' ? theme.colors.text : task.color.color } }}
                       />
@@ -234,17 +259,10 @@ const ToDoListScreen = () => {
           <Dialog.Actions>
             <Button
               uppercase={false}
-              //loading={loading}
               style={[styles.actionButtons, {marginLeft: 15}]}
               labelStyle={[styles.font, {fontSize: 16, color: theme.colors.accent, letterSpacing: 0}]}
-              //onPress={() => setShowAddLinks(false)}
+              onPress={() => deleteTaskHandler(selectedTask!.id, selectedTask!.done)}
             >Delete</Button>
-            <Button
-              uppercase={false}
-              style={[styles.actionButtons]}
-              labelStyle={[styles.font, {fontSize: 16, letterSpacing: 0}]}
-              onPress={() => setShowTask(false)}
-            >Ok</Button>
             </Dialog.Actions>
         </Dialog>
         </Portal>
@@ -269,7 +287,11 @@ const styleSheet = (theme: Theme | any) => StyleSheet.create({
   titleContainer: {
     width: '95%',
     marginTop: 15,
-    marginBottom: 10
+    marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   addNewContainer: {
     width: '95%',
