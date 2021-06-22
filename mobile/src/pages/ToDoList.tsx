@@ -13,6 +13,7 @@ import { Animate } from 'react-native-entrance-animation'
 import { useTasks } from '../services/TasksProvider'
 import { createDummyAssignmentId } from '../hooks/createId'
 import AppDialog from '../components/AppDialog'
+import AppSnackbar from '../components/Snackbar'
 
 const ToDoListScreen = () => {
   const theme: any = useTheme()
@@ -31,6 +32,8 @@ const ToDoListScreen = () => {
   const [reminderChoice, setReminderChoice] = useState('None')
   const [showTask, setShowTask] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task>()
+  const [showSnackbar, setShowSnackbar] = useState(false)
+  const [snackbarText, setSnackbarText] = useState('')
 
   useEffect(() => {
     const [pending, done] = filterTasks(tasks!)
@@ -50,7 +53,8 @@ const ToDoListScreen = () => {
 
   const createTaskHandler = async() => {
     if (newTaskTitle == '') {
-      console.log('error')
+      setSnackbarText('Set a title for the task')
+      setShowSnackbar(true)
       return
     }
     setCreateNewTaskLoad(true)
@@ -76,7 +80,8 @@ const ToDoListScreen = () => {
     try {
       await addNewTask(taskData, user)
     } catch (error) {
-      console.log(error)
+      setSnackbarText('An error has happen')
+      setShowSnackbar(true)
     }
     setCreateNewTaskLoad(false)
   }
@@ -104,7 +109,8 @@ const ToDoListScreen = () => {
     try {
       await setTaskStatus(id, status, user)
     } catch (error) {
-      console.log(error)
+      setSnackbarText('An error has happen')
+      setShowSnackbar(true)
     }
     setCreateNewTaskLoad(false)
   }
@@ -123,7 +129,8 @@ const ToDoListScreen = () => {
     try {
       await deleteTask(id, user)
     } catch (error) {
-      console.log(error)
+      setSnackbarText('An error has happen')
+      setShowSnackbar(true)
     }
   }
 
@@ -335,6 +342,12 @@ const ToDoListScreen = () => {
               onPress={() => setShowRemindMe(false)}
             >Ok</Button>
           }
+        />
+
+        <AppSnackbar
+          visible={showSnackbar}
+          setVisible={setShowSnackbar}
+          text={snackbarText}
         />
 
       </View>
