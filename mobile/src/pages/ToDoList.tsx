@@ -1,7 +1,7 @@
 import { useTheme } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth'
-import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import { Text, IconButton, TextInput, Checkbox, TouchableRipple, Button, Dialog, Portal, ActivityIndicator, Menu } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -12,32 +12,19 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Animate } from 'react-native-entrance-animation'
 import { useTasks } from '../services/TasksProvider'
 import { createDummyAssignmentId } from '../hooks/createId'
-
-const colors = [
-  { id: "1", color: "#a4bdfc" },
-  { id: "2", color: "#7ae7bf" },
-  { id: "3", color: "#dbadff" },
-  { id: "4", color: "#ff887c" },
-  { id: "5", color: "#fbd75b" },
-  { id: "6", color: "#ffb878" },
-  { id: "7", color: "#46d6db" },
-  //{ id: "8", color: "#e1e1e1" },
-  { id: "9", color: "#5484ed" },
-  { id: "10", color: "#51b749" },
-  { id: "11", color: "#dc2127" },
-  { id: "12", color: "text" },
-]
+import AppDialog from '../components/AppDialog'
 
 const ToDoListScreen = () => {
   const theme: any = useTheme()
   const styles = styleSheet(theme)
   const user = auth().currentUser
-  const { tasks, render, setRender, setTasks }: TasksProvider = useTasks()
+  const [refreshing, setRefreshing] = useState(false)
+  const { tasks, render, setRender, setTasks, getTasksHandler }: TasksProvider = useTasks()
   const [doneTasks, setDoneTasks] = useState<any[]>([])
   const [pendingTasks, setPendingTasks] = useState<any[]>([])
   const [showColorPicker, setShowColorPicker] = useState(false)
   const [newTaskTitle, setNewTaskTitle] = useState("")
-  const [newTaskColor, setNewTaskColor] = useState(colors[10])
+  const [newTaskColor, setNewTaskColor] = useState({ id: "12", color: "text" },)
   const [createNewTaskLoad, setCreateNewTaskLoad] = useState(false)
   const [showRemindMe, setShowRemindMe] = useState(false)
   const [showReminderMenu, setShowReminderMenu] = useState(false)
@@ -76,15 +63,16 @@ const ToDoListScreen = () => {
       notiId: 0
     }
     pendingTasks.push(taskData)
+    tasks?.push(taskData)
     setPendingTasks(pendingTasks)
+    setTasks!(tasks)
     setNewTaskTitle("")
-    setNewTaskColor(colors[10])
+    setNewTaskColor({ id: "12", color: "text" },)
     if (reminderChoice != 'None') {
       const notiId = setTaskReminder(reminderChoice, taskData)
       taskData.notiId = notiId
     }
     setReminderChoice('None')
-    
     try {
       await addNewTask(taskData, user)
     } catch (error) {
@@ -94,7 +82,6 @@ const ToDoListScreen = () => {
   }
 
   const changeTaskStatus = async(id: string, status: boolean) => {
-    setCreateNewTaskLoad(true)
     const taskIndex = tasks!.map((task) => task.id ).indexOf(id)
     tasks![taskIndex].done = status
     if (status == true) {
@@ -145,9 +132,26 @@ const ToDoListScreen = () => {
     setShowReminderMenu(false)
   }
 
+  const refreshScreen = useCallback( async() => {
+    setRefreshing(true)
+    await getTasksHandler!()
+    setRender!(render! + 1)
+    setRefreshing(false)
+  }, [])
+
   return (
     <SafeAreaView>
-      <ScrollView style={{ width: '100%', height: '100%' }}>
+      <ScrollView style={{ width: '100%', height: '100%' }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={refreshScreen}
+            colors={[theme.colors.accent]}
+            tintColor={theme.colors.accent}
+            progressBackgroundColor={theme.colors.surface}
+          />
+        }
+      >
       <View style={styles.container}>
         
         <View style={styles.titleContainer}>
@@ -207,7 +211,7 @@ const ToDoListScreen = () => {
               )}
               <View style={{ width: '100%' }}>
                 {pendingTasks.map((task: Task, i: number) => (
-                  <Animate right key={i}>
+                  <Animate fade delay={i * 10} key={i}>
                   <TouchableRipple
                     borderless
                     rippleColor={theme.colors.card}
@@ -239,7 +243,7 @@ const ToDoListScreen = () => {
               )}
               <View style={{ width: '100%' }}>
                 {doneTasks.map((task: Task, i: number) => (
-                  <Animate right key={i}>
+                  <Animate fade delay={i * 10} key={i}>
                   <TouchableRipple
                     borderless
                     rippleColor={theme.colors.card}
@@ -274,35 +278,32 @@ const ToDoListScreen = () => {
           setVisible={setShowColorPicker}
           colorPickerHandler={taskColorHandler}
         />
-        
-        <Portal>
-        <Dialog visible={showTask} onDismiss={() => setShowTask(false)}>
-          <Dialog.Title style={[styles.font, { fontSize: 25 }]}>
-            {selectedTask?.title}
-          </Dialog.Title>
-          <Dialog.Content>
+
+        <AppDialog
+          visible={showTask}
+          setVisible={setShowTask}
+          title={selectedTask?.title!}
+          body={
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={styles.font}>Is done:</Text>
               <Text style={styles.font}>{selectedTask?.done ? 'Yes' : 'No'}</Text>
             </View>
-          </Dialog.Content>
-          <Dialog.Actions>
+          }
+          primaryLabel={
             <Button
               uppercase={false}
               style={[styles.actionButtons, {marginLeft: 15}]}
               labelStyle={[styles.font, {fontSize: 16, color: theme.colors.accent, letterSpacing: 0}]}
               onPress={() => deleteTaskHandler(selectedTask!.id, selectedTask!.done)}
             >Delete</Button>
-          </Dialog.Actions>
-        </Dialog>
-        </Portal>
+          }
+        />
 
-        <Portal>
-        <Dialog visible={showRemindMe} onDismiss={() => setShowRemindMe(false)}>
-          <Dialog.Title style={[styles.font, { fontSize: 25 }]}>
-            Remind Me
-          </Dialog.Title>
-          <Dialog.Content>
+        <AppDialog
+          visible={showRemindMe}
+          setVisible={setShowRemindMe}
+          title="Remind Me"
+          body={
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={styles.font}>Remind me every:</Text>
               <View>
@@ -325,17 +326,16 @@ const ToDoListScreen = () => {
                 </Menu>
               </View>
             </View>
-          </Dialog.Content>
-          <Dialog.Actions>
+          }
+          primaryLabel={
             <Button
               uppercase={false}
               style={[styles.actionButtons, {marginLeft: 15}]}
               labelStyle={[styles.font, {fontSize: 16, letterSpacing: 0}]}
               onPress={() => setShowRemindMe(false)}
             >Ok</Button>
-          </Dialog.Actions>
-        </Dialog>
-        </Portal>
+          }
+        />
 
       </View>
       </ScrollView>

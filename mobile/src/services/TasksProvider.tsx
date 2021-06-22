@@ -20,7 +20,7 @@ export const TasksProvider = ({ children }: any) => {
   }, [user, render])
 
   return (
-    <TasksContext.Provider value={{ tasks, setTasks, setRender, render }}>
+    <TasksContext.Provider value={{ tasks, setTasks, setRender, render, getTasksHandler }}>
       {children}
     </TasksContext.Provider>
   )
