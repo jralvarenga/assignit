@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import { Theme } from '@react-navigation/native'
 import auth from '@react-native-firebase/auth'
-import { useTheme, TextInput, Divider, Button, Menu } from 'react-native-paper'
+import { useTheme, TextInput, Divider, Button, Menu, IconButton } from 'react-native-paper'
 import ColorPicker from '../components/ColorPicker'
 import { DatePicker } from '../components/DateTimePicker'
 import AppSnackbar from '../components/Snackbar'
@@ -133,9 +133,18 @@ const CreateNewTask = ({ navigation }: any) => {
 
           <TouchableOpacity onPress={() => setShowDatePicker(true)} activeOpacity={0.7} style={styles.selectedDatetime}>
             {taskDate ? (
-              <Text style={[styles.font, {fontSize: 20}]}>
-                To {dateString(taskDate, t)}
-              </Text>
+              <View style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={[styles.font, {fontSize: 20}]}>
+                  To {dateString(taskDate, t)}
+                </Text>
+                <IconButton
+                  icon="cancel"
+                  color={theme.colors.text}
+                  size={28}
+                  style={{ backgroundColor: theme.colors.card }}
+                  onPress={() => setTaskDate(undefined)}
+                />
+              </View>
             ) : (
               <Text style={[styles.font, { fontSize: 20 }]}>
                 Set a date

@@ -55,23 +55,23 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Agenda"
-        component={AgendaScreen}
-        options={{
-          title: t("Agenda"),
-          tabBarIcon: ({ focused, color }: any) => (
-            <MaterialIcon name="calendar-month" size={25} color={focused ? color : theme.colors.textPaper}
-            />
-          )
-        }}
-      />
-      <Tab.Screen
         name="ToDo"
         component={ToDoListScreen}
         options={{
           title: t("To Do"),
           tabBarIcon: ({ focused, color }: any) => (
             <MaterialIcon name="format-list-checks" size={25} color={focused ? color : theme.colors.textPaper}
+            />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Agenda"
+        component={AgendaScreen}
+        options={{
+          title: t("Agenda"),
+          tabBarIcon: ({ focused, color }: any) => (
+            <MaterialIcon name="calendar-month" size={25} color={focused ? color : theme.colors.textPaper}
             />
           )
         }}

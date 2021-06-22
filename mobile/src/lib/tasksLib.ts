@@ -10,6 +10,11 @@ export const getTasks = async(user: FirebaseAuthTypes.User | null) => {
   const getSubjectsInfo = await tasksRef.get()
 
   getSubjectsInfo.forEach((doc) => {
+    const data = doc.data()
+    if (data.setTo) {
+      data.setTo = data.setTo.toDate()  
+    }
+
     tasks.push(doc.data())
   })
 
