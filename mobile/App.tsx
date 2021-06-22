@@ -6,6 +6,7 @@ import Router from './src/services/Router'
 import { AuthProvider } from './src/services/AuthProvider'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { SubjectProvider } from './src/services/SubjectsProvider'
+import { TasksProvider } from './src/services/TasksProvider'
 import SplashScreen from 'react-native-splash-screen'
 import { ThemeProvider } from './src/services/ThemeProvider'
 import { GOOGLE_WEBCLIENT_ID } from '@env'
@@ -36,7 +37,9 @@ const App = () => {
     <AuthProvider>
       <ThemeProvider>
         <SubjectProvider>
-          <Router />
+          <TasksProvider>
+            <Router />
+          </TasksProvider>
         </SubjectProvider>
       </ThemeProvider>
     </AuthProvider>

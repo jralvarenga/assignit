@@ -4,6 +4,7 @@ import { DefaultTheme as NavigatorTheme, DarkTheme as NavigatorDarkTheme } from 
 declare global {
   namespace ReactNativePaper {
     interface ThemeColors {
+      accent: string
       textPaper: string
       inactivePrimary: string
     }

@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { Text, Button, Portal, TextInput, Dialog, useTheme } from 'react-native-paper'
+import ColorPicker from '../components/ColorPicker'
 import { createSubjectId } from '../hooks/createId'
 import { Subject } from '../interface/interfaces'
 
@@ -127,27 +128,11 @@ const NewSubjectScreen = ({ navigation }: any) => {
           >{t("Continue")}</Button>
         </View>
 
-        <Portal>
-          <Dialog visible={showColorPicker} onDismiss={() => setShowColorPicker(false)}>
-            <Dialog.Title style={[styles.font, {fontSize: 25, letterSpacing: 0}]}>
-              {t("Choose a color")}
-            </Dialog.Title>
-            <Dialog.Content>
-              <View style={styles.bottomSheet}>
-                <View style={styles.availableColors}>
-                  {colors.map((picker, i) => (
-                    <TouchableOpacity
-                      key={i}
-                      onPress={() => subjectColorHandler(picker)}
-                      activeOpacity={0.7}
-                      style={[styles.colorChooser, {backgroundColor: picker.color}]}
-                    ></TouchableOpacity>
-                  ))}
-                </View>
-              </View>
-            </Dialog.Content>
-          </Dialog>
-        </Portal>
+        <ColorPicker
+          visible={showColorPicker}
+          setVisible={setShowColorPicker}
+          colorPickerHandler={subjectColorHandler}
+        />
 
       </View>
     </ScrollView>
@@ -159,20 +144,6 @@ const styleSheet = (theme: any) => StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: theme.colors.background,
-  },
-  bottomSheetHeader: {
-    backgroundColor: theme.colors.surface,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    height: 80
-  },
-  bottomSheet: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
   },
   font: {
     fontFamily: 'poppins-bold',
@@ -207,15 +178,6 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginRight: '3%',
     marginBottom: '10%',
     elevation: 0,
-  },
-  availableColors: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    marginTop: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
   },
 })
 
