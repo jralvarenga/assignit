@@ -21,11 +21,11 @@ const ToDoListScreen = () => {
   const user = auth().currentUser
   const [refreshing, setRefreshing] = useState(false)
   const { tasks, render, setRender, setTasks, getTasksHandler }: TasksProvider = useTasks()
-  const [doneTasks, setDoneTasks] = useState<any[]>([])
-  const [pendingTasks, setPendingTasks] = useState<any[]>([])
+  const [doneTasks, setDoneTasks] = useState<Task[]>([])
+  const [pendingTasks, setPendingTasks] = useState<Task[]>([])
   const [showColorPicker, setShowColorPicker] = useState(false)
   const [newTaskTitle, setNewTaskTitle] = useState("")
-  const [newTaskColor, setNewTaskColor] = useState({ id: "12", color: "text" },)
+  const [newTaskColor, setNewTaskColor] = useState({ id: "12", color: "text" })
   const [createNewTaskLoad, setCreateNewTaskLoad] = useState(false)
   const [showRemindMe, setShowRemindMe] = useState(false)
   const [showReminderMenu, setShowReminderMenu] = useState(false)
@@ -87,15 +87,14 @@ const ToDoListScreen = () => {
   }
 
   const changeTaskStatus = async(id: string, status: boolean) => {
-    const taskIndex = tasks!.map((task) => task.id ).indexOf(id)
-    tasks![taskIndex].done = status
     if (status == true) {
       const pendingTaskIndex = pendingTasks!.map((task) => task.id ).indexOf(id)
-      doneTasks.push(tasks![taskIndex])
+      doneTasks.push(pendingTasks![pendingTaskIndex])
       setDoneTasks(doneTasks)
 
       pendingTasks.splice(pendingTaskIndex, 1)
       setPendingTasks(pendingTasks)
+      //setRender!(render! + 1)
     } else {
       const doneTaskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
       doneTasks![doneTaskIndex].done = status
@@ -104,7 +103,9 @@ const ToDoListScreen = () => {
 
       doneTasks.splice(doneTaskIndex, 1)
       setDoneTasks(doneTasks)
+      //setRender!(render! + 1)
     }
+    setRender!(render! + 1)
 
     try {
       await setTaskStatus(id, status, user)
@@ -292,8 +293,6 @@ const ToDoListScreen = () => {
           title={selectedTask?.title!}
           body={
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Text style={styles.font}>Is done:</Text>
-              <Text style={styles.font}>{selectedTask?.done ? 'Yes' : 'No'}</Text>
             </View>
           }
           primaryLabel={
