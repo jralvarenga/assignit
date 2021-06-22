@@ -29,7 +29,7 @@ const colors = [
 ]
 
 const ToDoListScreen = () => {
-  const theme = useTheme()
+  const theme: any = useTheme()
   const styles = styleSheet(theme)
   const user = auth().currentUser
   const { tasks, render, setRender, setTasks }: TasksProvider = useTasks()
@@ -101,14 +101,15 @@ const ToDoListScreen = () => {
       const pendingTaskIndex = pendingTasks!.map((task) => task.id ).indexOf(id)
       doneTasks.push(tasks![taskIndex])
       setDoneTasks(doneTasks)
+
       pendingTasks.splice(pendingTaskIndex, 1)
       setPendingTasks(pendingTasks)
     } else {
       const doneTaskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
-      const taskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
-      tasks![taskIndex].done = status
-      pendingTasks.push(tasks![taskIndex])
+      doneTasks![doneTaskIndex].done = status
+      pendingTasks.push(doneTasks![doneTaskIndex])
       setPendingTasks(pendingTasks)
+
       doneTasks.splice(doneTaskIndex, 1)
       setDoneTasks(doneTasks)
     }
@@ -214,10 +215,12 @@ const ToDoListScreen = () => {
                     style={styles.taskContainer}
                   ><>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <Checkbox
+                      <Checkbox.Item
+                        label=""
                         onPress={() => changeTaskStatus(task.id, true)}
                         status={task.done ? 'checked' : 'unchecked'}
-                        theme={{ colors: { primary: task.color.color } }}
+                        style={{ borderRadius: 20 }}
+                        color={task.color.color == 'text' ? theme.colors.text : task.color.color}
                       />
                       <Text style={[styles.font, { color: task.color.color == 'text' ? theme.colors.text : task.color.color, marginLeft: 15, fontSize: 20 }]}>
                         {task.title}
@@ -244,10 +247,12 @@ const ToDoListScreen = () => {
                     style={styles.taskContainer}
                   ><>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <Checkbox
+                      <Checkbox.Item
+                        label=""
                         onPress={() => changeTaskStatus(task.id, false)}
                         status={task.done ? 'checked' : 'unchecked'}
-                        theme={{ colors: { primary: task.color.color == 'text' ? theme.colors.text : task.color.color } }}
+                        style={{ borderRadius: 20 }}
+                        color={task.color.color == 'text' ? theme.colors.text : task.color.color}
                       />
                       <Text style={[styles.font, { color: task.color.color == 'text' ? theme.colors.text : task.color.color, marginLeft: 15, fontSize: 20 }]}>
                         {task.title}
