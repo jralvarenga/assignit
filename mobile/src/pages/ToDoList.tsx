@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth'
 import { StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
-import { Text, IconButton, TextInput, Checkbox, TouchableRipple, Button, Dialog, Portal, ActivityIndicator, Menu } from 'react-native-paper'
+import { Text, IconButton, TextInput, Checkbox, TouchableRipple, Button, ActivityIndicator, Menu } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ColorPicker from '../components/ColorPicker'
@@ -20,7 +20,8 @@ const ToDoListScreen = () => {
   const styles = styleSheet(theme)
   const user = auth().currentUser
   const [refreshing, setRefreshing] = useState(false)
-  const { tasks, render, setRender, setTasks, getTasksHandler }: TasksProvider = useTasks()
+  const [render, setRender] = useState(0)
+  const { tasks, setTasks, getTasksHandler }: TasksProvider = useTasks()
   const [doneTasks, setDoneTasks] = useState<Task[]>([])
   const [pendingTasks, setPendingTasks] = useState<Task[]>([])
   const [showColorPicker, setShowColorPicker] = useState(false)
@@ -34,12 +35,13 @@ const ToDoListScreen = () => {
   const [selectedTask, setSelectedTask] = useState<Task>()
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackbarText, setSnackbarText] = useState('')
+  console.log(pendingTasks)
 
   useEffect(() => {
     const [pending, done] = filterTasks(tasks!)
     setDoneTasks(done)
     setPendingTasks(pending)
-  }, [render, tasks])
+  }, [tasks, render])
 
   const taskColorHandler = (color: any) => {
     setNewTaskColor(color)
@@ -87,25 +89,9 @@ const ToDoListScreen = () => {
   }
 
   const changeTaskStatus = async(id: string, status: boolean) => {
-    if (status == true) {
-      const pendingTaskIndex = pendingTasks!.map((task) => task.id ).indexOf(id)
-      doneTasks.push(pendingTasks![pendingTaskIndex])
-      setDoneTasks(doneTasks)
-
-      pendingTasks.splice(pendingTaskIndex, 1)
-      setPendingTasks(pendingTasks)
-      //setRender!(render! + 1)
-    } else {
-      const doneTaskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
-      doneTasks![doneTaskIndex].done = status
-      pendingTasks.push(doneTasks![doneTaskIndex])
-      setPendingTasks(pendingTasks)
-
-      doneTasks.splice(doneTaskIndex, 1)
-      setDoneTasks(doneTasks)
-      //setRender!(render! + 1)
-    }
-    setRender!(render! + 1)
+    const taskIndex = tasks!.map((task) => task.id ).indexOf(id)
+    tasks![taskIndex].done = status
+    setRender(render + 1)
 
     try {
       await setTaskStatus(id, status, user)
@@ -113,7 +99,6 @@ const ToDoListScreen = () => {
       setSnackbarText('An error has happen')
       setShowSnackbar(true)
     }
-    setCreateNewTaskLoad(false)
   }
 
   const deleteTaskHandler = async(id: string, state: boolean) => {
@@ -143,7 +128,6 @@ const ToDoListScreen = () => {
   const refreshScreen = useCallback( async() => {
     setRefreshing(true)
     await getTasksHandler!()
-    setRender!(render! + 1)
     setRefreshing(false)
   }, [])
 
