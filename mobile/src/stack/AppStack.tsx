@@ -20,6 +20,7 @@ import AccountScreen from '../pages/Account'
 import { useTheme } from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
 import ToDoListScreen from '../pages/ToDoList'
+import CreateNewTask from '../pages/CreateNewTask'
 
 const Stack = createStackNavigator()
 const Tab = AnimatedTabBarNavigator()
@@ -102,7 +103,7 @@ const AppStack = () => {
 
   const headerTitleStyle = {
     fontFamily: 'poppins-bold',
-    fontSize: 28
+    fontSize: 28,
   }
 
   return (
@@ -219,6 +220,19 @@ const AppStack = () => {
         component={AccountScreen}
         options={{
           headerShown: false,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalPresentationIOS
+        }}
+      />
+
+      {/* Create task screen */}
+      <Stack.Screen
+        name="Create task"
+        component={CreateNewTask}
+        options={{
+          headerShown: true,
+          headerLeft: () => null,
+          headerTitleStyle: { ...headerTitleStyle },
           gestureEnabled: true,
           ...TransitionPresets.ModalPresentationIOS
         }}

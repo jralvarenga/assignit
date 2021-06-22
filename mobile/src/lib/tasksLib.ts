@@ -81,12 +81,11 @@ export const setTaskReminder = (reminderType: string, task: Task) => {
   const reminderTime: number = getReminderTime(reminderType)  
 
   const notiBody = {
-    title: 'You have a pending task',
-    body: `You have to do ${task.title}`,
+    title: `${task.title}`,
+    body: `You have a reminder for this task`,
     date: currentDate
   }
 
-  //const id = reminderNoti(reminderTime, notiBody)
-  const id = 1
+  const id = reminderNoti(reminderTime, notiBody)
   return id
 }
