@@ -33,7 +33,7 @@ const TaskContainer = ({ tasks, showTask, changeStatus }: TaskContainerProps) =>
             onPress={() => showTask(task)}
             style={styles.taskContainer}
           ><>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ width: '70%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <Checkbox.Item
                 label=""
                 onPress={() => changeStatus(task.id, !task.done)}
