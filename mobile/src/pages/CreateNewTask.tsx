@@ -104,7 +104,7 @@ const CreateNewTask = ({ navigation }: any) => {
           style={[styles.addButton, { backgroundColor: newTaskColor.color == 'text' ? theme.colors.primary : newTaskColor.color, marginRight: 15 }]}
           onPress={createTaskHandler}
           labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background, width: 100 }]}
-        >Add</Button>
+        >{t('Add')}</Button>
       ),
     })
   })
@@ -119,7 +119,7 @@ const CreateNewTask = ({ navigation }: any) => {
               mode="outlined"
               value={newTaskTitle}
               onChangeText={(value) => setNewTaskTitle(value)}
-              label="Add task title"
+              label={t("Add task title")}
               style={{ width: '80%' }}
               theme={{ colors: { primary: newTaskColor.color == 'text' ? theme.colors.text : newTaskColor.color } }}
             />
@@ -135,7 +135,7 @@ const CreateNewTask = ({ navigation }: any) => {
             {taskDate ? (
               <View style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text style={[styles.font, {fontSize: 20}]}>
-                  To {dateString(taskDate, t)}
+                  {t('Set task to', { date: dateString(taskDate, t) })}
                 </Text>
                 <IconButton
                   icon="cancel"
@@ -147,7 +147,7 @@ const CreateNewTask = ({ navigation }: any) => {
               </View>
             ) : (
               <Text style={[styles.font, { fontSize: 20 }]}>
-                Set a date
+                {t('Set a date')}
               </Text>
             )}
           </TouchableOpacity>
@@ -159,20 +159,20 @@ const CreateNewTask = ({ navigation }: any) => {
               anchor={
                 reminderType ? (
                   <Text onPress={() => setShowReminderType(true)} style={[styles.font, {fontSize: 20}]}>
-                    Remind me every {reminderType}
+                    {t("Remind me every time", { reminder: t(reminderType) })}
                   </Text>
                 ) : (
                   <Text onPress={() => setShowReminderType(true)} style={[styles.font, { fontSize: 20, marginRight: 20 }]}>
-                    Remind task
+                    {t('Remind task')}
                   </Text>
                 )
               }
             >
-              <Menu.Item onPress={() => setReminderTypeHandler(undefined)} title="None" />
-              <Menu.Item onPress={() => setReminderTypeHandler('Hour')} title="Hour" />
-              <Menu.Item onPress={() => setReminderTypeHandler('Day')} title="Day" />
-              <Menu.Item onPress={() => setReminderTypeHandler('Week')} title="Week" />
-              <Menu.Item onPress={() => setReminderTypeHandler('Month')} title="Month" />
+              <Menu.Item onPress={() => setReminderTypeHandler(undefined)} title={t("None")} />
+              <Menu.Item onPress={() => setReminderTypeHandler('Hour')} title={t("Hour")} />
+              <Menu.Item onPress={() => setReminderTypeHandler('Day')} title={t("Day")} />
+              <Menu.Item onPress={() => setReminderTypeHandler('Week')} title={t("Week")} />
+              <Menu.Item onPress={() => setReminderTypeHandler('Month')} title={t("Month")} />
             </Menu>
           </View>
 

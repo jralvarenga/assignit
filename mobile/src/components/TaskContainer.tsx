@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Animate } from 'react-native-entrance-animation'
 import { Checkbox, TouchableRipple, Text, useTheme } from 'react-native-paper'
@@ -13,13 +14,14 @@ interface TaskContainerProps {
 }
 
 const TaskContainer = ({ tasks, showTask, changeStatus }: TaskContainerProps) => {
+  const { t } = useTranslation()
   const theme: any = useTheme()
   const styles = styleSheet(theme)
 
   return (
     tasks.length == 0 ? (
       <Text style={[styles.font, {color: theme.colors.textPaper, marginTop: 15}]}>
-        You don't have any task here😢
+        {t("You don't have any task here")}
       </Text>
     ) : (
       <View style={{ width: '100%' }}>

@@ -158,6 +158,7 @@ const AppStack = () => {
         name="Create task"
         component={CreateNewTask}
         options={{
+          title: t('Create task'),
           headerShown: true,
           headerLeft: () => null,
           headerTitleStyle: { ...headerTitleStyle },

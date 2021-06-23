@@ -79,6 +79,7 @@ export default {
   "Assignment all day datetime": "{{date}}, all day",
   "Next week": "Next week",
   "Don't have anything pending": "Don't have anything pending",
+  "Have pending tasks": "You have {{tasks}} pending tasks",
 
   // Agenda screen
   "No Assigments this day": "No Assigments this day",
@@ -173,4 +174,25 @@ export default {
   // Screen 4
   "Start now": "Start now",
   "Sign in with": "Sign in with",
+
+  // ToDo list screen
+  "To Do": "To Do",
+  "To Do List": "To Do List",
+  "Done tasks": "Done",
+  "Tasks": "Tasks",
+  "Finished task on": "Finished on {{date}}",
+  "Set task to": "Set to {{date}}",
+  "Remind me every time": "Remind me every {{reminder}}",
+
+  // Create task screen
+  "Create task": "Create task",
+  "Add task title": "Add task title",
+  "Set a date": "Set a date",
+  "Remind task": "Remind task",
+  "You don't have any task here": "You don't have any task here😢",
+  "Hour": "Hour",
+  "Day": "Day",
+  "Week": "Week",
+  "Month": "Month",
+  "None": "None"
 }

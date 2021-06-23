@@ -123,11 +123,11 @@ const HomeScreen = ({ navigation }: any) => {
                     style={{ marginTop: 0, marginBottom: 10 }}
                   ><>
                     <Text style={[styles.font, {marginLeft: 15, fontSize: 25}]}>
-                      To Do List
+                      {t('To Do List')}
                     </Text>
                     <Animate fade delay={100}>
                       <Text style={[styles.font, {marginLeft: 15, fontSize: 16}]}>
-                        You have {pendingTasks.length} pending tasks
+                        {t('Have pending tasks', { tasks: pendingTasks.length })}
                       </Text>
                     </Animate>
                   </></TouchableRipple>

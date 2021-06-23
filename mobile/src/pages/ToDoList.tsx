@@ -104,7 +104,7 @@ const ToDoListScreen = ({ navigation }: any) => {
         
         <View style={styles.titleContainer}>
           <Text style={[styles.font, {fontSize: 32}]}>
-            To Do List
+            {t('To Do List')}
           </Text>
           <IconButton
             icon='plus'
@@ -122,7 +122,7 @@ const ToDoListScreen = ({ navigation }: any) => {
             onPress={() => setNavigatorScreen('tasks')}
           >
             <Text style={[styles.font, {color: theme.colors.textPaper}, navigatorScreen == 'tasks' && styles.activeNavigatorText]}>
-              Tasks
+              {t('Tasks')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -131,7 +131,7 @@ const ToDoListScreen = ({ navigation }: any) => {
             onPress={() => setNavigatorScreen('done')}
           >
             <Text style={[styles.font, {color: theme.colors.textPaper}, navigatorScreen == 'done' && styles.activeNavigatorText]}>
-              Done
+              {t('Done tasks')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -155,21 +155,21 @@ const ToDoListScreen = ({ navigation }: any) => {
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 {selectedTask?.done && (
                   <Text style={styles.font}>
-                    Finished on {dateString(selectedTask!.doneDate!, t)}
+                    {t('Finished task on', { date: dateString(selectedTask!.doneDate!, t) })}
                   </Text>
                 )}
               </View>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
                 {selectedTask?.setTo && (
                   <Text style={styles.font}>
-                    Set to {dateString(selectedTask!.setTo!, t)}
+                    {t('Set task to', { date: dateString(selectedTask!.setTo!, t) })}
                   </Text>
                 )}
               </View>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
                 {selectedTask?.reminder && (
                   <Text style={styles.font}>
-                    Remind me every {selectedTask?.reminder}
+                    {t('Remind me every time', { reminder: t(selectedTask?.reminder) })}
                   </Text>
                 )}
               </View>
@@ -181,7 +181,7 @@ const ToDoListScreen = ({ navigation }: any) => {
               style={[styles.actionButtons, {marginLeft: 15}]}
               labelStyle={[styles.font, {fontSize: 16, color: theme.colors.accent, letterSpacing: 0}]}
               onPress={() => deleteTaskHandler(selectedTask!.id, selectedTask!.done)}
-            >Delete</Button>
+            >{t('Delete')}</Button>
           }
         />
 
