@@ -12,6 +12,7 @@ import { Animate } from 'react-native-entrance-animation'
 import { useTasks } from '../services/TasksProvider'
 import AppDialog from '../components/AppDialog'
 import AppSnackbar from '../components/Snackbar'
+import TaskContainer from '../components/TaskContainer'
 
 const ToDoListScreen = ({ navigation }: any) => {
   const theme: any = useTheme()
@@ -20,6 +21,7 @@ const ToDoListScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false)
   const [render, setRender] = useState(0)
   const { tasks, setTasks, getTasksHandler }: TasksProvider = useTasks()
+  const [navigatorScreen, setNavigatorScreen] = useState('tasks')
   const [doneTasks, setDoneTasks] = useState<Task[]>([])
   const [pendingTasks, setPendingTasks] = useState<Task[]>([])
   const [showTask, setShowTask] = useState(false)
@@ -41,6 +43,7 @@ const ToDoListScreen = ({ navigation }: any) => {
   const changeTaskStatus = async(id: string, status: boolean) => {
     const taskIndex = tasks!.map((task) => task.id ).indexOf(id)
     tasks![taskIndex].done = status
+    //setTasks!(tasks![taskIndex])
     setRender(render + 1)
 
     try {
@@ -104,79 +107,35 @@ const ToDoListScreen = ({ navigation }: any) => {
           />
         </View>
 
-        <View style={styles.listContainer}>
-          {pendingTasks!.length == 0 && doneTasks.length == 0 ? (
-            <Text style={[styles.font, {color: theme.colors.textPaper, marginTop: 15}]}>
-              You don't have any task now😢
+        <View style={styles.navigator}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[styles.navigatorButton, navigatorScreen == 'tasks' && {backgroundColor: theme.colors.inactivePrimary}]}
+            onPress={() => setNavigatorScreen('tasks')}
+          >
+            <Text style={[styles.font, {color: theme.colors.textPaper}, navigatorScreen == 'tasks' && styles.activeNavigatorText]}>
+              Tasks
             </Text>
-          ) : (
-            <View>
-              {/* PENDING TASKS */}
-              {pendingTasks.length != 0 && (
-                <Text style={[styles.font, styles.tasksTitles]}>Tasks</Text>
-              )}
-              <View style={{ width: '100%' }}>
-                {pendingTasks.map((task: Task, i: number) => (
-                  <Animate fade delay={i * 10} key={i}>
-                  <TouchableRipple
-                    borderless
-                    rippleColor={theme.colors.card}
-                    onPress={() => showTaskHandler(task)}
-                    style={styles.taskContainer}
-                  ><>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <Checkbox.Item
-                        label=""
-                        onPress={() => changeTaskStatus(task.id, true)}
-                        status={task.done ? 'checked' : 'unchecked'}
-                        style={{ borderRadius: 20 }}
-                        color={task.color.color == 'text' ? theme.colors.text : task.color.color}
-                      />
-                      <Text style={[styles.font, { color: task.color.color == 'text' ? theme.colors.text : task.color.color, marginLeft: 15, fontSize: 20 }]}>
-                        {task.title}
-                      </Text>
-                    </View>
-                    <TouchableOpacity activeOpacity={0.7}>
-                      <MaterialIcons name="keyboard-arrow-up" size={30} color={theme.colors.text} />
-                    </TouchableOpacity>
-                  </></TouchableRipple>
-                  </Animate>
-                ))}
-              </View>
-              {/* DONE TASKS */}
-              {doneTasks.length != 0 && (
-                <Text style={[styles.font, styles.tasksTitles]}>Done</Text>
-              )}
-              <View style={{ width: '100%' }}>
-                {doneTasks.map((task: Task, i: number) => (
-                  <Animate fade delay={i * 10} key={i}>
-                  <TouchableRipple
-                    borderless
-                    rippleColor={theme.colors.card}
-                    onPress={() => showTaskHandler(task)}
-                    style={styles.taskContainer}
-                  ><>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <Checkbox.Item
-                        label=""
-                        onPress={() => changeTaskStatus(task.id, false)}
-                        status={task.done ? 'checked' : 'unchecked'}
-                        style={{ borderRadius: 20 }}
-                        color={task.color.color == 'text' ? theme.colors.text : task.color.color}
-                      />
-                      <Text style={[styles.font, { color: task.color.color == 'text' ? theme.colors.text : task.color.color, marginLeft: 15, fontSize: 20 }]}>
-                        {task.title}
-                      </Text>
-                    </View>
-                    <TouchableOpacity activeOpacity={0.7}>
-                      <MaterialIcons name="keyboard-arrow-up" size={30} color={theme.colors.text} />
-                    </TouchableOpacity>
-                  </></TouchableRipple>
-                  </Animate>
-                ))}
-              </View>
-            </View>
-          )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[styles.navigatorButton, navigatorScreen == 'done' && {backgroundColor: theme.colors.inactivePrimary}]}
+            onPress={() => setNavigatorScreen('done')}
+          >
+            <Text style={[styles.font, {color: theme.colors.textPaper}, navigatorScreen == 'done' && styles.activeNavigatorText]}>
+              Done
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.listContainer}>
+          <View>
+            <TaskContainer
+              tasks={navigatorScreen == 'tasks' ? pendingTasks : doneTasks}
+              changeStatus={changeTaskStatus}
+              showTask={showTaskHandler}
+            />
+          </View>
         </View>
 
         <AppDialog
@@ -229,32 +188,25 @@ const styleSheet = (theme: Theme | any) => StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  addNewContainer: {
+  navigator: {
     width: '95%',
+    marginTop: 15,
+    marginBottom: 15,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 15
+    justifyContent: 'space-around'
   },
-  taskNameContainer: {
-    width: '70%',
+  navigatorButton: {
+    width: 130,
+    height: 45,
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100
   },
-  colorChooser: {
-    width: 47,
-    height: 47,
-    borderRadius: 100,
-    marginBottom: 5,
-    borderColor: theme.colors.surface
-  },
-  addNewTask: {
-    width: 120,
-    height: 40,
-    elevation: 0,
+  activeNavigatorText: {
+    color: theme.colors.primary,
   },
   listContainer: {
     width: '95%',
@@ -263,15 +215,6 @@ const styleSheet = (theme: Theme | any) => StyleSheet.create({
     fontSize: 28,
     marginTop: 10,
     marginBottom: 15
-  },
-  taskContainer: {
-    width: '100%',
-    height: 70,
-    borderRadius: 20,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
   },
   showTaskContainer: {
     width: '95%',
