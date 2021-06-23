@@ -2,19 +2,21 @@ import { useTheme } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth'
 import { StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
-import { Text, IconButton, Checkbox, TouchableRipple, Button } from 'react-native-paper'
+import { Text, IconButton, Button } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Task, TasksProvider } from '../interface/interfaces'
 import { deleteTask, filterTasks, setTaskStatus } from '../lib/tasksLib'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { Animate } from 'react-native-entrance-animation'
 import { useTasks } from '../services/TasksProvider'
 import AppDialog from '../components/AppDialog'
 import AppSnackbar from '../components/Snackbar'
 import TaskContainer from '../components/TaskContainer'
+import { dateString } from '../hooks/useDateTime'
+import { useTranslation } from 'react-i18next'
+import { cancelNoti } from '../lib/notifications'
 
 const ToDoListScreen = ({ navigation }: any) => {
+  const { t } = useTranslation()
   const theme: any = useTheme()
   const styles = styleSheet(theme)
   const user = auth().currentUser
@@ -43,7 +45,7 @@ const ToDoListScreen = ({ navigation }: any) => {
   const changeTaskStatus = async(id: string, status: boolean) => {
     const taskIndex = tasks!.map((task) => task.id ).indexOf(id)
     tasks![taskIndex].done = status
-    //setTasks!(tasks![taskIndex])
+    tasks![taskIndex].doneDate = status == true ? new Date() : undefined
     setRender(render + 1)
 
     try {
@@ -55,6 +57,7 @@ const ToDoListScreen = ({ navigation }: any) => {
   }
 
   const deleteTaskHandler = async(id: string, state: boolean) => {
+    const index = tasks!.map((task) => task.id ).indexOf(id)
     if (state == true) {
       const taskIndex = doneTasks!.map((task) => task.id ).indexOf(id)
       doneTasks.splice(taskIndex, 1)
@@ -65,6 +68,11 @@ const ToDoListScreen = ({ navigation }: any) => {
       setPendingTasks(pendingTasks)
     }
     setShowTask(false)
+    const task = tasks![index]
+    if (task.notiId && task.notiId != 0) {
+      console.log('Deleled noti')
+      cancelNoti(task.notiId) 
+    }
     try {
       await deleteTask(id, user)
     } catch (error) {
@@ -143,7 +151,28 @@ const ToDoListScreen = ({ navigation }: any) => {
           setVisible={setShowTask}
           title={selectedTask?.title!}
           body={
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                {selectedTask?.done && (
+                  <Text style={styles.font}>
+                    Finished on {dateString(selectedTask!.doneDate!, t)}
+                  </Text>
+                )}
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
+                {selectedTask?.setTo && (
+                  <Text style={styles.font}>
+                    Set to {dateString(selectedTask!.setTo!, t)}
+                  </Text>
+                )}
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
+                {selectedTask?.reminder && (
+                  <Text style={styles.font}>
+                    Remind me every {selectedTask?.reminder}
+                  </Text>
+                )}
+              </View>
             </View>
           }
           primaryLabel={

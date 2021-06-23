@@ -14,6 +14,9 @@ export const getTasks = async(user: FirebaseAuthTypes.User | null) => {
     if (data.setTo) {
       data.setTo = data.setTo.toDate()  
     }
+    if (data.doneDate) {
+      data.doneDate = data.doneDate.toDate()  
+    }
 
     tasks.push(doc.data())
   })
@@ -33,7 +36,8 @@ export const setTaskStatus = async(taskId: string, state: boolean, user: Firebas
   const tasksRef = firestore().collection('data').doc(user?.uid).collection('tasks').doc(taskId)
 
   await tasksRef.update({
-    done: state
+    done: state,
+    doneDate: state == true ? new Date() : undefined
   })
 }
 

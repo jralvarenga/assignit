@@ -57,7 +57,12 @@ const CreateNewTask = ({ navigation }: any) => {
       done: false,
       notiId: 0
     }
-    if (taskDate) {
+    if (reminderType) {
+      const notiId = setTaskReminder(reminderType, taskData)
+      taskData.notiId = notiId
+      taskData.reminder = reminderType
+    }
+    if (taskDate && !reminderType) {
       const notiId = createNotiId()
       const notiBody = {
         date: taskDate,
@@ -70,11 +75,6 @@ const CreateNewTask = ({ navigation }: any) => {
       localProgamableNoti(notiBody)
       taskData.notiId = notiId
       taskData.setTo = taskDate
-    }
-    if (reminderType) {
-      const notiId = setTaskReminder(reminderType, taskData)
-      taskData.notiId = notiId
-      taskData.reminder = reminderType
     }
     try {
       await addNewTask(taskData, user)
@@ -103,7 +103,7 @@ const CreateNewTask = ({ navigation }: any) => {
           loading={createTaskLoad}
           style={[styles.addButton, { backgroundColor: newTaskColor.color == 'text' ? theme.colors.primary : newTaskColor.color, marginRight: 15 }]}
           onPress={createTaskHandler}
-          labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background}]}
+          labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background, width: 100 }]}
         >Add</Button>
       ),
     })
