@@ -4,13 +4,15 @@ import { StyleSheet, View, ScrollView, TouchableOpacity, Dimensions, RefreshCont
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text, Button, ActivityIndicator, TouchableRipple, useTheme } from 'react-native-paper'
 import { useSubjects } from '../hooks/useSubjects'
-import { Subject, Assignment, SubjectProvider } from '../interface/interfaces'
+import { Subject, Assignment, SubjectProvider, TasksProvider, Task } from '../interface/interfaces'
 import { dateString, getGreetingMessage, timeString } from '../hooks/useDateTime'
 import { useSubjectProvider } from '../services/SubjectsProvider'
 import { Animate } from 'react-native-entrance-animation'
 import LottieView from 'lottie-react-native'
 import { colorIsLightOrDark } from '../hooks/colorIsLightOrDark'
 import AppSnackbar from '../components/Snackbar'
+import { useTasks } from '../services/TasksProvider'
+import { filterTasks } from '../lib/tasksLib'
 
 const windowHeight = Dimensions.get('window').height
 
@@ -31,9 +33,11 @@ const HomeScreen = ({ navigation }: any) => {
   const styles = styleSheet(theme)
   const currentDate = new Date()
   const { loading, subjects, refreshSubjects }: SubjectProvider = useSubjectProvider()
+  const { tasks }: TasksProvider = useTasks()
   const greetingMessage: string = getGreetingMessage(t)
   const [fullSubjects, setFullSubjects] = useState<Subject[]>([])
   const [userSubjects, assignments, nextWeekAssignments, pendingAssignments, setSubjects, setAssignments]: any = useSubjects()
+  const [pendingTasks, setPendingTasks] = useState<Task[]>([])
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
@@ -41,7 +45,9 @@ const HomeScreen = ({ navigation }: any) => {
     setFullSubjects(subjects!)
     setSubjects(subjects)
     setAssignments(subjects)
-  }, [subjects])
+    const [pending, done] = filterTasks(tasks!)
+    setPendingTasks(pending)
+  }, [subjects, tasks])
 
   const goToSubject = (id: string) => {
     const index = fullSubjects.map((subject: Subject) => subject.id ).indexOf(id)
@@ -106,6 +112,27 @@ const HomeScreen = ({ navigation }: any) => {
           ) : (
           
             <View style={styles.contentContainer}>
+
+              {/* TODO List SECTION */}
+              {pendingTasks.length != 0 && (
+                <Animate fade delay={50}>
+                  <TouchableRipple
+                    onPress={() => navigation.navigate('ToDo')}
+                    borderless
+                    rippleColor={theme.colors.surface}
+                    style={{ marginTop: 0, marginBottom: 10 }}
+                  ><>
+                    <Text style={[styles.font, {marginLeft: 15, fontSize: 25}]}>
+                      To Do List
+                    </Text>
+                    <Animate fade delay={100}>
+                      <Text style={[styles.font, {marginLeft: 15, fontSize: 16}]}>
+                        You have {pendingTasks.length} pending tasks
+                      </Text>
+                    </Animate>
+                  </></TouchableRipple>
+                </Animate>
+              )}
               
               {/* SUBJECTS SECTION */}
               {userSubjects.length == 0 ? (
@@ -286,7 +313,7 @@ const HomeScreen = ({ navigation }: any) => {
               )}
             </View>
           )}
-        
+
           <AppSnackbar
             visible={showSnackbar}
             setVisible={setShowSnackbar}
