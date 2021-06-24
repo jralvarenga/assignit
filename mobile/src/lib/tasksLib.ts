@@ -10,6 +10,14 @@ export const getTasks = async(user: FirebaseAuthTypes.User | null) => {
   const getSubjectsInfo = await tasksRef.get()
 
   getSubjectsInfo.forEach((doc) => {
+    const data = doc.data()
+    if (data.setTo) {
+      data.setTo = data.setTo.toDate()  
+    }
+    if (data.doneDate) {
+      data.doneDate = data.doneDate.toDate()  
+    }
+
     tasks.push(doc.data())
   })
 
@@ -28,7 +36,8 @@ export const setTaskStatus = async(taskId: string, state: boolean, user: Firebas
   const tasksRef = firestore().collection('data').doc(user?.uid).collection('tasks').doc(taskId)
 
   await tasksRef.update({
-    done: state
+    done: state,
+    doneDate: state == true ? new Date() : undefined
   })
 }
 
@@ -81,12 +90,11 @@ export const setTaskReminder = (reminderType: string, task: Task) => {
   const reminderTime: number = getReminderTime(reminderType)  
 
   const notiBody = {
-    title: 'You have a pending task',
-    body: `You have to do ${task.title}`,
+    title: `${task.title}`,
+    body: `You have a reminder for this task`,
     date: currentDate
   }
 
-  //const id = reminderNoti(reminderTime, notiBody)
-  const id = 1
+  const id = reminderNoti(reminderTime, notiBody)
   return id
 }

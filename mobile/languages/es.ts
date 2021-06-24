@@ -2,7 +2,7 @@ export default {
   // General
   "Keep everything organized": "Manten todo organizado",
   "Subjects": "Temas",
-  "Assignments": "Tareas",
+  "Assignments": "Actividades",
   "Cancel": "Cancelar",
   "Done": "Hecho",
   "Delete": "Borrar",
@@ -18,7 +18,7 @@ export default {
   "Settings": "Config",
   "New Subject": "Nuevo Tema",
   "Stadistics": "Estadísticas",
-  "Add Assignments": "Agregar Tarea",
+  "Add Assignments": "Agregar Actividad",
   "Create Subject": "Crear Tema",
   
   // DATETIME
@@ -68,7 +68,7 @@ export default {
   "Good afternoon": "Buenas tardes",
   "Good evening": "Buenas noches",
   "You don't have anything pending this week": "No tienes nada pendiente esta semana",
-  "Assignments this week": "Tienes {{assignments}} tareas esta semana",
+  "Assignments this week": "Tienes {{assignments}} actividades esta semana",
   "Don't have any subjects😢": "No has creado temas aún😢",
   "Create subject": "Crear tema",
   "You can go to settings and create it there": "Puedes ir a config. y crearlo ahí",
@@ -79,9 +79,10 @@ export default {
   "Assignment all day datetime": "{{date}}, todo el día",
   "Next week": "Próxima semana",
   "Don't have anything pending": "No tienes nada pendiente",
+  "Have pending tasks": "Tienes {{tasks}} tareas pendientes",
 
   // Agenda screen
-  "No Assigments this day": "No hay tareas este día",
+  "No Assigments this day": "No hay actividades este día",
 
   //Settings screen
   "Theme": "Tema",
@@ -100,7 +101,7 @@ export default {
   "Your stats": "Tus estad.",
   "Delete account": "Borrar cuenta",
   "You're about to delete your account": "Estás a punto de borrar tu cuenta",
-  "This will delete all your subjects and assignments": "Esto borrara todos tus temas y tareas",
+  "This will delete all your subjects and assignments": "Esto borrara todos tus temas y actividades",
   "Also all your Assignit data in your Google Calendar": "Así como tu datos de Assignit en tu Google Calendar",
   "¿Are you sure?": "¿Estás seguro?",
   "You will need to restar the app": "Tendrás que reiniciar la app",
@@ -115,8 +116,8 @@ export default {
   "Assignment in 24 hours": "Tienes {{assignment}} en 24 horas",
 
   // Add assignments screen
-  "Add assignments to": "Agregar tareas a {{subject}}",
-  "Assignment title": "Título de tarea *",
+  "Add assignments to": "Agregar actividades a {{subject}}",
+  "Assignment title": "Título de actividad *",
   "All day": "Todo el día",
   "Description": "Descripción",
   "Wait!!": "Alto!!",
@@ -132,9 +133,9 @@ export default {
   "Provide a subject name": "Ingresa un nombre para el tema",
 
   // Stadistics screen
-  "Start creating subjects and assigments to have stadistics": "Empieza a crear temas y tareas para tener Estadísticas",
-  "Count subjects and assignments": "Tienes {{assignments}} tareas activas de {{subjects}} temas",
-  "Count assignments in subject": "{{active}} tareas activas de {{total}}",
+  "Start creating subjects and assigments to have stadistics": "Empieza a crear temas y actividades para tener Estadísticas",
+  "Count subjects and assignments": "Tienes {{assignments}} actividades activas de {{subjects}} temas",
+  "Count assignments in subject": "{{active}} actividades activas de {{total}}",
   "You've completed this subject": "Has completado este tema",
   "% Done": "{{porcent}}% Terminado",
 
@@ -144,14 +145,14 @@ export default {
   "Go to reunion": "Ir a la reunion",
   "Tap here to edit link": "Presiona aquí para editar link",
   "Progress": "Progreso",
-  "Assignments pending": "Tienes {{assignments}} tareas pendientes",
+  "Assignments pending": "Tienes {{assignments}} actividades pendientes",
   "Assignment start at": "Empieza a las {{time)} ",
-  "Add Assignment": "Agregar Tareas",
+  "Add Assignment": "Agregar actividades",
   "Add links": "Agregar links",
   "Delete Subject": "Borrar Tema",
   "Change or add subject links": "Cambiar o agregar links de tema",
   "¿Are you sure you want to delete subject?": "Estás seguro que quieres borrar {{subject}}?",
-  "This will delete all your assignments and events from the calendar": "Eliminaras todas tus tareas y eventos de tu Google Calendar",
+  "This will delete all your assignments and events from the calendar": "Eliminaras todas tus actividades y eventos de tu Google Calendar",
   "There has been an error opening the link": "Ha ocurrido un error abriendo el link",
   "Copied link": "Link copiado",
   "Copied reunion": "Reunion copiada",
@@ -161,18 +162,39 @@ export default {
   "Skip": "Saltar",
   "Next": "Siguiente",
   // Screen 0
-  "Keep all your tasks in one place": "Mantén todas tus tareas organizadas en un solo lugar",
+  "Keep all your tasks in one place": "Mantén todas tus actividades organizadas en un solo lugar",
   "Start getting organized": "Empieza a organizarte con <0>Assignit</0>",
   // Screen 1
   "Have everything organized in groups": "Mantén todo organizado en grupos",
-  "Create a Subject to group all your Assigments or tasks": "Crea Temas para agrupar todas tus tareas",
+  "Create a Subject to group all your Assigments or tasks": "Crea Temas para agrupar todas tus actividades",
   // Screen 2
   "Check your progress in all your subjects": "Mira tu progreso en todos tus temas",
-  "An easy way to keep track on your tasks": "Una manera fácil de llevar registro de tus tareas",
+  "An easy way to keep track on your tasks": "Una manera fácil de llevar registro de tus actividades",
   // Screen 3
   "Sync with your Google Calendar": "Sincroniza con Google Calendar",
   "Sign in with Google to sync Assignit with your calendar": "Inicia sesión con Google para sincronizar <0>Assignit</0> with your calendario",
   // Screen 4
   "Start now": "Empieza ahora",
   "Sign in with": "Inicia sesión con",
+
+  // ToDo list screen
+  "To Do": "Que Hacer",
+  "To Do List": "Lista de hacer",
+  "Done tasks": "Terminado",
+  "Tasks": "Tareas",
+  "Finished task on": "Terminada el {{date}}",
+  "Set task to": "Para el {{date}}",
+  "Remind me every time": "Recuerdame cada {{reminder}}",
+
+  // Create task screen
+  "Create task": "Crear tarea",
+  "Add task title": "Agrega un título",
+  "Set a date": "Para una fecha",
+  "Remind task": "Recuerdame esta tarea",
+  "You don't have any task here": "No tienes ninguna tarea aquí😢",
+  "Hour": "Hora",
+  "Day": "Día",
+  "Week": "Semana",
+  "Month": "Mes",
+  "None": "Ninguno"
 }

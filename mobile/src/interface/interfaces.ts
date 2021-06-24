@@ -60,13 +60,15 @@ export interface ThemeProvider {
 export interface Task {
   title: string,
   id: string
-  reminder: string | false,
+  reminder?: string,
   color: {
     id: string,
     color: string
   },
   done: boolean,
-  notiId?: number
+  notiId?: number,
+  setTo?: Date,
+  doneDate?: Date
 }
 
 export interface TasksProvider {

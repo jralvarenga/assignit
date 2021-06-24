@@ -69,7 +69,7 @@ export const repeatNotis = (translator: Function) => {
   return notiId
 }
 
-export const reminderNoti = (repeatTime: number, body: any) => {
+export const reminderNoti = (repeatTime: number, body: { title: string, body: string, date: Date }) => {
   const notiId = createNotiId()
   const user: any = auth().currentUser
 
@@ -85,7 +85,7 @@ export const reminderNoti = (repeatTime: number, body: any) => {
     message: body.body,
     repeatType: 'time',
     repeatTime: repeatTime,
-    date: new Date(body.date + repeatTime)
+    date: new Date(body.date.getTime() + repeatTime)
   })
   return notiId
 }
