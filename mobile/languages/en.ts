@@ -154,6 +154,8 @@ export default {
   "¿Are you sure you want to delete subject?": "¿Are you sure you want to delete {{subject}}?",
   "This will delete all your assignments and events from the calendar": "This will delete all your assignments and events from the calendar",
   "There has been an error opening the link": "There has been an error opening the link",
+  "Copied link": "Copied link",
+  "Copied reunion": "Copied reunion",
 
   // Welcome screens
   // Index

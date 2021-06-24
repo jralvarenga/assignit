@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Seo from '../components/seo'
 import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { GetApp as GetAppIcon/*, Launch as LaunchIcon*/ } from '@material-ui/icons'
+import { GetApp as GetAppIcon, Launch as LaunchIcon } from '@material-ui/icons'
 
 import logo from '../assets/icons/app_logo.svg'
 import {
@@ -50,13 +50,15 @@ const HomePage = () => {
           <div className={classes.topContainer}>
             <img className={classes.logoIcon} src={logo} alt="" />
             <div className={classes.buttonsContainer}>
-              {/*<Button
-                disableElevation
-                color="primary"
-                style={{ textTransform: 'none', borderRadius: 10, marginRight: 30 }}
-                startIcon={<LaunchIcon />}
-              >Open
-              </Button>*/}
+              <Link to="/app" style={{ textDecoration: 'none' }}>
+                <Button
+                  disableElevation
+                  color="primary"
+                  style={{ textTransform: 'none', borderRadius: 10, marginRight: 30 }}
+                  startIcon={<LaunchIcon />}
+                >Open
+                </Button>
+              </Link>
               <Button
                 disableElevation
                 variant="contained"

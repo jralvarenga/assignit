@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { useState } from 'react'
 import { StyleSheet, View, TouchableOpacity, Dimensions, ScrollView, Linking } from 'react-native'
 import { Text, Button, Dialog, IconButton, Menu, Portal, ProgressBar, Snackbar, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
+import Clipboard from '@react-native-clipboard/clipboard'
 import { filterAssignments, timeString } from '../hooks/useDateTime'
 import { Subject, Assignment, SubjectProvider } from '../interface/interfaces'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
@@ -42,9 +43,6 @@ const SubjectScreen = ({ navigation, route }: any) => {
 
   const newLinkRef: any = useRef()
   const newReunionRef: any = useRef()
-
-  const [showError, setShowError] = useState(false)
-  const [error, setError] = useState("")
 
   useEffect(() => {
     const filteredAssignments: any = filterAssignments(subject.assignments!, t)
@@ -143,8 +141,8 @@ const SubjectScreen = ({ navigation, route }: any) => {
     try {
       await changeLinks(subject, user, 'reunion', newReunion)
     } catch (error) {
-      setError(t("There has been an error opening the link"))
-      setShowError(true)
+      setSnackbarText(t("There has been an error opening the link"))
+      setShowSnackbar(true)
     }
     setNewReunion('')
     setSubject({
@@ -153,6 +151,24 @@ const SubjectScreen = ({ navigation, route }: any) => {
     })
     setLoading(false)
     setRender!(render! + 1)
+  }
+
+  const copyLink = (type: string) => {
+    switch (type) {
+      case 'link':
+        Clipboard.setString(subject.link!)
+        setSnackbarText(t('Copied link'))
+        setShowSnackbar(true)
+      break
+      case 'reunion':
+        Clipboard.setString(subject.reunion!)
+        setSnackbarText(t('Copied reunion'))
+        setShowSnackbar(true)
+      break
+    
+      default:
+      break
+    }
   }
 
   return (
@@ -166,6 +182,7 @@ const SubjectScreen = ({ navigation, route }: any) => {
                 borderless
                 rippleColor={theme.colors.surface}
                 onPress={() => goToLink(subject.link)}
+                onLongPress={() => copyLink('link')}
                 style={[styles.linkContainer, {marginBottom: 10}]}
               >
                 <>
@@ -180,6 +197,7 @@ const SubjectScreen = ({ navigation, route }: any) => {
               <TouchableRipple
                 borderless
                 rippleColor={theme.colors.surface}
+                onLongPress={() => copyLink('reunion')}
                 onPress={() => goToLink(subject.reunion)}
                 style={styles.linkContainer}
               >

@@ -154,6 +154,8 @@ export default {
   "¿Are you sure you want to delete subject?": "Estás seguro que quieres borrar {{subject}}?",
   "This will delete all your assignments and events from the calendar": "Eliminaras todas tus actividades y eventos de tu Google Calendar",
   "There has been an error opening the link": "Ha ocurrido un error abriendo el link",
+  "Copied link": "Link copiado",
+  "Copied reunion": "Reunion copiada",
   
   // Welcome screens
   // Index
