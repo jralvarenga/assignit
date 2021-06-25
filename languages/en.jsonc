@@ -79,6 +79,7 @@
   "Assignment all day datetime": "{{date}}, all day",
   "Next week": "Next week",
   "Don't have anything pending": "Don't have anything pending",
+  "Have pending tasks": "You have {{tasks}} pending tasks",
 
   // Agenda screen
   "No Assigments this day": "No Assigments this day",
@@ -135,7 +136,7 @@
   "Start creating subjects and assigments to have stadistics": "Start creating subjects and assigments to have stadistics",
   "Count subjects and assignments": "You have {{assignments}} active assignments from {{subjects}} subjects",
   "Count assignments in subject": "{{active}} active assignments of {{total}}",
-  "You've completed this subject": "You've completed this subject",
+  "You've completed this subject": "You've completed this subject🎉🎉",
   "% Done": "{{porcent}}% Done",
 
   // Subject screen
@@ -153,6 +154,8 @@
   "¿Are you sure you want to delete subject?": "¿Are you sure you want to delete {{subject}}?",
   "This will delete all your assignments and events from the calendar": "This will delete all your assignments and events from the calendar",
   "There has been an error opening the link": "There has been an error opening the link",
+  "Copied link": "Copied link",
+  "Copied reunion": "Copied reunion",
 
   // Welcome screens
   // Index
@@ -173,4 +176,28 @@
   // Screen 4
   "Start now": "Start now",
   "Sign in with": "Sign in with",
+
+  // ToDo list screen
+  "To Do": "To Do",
+  "To Do List": "To Do List",
+  "Done tasks": "Done",
+  "Tasks": "Tasks",
+  "Finished task on": "Finished on {{date}}",
+  "Set task to": "Set to {{date}}",
+  "Remind me every time": "Remind me every {{reminder}}",
+  "You've done all your tasks": "You've done all your tasks💫",
+  "Start adding tasks to your list": "Start adding tasks to your list",
+  "Remind": "Remind",
+
+  // Create task screen
+  "Create task": "Create task",
+  "Add task title": "Add task title",
+  "Set a date": "Set a date",
+  "Remind task": "Remind task",
+  "You don't have any task here": "You don't have any task here😢",
+  "Hour": "Hour",
+  "Day": "Day",
+  "Week": "Week",
+  "Month": "Month",
+  "None": "None"
 }
