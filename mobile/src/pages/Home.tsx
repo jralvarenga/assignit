@@ -137,7 +137,7 @@ const HomeScreen = ({ navigation }: any) => {
               {userSubjects.length == 0 ? (
                 <View style={styles.addSubjects}>
                   <Animate fade delay={50}>
-                    <View style={{ width: '100%', height: 180 }}>
+                    <View style={{ width: '100%', height: 180, backgroundColor: 'red' }}>
                       <LottieView
                         source={require('../assets/animations/austronaut.json')}
                         autoPlay
