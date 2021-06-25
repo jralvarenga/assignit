@@ -187,6 +187,7 @@ export default {
   "Remind me every time": "Recuerdame cada {{reminder}}",
   "You've done all your tasks": "Has terminado todas tus tareas💫",
   "Start adding tasks to your list": "Empieza a añadir tareas a tu lista",
+  "Remind": "Recordar",
 
   // Create task screen
   "Create task": "Crear tarea",

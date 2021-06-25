@@ -102,7 +102,7 @@ export const existAssignmentNotification = (assignments: Assignment[], subjects:
       assgimentsNotiDate.setHours(0, 0)
 
       // Checks if assingments is same day (stop notis spam)
-      if (currentDate != assgimentsNotiDate || currentDate < assgimentsNotiDate) {
+      if (currentDate != assgimentsNotiDate && currentDate < assgimentsNotiDate) {
         const index = notis!.map((noti) => +noti.id ).indexOf(notiId)
         const subjectIndex = subjects!.map((subject) => subject.id ).indexOf(assignment.subject)
         if (index == -1) {

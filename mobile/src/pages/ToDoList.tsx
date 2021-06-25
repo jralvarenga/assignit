@@ -268,6 +268,7 @@ const styleSheet = (theme: Theme | any) => StyleSheet.create({
   },
   listContainer: {
     width: '95%',
+    marginTop: 15
   },
   tasksTitles: {
     fontSize: 28,

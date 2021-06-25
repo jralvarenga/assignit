@@ -2,11 +2,12 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Animate } from 'react-native-entrance-animation'
-import { Checkbox, TouchableRipple, Text, useTheme } from 'react-native-paper'
+import { Checkbox, TouchableRipple, Text, useTheme, Chip } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import LottieView from 'lottie-react-native'
 import { Task } from '../interface/interfaces'
+import { dateString } from '../hooks/useDateTime'
 
 interface TaskContainerProps {
   tasks: Task[],
@@ -58,17 +59,27 @@ const TaskContainer = ({ tasks, showTask, changeStatus, done }: TaskContainerPro
                 onPress={() => changeStatus(task.id, !task.done)}
                 status={task.done ? 'checked' : 'unchecked'}
                 style={{ borderRadius: 20 }}
-                color={task.color.color == 'text' ? theme.colors.text : task.color.color}
+                color={task.color.color == 'text' ? theme.colors.primary : task.color.color}
               />
-              <Text style={[
-                styles.font,
-                {
-                  color: task.color.color == 'text' ? theme.colors.text : task.color.color,
-                  textDecorationLine: done ? 'line-through' : 'none'
-                }
-              ]}>
-                {task.title}
-              </Text>
+              <View>
+                <Text style={[
+                  styles.font,
+                  {
+                    color: task.color.color == 'text' ? theme.colors.text : task.color.color,
+                    textDecorationLine: done ? 'line-through' : 'none',
+                  }
+                ]}>
+                  {task.title}
+                </Text>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                  {task.setTo && (
+                    <Chip>{dateString(task.setTo, t)}</Chip>
+                  )}
+                  {task.reminder && (
+                    <Chip>{t('Remind')}</Chip>
+                  )}
+                </View>
+              </View>
             </View>
             <TouchableOpacity activeOpacity={0.7}>
               <MaterialIcons name="keyboard-arrow-up" size={30} color={theme.colors.text} />
@@ -97,11 +108,6 @@ const styleSheet = (theme: Theme | any) => StyleSheet.create({
     color: theme.colors.text,
     fontSize: 16
   },
-  taskText: {
-    marginLeft: 15,
-    fontSize: 20,
-    textDecorationLine: 'line-through'
-  }
 })
 
 export default TaskContainer

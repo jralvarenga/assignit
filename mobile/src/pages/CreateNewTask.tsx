@@ -63,6 +63,8 @@ const CreateNewTask = ({ navigation }: any) => {
       taskData.reminder = reminderType
     }
     if (taskDate && !reminderType) {
+      console.log('xd');
+      
       const notiId = createNotiId()
       const notiBody = {
         date: taskDate,
@@ -121,7 +123,7 @@ const CreateNewTask = ({ navigation }: any) => {
               label={t("Add task title")}
               style={{ width: '80%', borderRadius: 15 }}
               underlineColor="transparent"
-              theme={{ colors: { primary: newTaskColor.color == 'text' ? theme.colors.text : newTaskColor.color } }}
+              theme={{ colors: { primary: newTaskColor.color == 'text' ? theme.colors.primary : newTaskColor.color } }}
             />
             <TouchableOpacity
               onPress={() => setShowColorPicker(true)}
