@@ -74,12 +74,12 @@ const TaskContainer = ({ tasks, showTask, changeStatus, done }: TaskContainerPro
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   {task.setTo && (
                     <Chip>
-                      <Text style={[styles.font]}>{dateString(task.setTo, t)}</Text>
+                      <Text style={[styles.font, { fontSize: 14 }]}>{dateString(task.setTo, t)}</Text>
                     </Chip>
                   )}
                   {task.reminder && (
                     <Chip>
-                      <Text style={[styles.font]}>{t('Remind')}</Text>
+                      <Text style={[styles.font, { fontSize: 14 }]}>{t('Remind')}</Text>
                     </Chip>
                   )}
                 </View>
