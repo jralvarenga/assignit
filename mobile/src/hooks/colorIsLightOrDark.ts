@@ -21,7 +21,7 @@ export const colorIsLightOrDark = (color: any) => {
 
   hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
 
-  if (hsp > 150) {
+  if (hsp > 190) {
     return lightTheme.colors.text
   } 
   else {

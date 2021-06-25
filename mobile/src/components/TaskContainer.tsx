@@ -5,24 +5,43 @@ import { Animate } from 'react-native-entrance-animation'
 import { Checkbox, TouchableRipple, Text, useTheme } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import LottieView from 'lottie-react-native'
 import { Task } from '../interface/interfaces'
 
 interface TaskContainerProps {
   tasks: Task[],
   showTask: Function,
-  changeStatus: Function
+  changeStatus: Function,
+  done: boolean
 }
 
-const TaskContainer = ({ tasks, showTask, changeStatus }: TaskContainerProps) => {
+const TaskContainer = ({ tasks, showTask, changeStatus, done }: TaskContainerProps) => {
   const { t } = useTranslation()
   const theme: any = useTheme()
   const styles = styleSheet(theme)
 
   return (
     tasks.length == 0 ? (
-      <Text style={[styles.font, {color: theme.colors.textPaper, marginTop: 15}]}>
-        {t("You don't have any task here")}
-      </Text>
+      done ? (
+        <View>
+          <Text style={[styles.font, {color: theme.colors.textPaper, marginTop: 15}]}>
+            {t("You don't have any task here")}
+          </Text>
+        </View>
+      ) : (<>
+        <View style={{ width: '100%', height: 180 }}>
+          <LottieView
+            source={require('../assets/animations/done-tasks.json')}
+            autoPlay
+            loop={false}
+          />
+        </View>
+        <View>
+          <Text style={[styles.font, {color: theme.colors.textPaper, textAlign: 'center'}]}>
+            {t("You've done all your tasks")}
+          </Text>
+        </View></>
+      )
     ) : (
       <View style={{ width: '100%' }}>
         {tasks.map((task: Task, i: number) => (
@@ -41,7 +60,13 @@ const TaskContainer = ({ tasks, showTask, changeStatus }: TaskContainerProps) =>
                 style={{ borderRadius: 20 }}
                 color={task.color.color == 'text' ? theme.colors.text : task.color.color}
               />
-              <Text style={[styles.font, { color: task.color.color == 'text' ? theme.colors.text : task.color.color, marginLeft: 15, fontSize: 20 }]}>
+              <Text style={[
+                styles.font,
+                {
+                  color: task.color.color == 'text' ? theme.colors.text : task.color.color,
+                  textDecorationLine: done ? 'line-through' : 'none'
+                }
+              ]}>
                 {task.title}
               </Text>
             </View>
@@ -68,10 +93,15 @@ const styleSheet = (theme: Theme | any) => StyleSheet.create({
     justifyContent: 'space-between'
   },
   font: {
-    fontFamily: 'poppins-bold',
+    fontFamily: 'poppins-semibold',
     color: theme.colors.text,
     fontSize: 16
   },
+  taskText: {
+    marginLeft: 15,
+    fontSize: 20,
+    textDecorationLine: 'line-through'
+  }
 })
 
 export default TaskContainer

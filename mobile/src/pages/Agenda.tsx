@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, ScrollView, FlatList } from 'react-native'
+import { Animate } from 'react-native-entrance-animation'
 import { IconButton, TouchableRipple, Text, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DatesContainer from '../components/DatesContainer'
@@ -8,8 +9,9 @@ import { colorIsLightOrDark } from '../hooks/colorIsLightOrDark'
 import { Assignment, Subject, SubjectProvider } from '../interface/interfaces'
 import { getDates, getDayString, groupAssigmentsAgenda, markedAssigments } from '../lib/agendaFunctions'
 import { useSubjectProvider } from '../services/SubjectsProvider'
+import LottieView from 'lottie-react-native'
 
-const translateMonthNames = (t: any): string[] => [t('January'),t('February'),t('March'),t('April'),t('May'),t('June'),t('Jule'),t('August'),t('September'),t('October'),t('November'),t('December')]
+const translateMonthNames = (t: Function): string[] => [t('January'),t('February'),t('March'),t('April'),t('May'),t('June'),t('Jule'),t('August'),t('September'),t('October'),t('November'),t('December')]
 
 const AgendaScreen = ({ navigation }: any) => {
   const { t } = useTranslation()
@@ -18,6 +20,7 @@ const AgendaScreen = ({ navigation }: any) => {
   const theme = useTheme()
   const styles = styleSheet(theme)
   const currentDate = new Date()
+  currentDate.setMinutes( currentDate.getMinutes() + currentDate.getTimezoneOffset() )
   
   const { subjects }: SubjectProvider = useSubjectProvider()
 
@@ -33,7 +36,7 @@ const AgendaScreen = ({ navigation }: any) => {
   const monthScrollRef = useRef<any>(null)
   const [monthDataSourceCords, setMonthDataSourceCords] = useState<number[]>([0,1,2,3,4,5,6,7,8,9,10,11,12])
   const dayScrollRef = useRef<any>(null)
-  const [dayDataSourceCords, setDayDataSourceCords] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+  const [dayDataSourceCords, setDayDataSourceCords] = useState<number[]>([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31])
 
   const monthScrollHandler = (index: number) => {
     monthScrollRef.current.scrollTo({
@@ -44,6 +47,7 @@ const AgendaScreen = ({ navigation }: any) => {
   }
 
   const dayScrollHandler = (index: number) => {
+    
     dayScrollRef.current.scrollTo({
       x: dayDataSourceCords[index],
       y: 0,
@@ -67,7 +71,7 @@ const AgendaScreen = ({ navigation }: any) => {
   }, [monthDataSourceCords, monthScrollRef])
   useEffect(() => {
     setTimeout(() => {
-      dayScrollHandler(currentDate.getDate())
+      dayScrollHandler(currentDate.getDate() - 1)
     }, 600)
   }, [dayDataSourceCords, dayScrollRef])
 
@@ -133,15 +137,17 @@ const AgendaScreen = ({ navigation }: any) => {
 
       <View style={styles.yearContainer}>
         <View style={{ width: '90%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <View>
+          <Animate fade delay={50}>
             <Text style={[styles.font, {fontSize: 40}]}>{year}</Text>
-          </View>
-          <IconButton
-            icon="calendar-today"
-            size={30}
-            onPress={returnToToday}
-            style={{ backgroundColor: theme.colors.surface }}
-          />
+          </Animate>
+          <Animate fade delay={100}>
+            <IconButton
+              icon="calendar-today"
+              size={30}
+              onPress={returnToToday}
+              style={{ backgroundColor: theme.colors.surface }}
+            />
+          </Animate>
         </View>
       </View>
       
@@ -167,9 +173,13 @@ const AgendaScreen = ({ navigation }: any) => {
                 style={styles.monthBox}
               >
                 {selectedMonth == i ? (
-                  <Text style={[styles.font, {color: theme.colors.accent}]}>{month}</Text>
+                  <Animate fade delay={50 * i}>
+                    <Text style={[styles.font, {color: theme.colors.accent}]}>{month}</Text>
+                  </Animate>
                 ) : (
-                  <Text style={[styles.font]}>{month}</Text>
+                  <Animate fade delay={50 * i}>
+                    <Text style={[styles.font]}>{month}</Text>
+                  </Animate>
                 )}
               </TouchableRipple>
             ))}
@@ -192,11 +202,11 @@ const AgendaScreen = ({ navigation }: any) => {
       </View>
 
       <View style={styles.agendaContainer}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <Animate fade delay={50} containerStyle={{ flex: 1, justifyContent: 'center' }}>
           <Text style={[styles.font, { fontSize: 25, marginLeft: '5%' }]}>
             {stringDay}
           </Text>
-        </View>
+        </Animate>
         <View style={{ flex: 3 }}>
           {dateAssigments != undefined ? (
             <FlatList
@@ -222,21 +232,23 @@ const AgendaScreen = ({ navigation }: any) => {
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item: any, i: number) => i.toString()}
                         renderItem={({ item }) => (
-                          <TouchableRipple
-                            borderless
-                            onPress={() => goToAssignment(item)}
-                            rippleColor={theme.colors.surface}
-                            style={[styles.assignmentBox, {backgroundColor: item.color}]}
-                          >
-                            <View>
-                              <Text style={[styles.font, {fontSize: 23, marginLeft: 15, color: colorIsLightOrDark(item.color) }]}>
-                                {item.title}
-                              </Text>
-                              <Text style={[styles.font, {fontSize: 14, marginLeft: 15, marginTop: -7, color: colorIsLightOrDark(item.color) }]}>
-                                {item.subjectName}
-                              </Text>
-                            </View>
-                          </TouchableRipple>
+                          <Animate fade delay={50}>
+                            <TouchableRipple
+                              borderless
+                              onPress={() => goToAssignment(item)}
+                              rippleColor={theme.colors.surface}
+                              style={[styles.assignmentBox, {backgroundColor: item.color}]}
+                            >
+                              <View>
+                                <Text style={[styles.font, {fontSize: 23, marginLeft: 15, color: colorIsLightOrDark(item.color) }]}>
+                                  {item.title}
+                                </Text>
+                                <Text style={[styles.font, {fontSize: 14, marginLeft: 15, marginTop: -7, color: colorIsLightOrDark(item.color) }]}>
+                                  {item.subjectName}
+                                </Text>
+                              </View>
+                            </TouchableRipple>
+                          </Animate>
                         )}
                       />
                     </View>
@@ -245,11 +257,20 @@ const AgendaScreen = ({ navigation }: any) => {
               }}
             />
           ) : (
-            <View>
-              <Text style={[styles.font, {fontSize: 20, color: theme.colors.textPaper, width: '100%', textAlign: 'center'}]}>
-                {t("No Assigments this day")}
-              </Text>
-            </View>
+            <>
+              <View style={{ width: '100%', height: 180 }}>
+                <LottieView
+                  source={require('../assets/animations/empty-box.json')}
+                  autoPlay
+                  loop
+                />
+              </View>
+              <View>
+                <Text style={[styles.font, {fontSize: 20, color: theme.colors.textPaper, width: '100%', textAlign: 'center'}]}>
+                  {t("No Assigments this day")}
+                </Text>
+              </View>
+            </>
           )}
           
         </View>

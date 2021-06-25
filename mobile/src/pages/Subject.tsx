@@ -1,9 +1,11 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { useState } from 'react'
 import { StyleSheet, View, TouchableOpacity, Dimensions, ScrollView, Linking } from 'react-native'
-import { Text, Button, Dialog, IconButton, Menu, Portal, ProgressBar, Snackbar, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
+import { Text, Button, IconButton, Menu, ProgressBar, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
 import Clipboard from '@react-native-clipboard/clipboard'
+import LottieView from 'lottie-react-native'
 import { filterAssignments, timeString } from '../hooks/useDateTime'
+import { Animate } from 'react-native-entrance-animation'
 import { Subject, Assignment, SubjectProvider } from '../interface/interfaces'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { changeLinks, deleteSubject } from '../lib/firestore'
@@ -15,6 +17,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 import AppSnackbar from '../components/Snackbar'
+import AppDialog from '../components/AppDialog'
 
 const devideWidth = Dimensions.get('window').width
 const devideHeight = Dimensions.get('window').height
@@ -178,68 +181,91 @@ const SubjectScreen = ({ navigation, route }: any) => {
         <View style={[styles.stadisticsContainer, { marginBottom: 15 }]}>
           <View style={{ width: '95%' }}>
             {subject.link != '' &&  (
-              <TouchableRipple
-                borderless
-                rippleColor={theme.colors.surface}
-                onPress={() => goToLink(subject.link)}
-                onLongPress={() => copyLink('link')}
-                style={[styles.linkContainer, {marginBottom: 10}]}
-              >
-                <>
-                <Text style={[styles.font, { fontSize: 20 }]}>
-                  {t("Go to link", { subject: subject.name })}
-                </Text>
-                <Feather name="external-link" size={30} color={theme.colors.text} />
-                </>
-              </TouchableRipple>
+              <Animate fade delay={50}>
+                <TouchableRipple
+                  borderless
+                  rippleColor={theme.colors.surface}
+                  onPress={() => goToLink(subject.link)}
+                  onLongPress={() => copyLink('link')}
+                  style={[styles.linkContainer, {marginBottom: 10}]}
+                ><>
+                  <Text style={[styles.font, { fontSize: 20 }]}>
+                    {t("Go to link", { subject: subject.name })}
+                  </Text>
+                  <Feather name="external-link" size={30} color={theme.colors.text} />
+                </></TouchableRipple>
+              </Animate>
             )}
             {subject.reunion != '' && (
-              <TouchableRipple
-                borderless
-                rippleColor={theme.colors.surface}
-                onLongPress={() => copyLink('reunion')}
-                onPress={() => goToLink(subject.reunion)}
-                style={styles.linkContainer}
-              >
-                <>
-                <Text style={[styles.font, { fontSize: 20 }]}>
-                  {t("Go to reunion")}
-                </Text>
-                <MaterialIcons name="groups" size={30} color={theme.colors.text} />
-                </>
-              </TouchableRipple>
+              <Animate fade delay={100}>
+                <TouchableRipple
+                  borderless
+                  rippleColor={theme.colors.surface}
+                  onLongPress={() => copyLink('reunion')}
+                  onPress={() => goToLink(subject.reunion)}
+                  style={styles.linkContainer}
+                ><>
+                  <Text style={[styles.font, { fontSize: 20 }]}>
+                    {t("Go to reunion")}
+                  </Text>
+                  <MaterialIcons name="groups" size={30} color={theme.colors.text} />
+                </></TouchableRipple>
+              </Animate>
             )}
-            <TouchableOpacity activeOpacity={0.7} onPress={() => setShowAddLinks(true)} style={{ width: '100%', display: 'flex', alignItems: 'flex-end' }}>
-              <Text style={[styles.font, {color: theme.colors.textPaper}]}>
-                {t("Tap here to edit link")}
-              </Text>
-            </TouchableOpacity>
+            {subject.reunion != '' || subject.link != '' && (
+              <Animate fade delay={150}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => setShowAddLinks(true)} style={{ width: '100%', display: 'flex', alignItems: 'flex-end' }}>
+                  <Text style={[styles.font, {color: theme.colors.textPaper}]}>
+                    {t("Tap here to edit link")}
+                  </Text>
+                </TouchableOpacity>
+              </Animate>
+            )}
           </View>
         </View>
         
         <View style={styles.stadisticsContainer}>
-          <TouchableOpacity onPress={goToStadistics} activeOpacity={0.7} style={{ width: '95%' }}>
-            <Text style={[styles.font, { fontSize: 30, marginBottom: 10 }]}>
-              {t("Progress")}
-            </Text>
-          </TouchableOpacity>
+          <Animate fade delay={50} containerStyle={{ width: '95%' }}>
+            <TouchableOpacity onPress={goToStadistics} activeOpacity={0.7}>
+              <Text style={[styles.font, { fontSize: 30, marginBottom: 10 }]}>
+                {t("Progress")}
+              </Text>
+            </TouchableOpacity>
+          </Animate>
           <View style={{ width: '95%' }}>
-            <ProgressBar progress={subject.progress!.progress} color={subject.color.color} />
-            <View style={{ width: '100%' }}>
+            <Animate fade delay={100}>
+              <ProgressBar progress={subject.progress!.progress} color={subject.color.color} />
+            </Animate>
+            <Animate fade delay={150} containerStyle={{ width: '100%' }}>
               <Text style={[styles.font, { textAlign: 'right', color: theme.colors.textPaper, marginTop: 10 }]}>
                 {t("% Done", { porcent: (subject.progress!.progress * 100)!.toFixed(2) })}
               </Text>
-            </View>
+            </Animate>
           </View>
-          <View style={{ width: '95%' }}>
-            <Text style={[styles.font, { marginTop: 15, marginBottom: 15, fontSize: 20 }]}>
+          <Animate fade delay={150} containerStyle={{ width: '95%' }}>
+            <View>
               {subject.assignments?.length == 0 ? (
-                t("You don't have anything pending")
+                <>
+                  <View style={{ width: '100%', height: 180, marginTop: 60 }}>
+                    <LottieView
+                      source={require('../assets/animations/done-tasks.json')}
+                      autoPlay
+                      loop={false}
+                    />
+                  </View>
+                  <View>
+                    <Text style={[styles.font, {color: theme.colors.textPaper, textAlign: 'center'}]}>
+                      {t("You've completed this subject")}
+                    </Text>
+                  </View>
+                </>
               ) : (
-                t("Assignments pending", { assignments: subject.assignments?.length } )
+                <Text style={[styles.font, { marginTop: 15, marginBottom: 15, fontSize: 20 }]}>
+                  {t("Assignments pending", { assignments: subject.assignments?.length } )}
+                </Text>
               )}
-            </Text>
-          </View>
+            </View>
+          </Animate>
         </View>
 
         <View style={styles.assignmentsContainer}>
@@ -250,20 +276,24 @@ const SubjectScreen = ({ navigation, route }: any) => {
 
               return (
                 <View key={i}>
-                  <Text style={[styles.font, {color: theme.colors.textPaper, fontSize: 16, marginLeft: '3%', marginBottom: 5, marginTop: 10}]}>
-                    {date}
-                  </Text>
+                  <Animate fade delay={50 * i}>
+                    <Text style={[styles.font, {color: theme.colors.textPaper, fontSize: 16, marginLeft: '3%', marginBottom: 5, marginTop: 10}]}>
+                      {date}
+                    </Text>
+                  </Animate>
                   {assignments.map((assimgment, i) => (
-                    <TouchableOpacity key={i} onPress={() => viewAssignment(assimgment)} activeOpacity={0.7} style={styles.assignmentBox}>
-                      <Text style={[styles.font, {fontSize: 20, marginLeft: 15}]}>{assimgment.title}</Text>
-                      <Text style={[styles.font, {fontSize: 14, marginLeft: 15}]}>
-                        {timeString(assimgment.from) == '0:00 am' ? (
-                          t("All day")
-                        ) : (
-                          timeString(assimgment.from)
-                        )}
-                      </Text>
-                    </TouchableOpacity>
+                    <Animate key={i} fade delay={60 * i}>
+                      <TouchableOpacity onPress={() => viewAssignment(assimgment)} activeOpacity={0.7} style={styles.assignmentBox}>
+                        <Text style={[styles.font, {fontSize: 20, marginLeft: 15}]}>{assimgment.title}</Text>
+                        <Text style={[styles.font, {fontSize: 14, marginLeft: 15}]}>
+                          {timeString(assimgment.from) == '0:00 am' ? (
+                            t("All day")
+                          ) : (
+                            timeString(assimgment.from)
+                          )}
+                        </Text>
+                      </TouchableOpacity>
+                    </Animate>
                   ))}
                 </View>
               )
@@ -308,83 +338,76 @@ const SubjectScreen = ({ navigation, route }: any) => {
           />
         </Menu>
 
-        <Portal>
-          <Dialog visible={showAddLinks} onDismiss={() => setShowAddLinks(false)}>
-            <Dialog.Title style={[styles.font, { fontSize: 20, letterSpacing: 0 }]}>
-              {t("Change or add subject links")}
-            </Dialog.Title>
-            <Dialog.Content>
-              <Text style={[styles.font]}>{t("Subject link")}</Text>
-              <TextInput
-                mode="outlined"
-                style={{ width: '100%', backgroundColor: theme.colors.surface }}
-                value={newLink}
-                ref={newLinkRef}
-                onChangeText={(value: string) => setNewLink(value)}
-                onSubmitEditing={newLinkHandler}
-                theme={{ ...theme, colors: { primary: subject.color.color } }}
-                label={subject.link!}
-                onBlur={newLinkHandler}
-              />
-              <Text style={[styles.font, { marginTop: 10 }]}>{t("Reunion link")}</Text>
-              <TextInput
-                mode="outlined"
-                ref={newReunionRef}
-                style={{ width: '100%', backgroundColor: theme.colors.surface }}
-                value={newReunion}
-                onChangeText={(value: string) => setNewReunion(value)}
-                onSubmitEditing={newReunionHandler}
-                theme={{ ...theme, colors: { primary: subject.color.color } }}
-                label={subject.reunion!}
-                onBlur={newReunionHandler}
-              />
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button
-                uppercase={false}
-                style={[styles.actionButtons, {marginLeft: 15}]}
-                labelStyle={[styles.font, {fontSize: 16, letterSpacing: 0}]}
-                onPress={() => setShowAddLinks(false)}
-              >{t("Cancel")}</Button>
-              <Button
-                uppercase={false}
-                loading={loading}
-                style={[styles.actionButtons]}
-                labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
-                onPress={() => setShowAddLinks(false)}
-              >Ok</Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
+        <AppDialog
+          visible={showAddLinks}
+          setVisible={setShowAddLinks}
+          title={t("Change or add subject links")}
+          body={<>
+            <Text style={[styles.font]}>{t("Subject link")}</Text>
+            <TextInput
+              mode="outlined"
+              style={{ width: '100%', backgroundColor: theme.colors.surface }}
+              value={newLink}
+              ref={newLinkRef}
+              onChangeText={(value: string) => setNewLink(value)}
+              onSubmitEditing={newLinkHandler}
+              theme={{ ...theme, colors: { primary: subject.color.color } }}
+              label={subject.link!}
+              onBlur={newLinkHandler}
+            />
+            <Text style={[styles.font, { marginTop: 10 }]}>{t("Reunion link")}</Text>
+            <TextInput
+              mode="outlined"
+              ref={newReunionRef}
+              style={{ width: '100%', backgroundColor: theme.colors.surface }}
+              value={newReunion}
+              onChangeText={(value: string) => setNewReunion(value)}
+              onSubmitEditing={newReunionHandler}
+              theme={{ ...theme, colors: { primary: subject.color.color } }}
+              label={subject.reunion!}
+              onBlur={newReunionHandler}
+            /></>
+          }
+          primaryLabel={
+            <Button
+              uppercase={false}
+              loading={loading}
+              style={[styles.actionButtons]}
+              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
+              onPress={() => setShowAddLinks(false)}
+            >Ok</Button>
+          }
+        />
 
-        <Portal>
-          <Dialog visible={showDeleteSubject} onDismiss={() => setShowDeleteSubject(false)}>
-            <Dialog.Title style={[styles.font, { fontSize: 20, letterSpacing: 0 }]}>
-              {t("¿Are you sure you want to delete subject?", { subject: subject.name })}
-            </Dialog.Title>
-            <Dialog.Content>
-              <Text style={[styles.font, {color: theme.colors.textPaper, letterSpacing: 0}]}>
-                {t("This will delete all your assignments and events from the calendar")}
-              </Text>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button
-                uppercase={false}
-                style={[styles.actionButtons, {marginLeft: 15}]}
-                labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
-                onPress={() => setShowDeleteSubject(false)}
-              >{t("Cancel")}</Button>
-              <Button
-                mode="contained"
-                uppercase={false}
-                loading={loading}
-                style={[styles.actionButtons]}
-                labelStyle={[styles.font, {fontSize: 16, color: theme.colors.background, letterSpacing: 0}]}
-                onPress={deleteSubjectHandler}
-              >{t("Delete")}</Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
+        <AppDialog
+          visible={showDeleteSubject}
+          setVisible={setShowDeleteSubject}
+          title={t("¿Are you sure you want to delete subject?", { subject: subject.name })}
+          body={
+            <Text style={[styles.font, {color: theme.colors.textPaper, letterSpacing: 0}]}>
+              {t("This will delete all your assignments and events from the calendar")}
+            </Text>
+          }
+          primaryLabel={
+            <Button
+              mode="contained"
+              uppercase={false}
+              loading={loading}
+              style={[styles.actionButtons]}
+              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.background, letterSpacing: 0}]}
+              onPress={deleteSubjectHandler}
+            >{t("Delete")}</Button>
+          }
+          secondaryLabel={
+            <Button
+              uppercase={false}
+              style={[styles.actionButtons, {marginLeft: 15}]}
+              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
+              onPress={() => setShowDeleteSubject(false)}
+            >{t("Cancel")}</Button>
+          }
+        />
+
       </ScrollView>
 
       <AppSnackbar

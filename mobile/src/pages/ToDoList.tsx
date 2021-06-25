@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth'
 import { StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
-import { Text, IconButton, Button } from 'react-native-paper'
+import { Text, IconButton, Button, Badge } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Task, TasksProvider } from '../interface/interfaces'
@@ -14,6 +14,7 @@ import TaskContainer from '../components/TaskContainer'
 import { dateString } from '../hooks/useDateTime'
 import { useTranslation } from 'react-i18next'
 import { cancelNoti } from '../lib/notifications'
+import LottieView from 'lottie-react-native'
 
 const ToDoListScreen = ({ navigation }: any) => {
   const { t } = useTranslation()
@@ -124,6 +125,11 @@ const ToDoListScreen = ({ navigation }: any) => {
             <Text style={[styles.font, {color: theme.colors.textPaper}, navigatorScreen == 'tasks' && styles.activeNavigatorText]}>
               {t('Tasks')}
             </Text>
+            {tasks?.length != 0 && (
+              <Badge style={{ position: 'absolute', top: 0 }}>
+                {pendingTasks.length}
+              </Badge>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -133,18 +139,41 @@ const ToDoListScreen = ({ navigation }: any) => {
             <Text style={[styles.font, {color: theme.colors.textPaper}, navigatorScreen == 'done' && styles.activeNavigatorText]}>
               {t('Done tasks')}
             </Text>
+            {tasks?.length != 0 && (
+              <Badge style={{ position: 'absolute', top: 0 }}>
+                {doneTasks.length}
+              </Badge>
+            )}
           </TouchableOpacity>
         </View>
 
-        <View style={styles.listContainer}>
-          <View>
-            <TaskContainer
-              tasks={navigatorScreen == 'tasks' ? pendingTasks : doneTasks}
-              changeStatus={changeTaskStatus}
-              showTask={showTaskHandler}
-            />
+        {tasks?.length == 0 ? (
+          <>
+            <View style={{ width: '100%', height: 180, marginTop: 60 }}>
+              <LottieView
+                source={require('../assets/animations/todo-list.json')}
+                autoPlay
+                loop
+              />
+            </View>
+            <View>
+              <Text style={[styles.font, {color: theme.colors.textPaper, textAlign: 'center'}]}>
+                {t("Start adding tasks to your list")}
+              </Text>
+            </View>
+          </>
+        ) : (
+          <View style={styles.listContainer}>
+            <View>
+              <TaskContainer
+                tasks={navigatorScreen == 'tasks' ? pendingTasks : doneTasks}
+                changeStatus={changeTaskStatus}
+                showTask={showTaskHandler}
+                done={navigatorScreen == 'tasks' ? false : true}
+              />
+            </View>
           </View>
-        </View>
+        )}
 
         <AppDialog
           visible={showTask}

@@ -8,6 +8,17 @@ export interface Assignment {
   notiId: number
 }
 
+export interface AssignmentColor {
+  color: string,
+  title: string
+  subject: string,
+  description: string,
+  id: string,
+  from: Date,
+  to: Date,
+  notiId: number
+}
+
 export interface Subject {
   id: string,
   name: string,
@@ -77,4 +88,14 @@ export interface TasksProvider {
   render?: number,
   setRender?: Function,
   getTasksHandler?: Function
+}
+
+export interface FirebaseError {
+  message: string,
+  code: string,
+  name: string,
+  nameSpace: string,
+  nativeErrorCode: string | number,
+  nativeErrorBase: string,
+  stack: undefined | string
 }

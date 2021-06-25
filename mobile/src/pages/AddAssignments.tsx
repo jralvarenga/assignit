@@ -182,9 +182,9 @@ const AddAssignmentsScreen = ({ route, navigation }: any) => {
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
-            style={styles.assignmentTitleInput}
+            style={[styles.assignmentTitleInput, {borderRadius: 15 }]}
+            underlineColor="transparent"
             label={t("Assignment title")}
-            mode="outlined"
             theme={{ colors: { primary: subject.color.color } }}
           />
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -226,9 +226,9 @@ const AddAssignmentsScreen = ({ route, navigation }: any) => {
             <TextInput
               value={description}
               onChangeText={(value: string) => setDescription(value)}
-              style={{ width: '95%' }}
+              style={{ width: '95%', borderRadius: 15 }}
+              underlineColor="transparent"
               label={t("Description")}
-              mode="outlined"
               multiline={true}
               numberOfLines={6}
               

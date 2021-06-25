@@ -14,6 +14,7 @@ import { cancelAllNotis, cancelNoti, localNoti, repeatNotis } from '../lib/notif
 import { useUserColorScheme } from '../services/ThemeProvider'
 import { useTranslation } from 'react-i18next'
 import AppSnackbar from '../components/Snackbar'
+import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 
 const SettingsScreen = ({ navigation }: any) => {
   const { t } = useTranslation()

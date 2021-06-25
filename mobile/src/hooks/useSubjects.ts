@@ -159,3 +159,10 @@ export const joinSubjectAssignment = (subjects: Subject[], assigments: Assignmen
   
   return array
 }
+
+export const addColorToAssignment = (assignments: Assignment[], subject: Subject) => assignments.map((assignment) => {
+  return {
+    ...assignment,
+    color: subject.color.color
+  }
+})

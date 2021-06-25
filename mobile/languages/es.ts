@@ -136,7 +136,7 @@ export default {
   "Start creating subjects and assigments to have stadistics": "Empieza a crear temas y actividades para tener Estadísticas",
   "Count subjects and assignments": "Tienes {{assignments}} actividades activas de {{subjects}} temas",
   "Count assignments in subject": "{{active}} actividades activas de {{total}}",
-  "You've completed this subject": "Has completado este tema",
+  "You've completed this subject": "Has completado este tema🎉🎉",
   "% Done": "{{porcent}}% Terminado",
 
   // Subject screen
@@ -185,6 +185,8 @@ export default {
   "Finished task on": "Terminada el {{date}}",
   "Set task to": "Para el {{date}}",
   "Remind me every time": "Recuerdame cada {{reminder}}",
+  "You've done all your tasks": "Has terminado todas tus tareas💫",
+  "Start adding tasks to your list": "Empieza a añadir tareas a tu lista",
 
   // Create task screen
   "Create task": "Crear tarea",

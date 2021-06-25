@@ -4,7 +4,7 @@ import { View, StyleSheet, TouchableOpacity, StatusBar } from 'react-native'
 import { Button, Text, useTheme } from 'react-native-paper'
 import { removeSubjectProgress } from '../hooks/subjectProgress'
 import { dateString, timeString } from '../hooks/useDateTime'
-import { Assignment, Subject, SubjectProvider } from '../interface/interfaces'
+import { Assignment, FirebaseError, Subject, SubjectProvider } from '../interface/interfaces'
 import { deleteEvent } from '../lib/calendar'
 import { deleteAssigment, updateProgress } from '../lib/firestore'
 import { useSubjectProvider } from '../services/SubjectsProvider'
@@ -54,7 +54,8 @@ const AssignmentScreen = ({ route, navigation }: any) => {
       await deleteAssigment(id, user, subject)
       setRender!(render! + 1)
       navigation.navigate('Home')
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setSnackbarText(error.message)
         setShowSnackbar(true)

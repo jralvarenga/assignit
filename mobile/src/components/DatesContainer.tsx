@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { TouchableRipple, useTheme } from 'react-native-paper'
+import { Animate } from 'react-native-entrance-animation'
 
 interface DatesContainerProps {
   dates: number[],
@@ -41,59 +42,60 @@ const DatesContainer = ({ dates, month, year, selectedDate, onSelectDate, scroll
 
           return (
             <View
-            key={i}
-            onLayout={(e) => {
-              const layout = e.nativeEvent.layout
-              // Get position of every day View
-              dataSourceCords[i] = layout.x
-              setDataSourceCords(dataSourceCords)
-            }}
-            style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-          >
-          {completeDate.getDay() == 0 ? (
-            <View style={styles.weekSeparator} />
-          ) : ( <></> )}
-          {selectedDate == date ? (
-            <TouchableRipple
-              borderless
-              onPress={() => onSelectDate!(date)}
-              rippleColor={theme.colors.surface}
-              style={[styles.dateBox, { backgroundColor: theme.colors.inactivePrimary }]}
+              key={i}
+              onLayout={(e) => {
+                const layout = e.nativeEvent.layout
+                // Get position of every day View
+                dataSourceCords[i] = layout.x
+                
+                setDataSourceCords(dataSourceCords)
+              }}
+              style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
             >
-              <View>
-                <View style={[styles.dayIdBox]}>
-                  <Text style={[styles.font, {color: theme.colors.accent}]}>{date}</Text>
-                  <Text style={[styles.font, {color: theme.colors.accent, fontSize: 12, fontFamily: 'poppins', marginTop: -10}]}>
-                    {dayNames[completeDate.getDay()]}
-                  </Text>
-                </View>
-              </View>
-            </TouchableRipple>
-          ) : (
-            <TouchableRipple
-              borderless
-              onPress={() => onSelectDate!(date)}
-              rippleColor={theme.colors.surface}
-              style={styles.dateBox}
-            >
-              <View>
-                <View style={[styles.dayIdBox]}>
-                  <Text style={[styles.font]}>{date}</Text>
-                  <Text style={[styles.font, {fontSize: 12, fontFamily: 'poppins', marginTop: -10}]}>
-                    {dayNames[completeDate.getDay()]}
-                  </Text>
-                </View>
-                {markers != undefined ? (
-                  <View style={styles.markerContainer}>
-                    {markers.map((item: any, i: number) => (
-                      <View key={i} style={[styles.markerView,{ backgroundColor: item.color }]} />
-                    ))}
+              {completeDate.getDay() == 0 ? (
+                <View style={styles.weekSeparator} />
+              ) : ( <></> )}
+              {selectedDate == date ? (
+                <TouchableRipple
+                  borderless
+                  onPress={() => onSelectDate!(date)}
+                  rippleColor={theme.colors.surface}
+                  style={[styles.dateBox, { backgroundColor: theme.colors.inactivePrimary }]}
+                >
+                  <View>
+                    <View style={[styles.dayIdBox]}>
+                      <Text style={[styles.font, {color: theme.colors.accent}]}>{date}</Text>
+                      <Text style={[styles.font, {color: theme.colors.accent, fontSize: 12, fontFamily: 'poppins', marginTop: -10}]}>
+                        {dayNames[completeDate.getDay()]}
+                      </Text>
+                    </View>
                   </View>
-                ) : ( <></> )}
-              </View>
-            </TouchableRipple>
-          )}
-          </View>
+                </TouchableRipple>
+              ) : (
+                <TouchableRipple
+                  borderless
+                  onPress={() => onSelectDate!(date)}
+                  rippleColor={theme.colors.surface}
+                  style={styles.dateBox}
+                >
+                  <View>
+                    <View style={[styles.dayIdBox]}>
+                      <Text style={[styles.font]}>{date}</Text>
+                      <Text style={[styles.font, {fontSize: 12, fontFamily: 'poppins', marginTop: -10}]}>
+                        {dayNames[completeDate.getDay()]}
+                      </Text>
+                    </View>
+                    {markers != undefined ? (
+                      <View style={styles.markerContainer}>
+                        {markers.map((item: any, i: number) => (
+                          <View key={i} style={[styles.markerView,{ backgroundColor: item.color }]} />
+                        ))}
+                      </View>
+                    ) : ( <></> )}
+                  </View>
+                </TouchableRipple>
+              )}
+            </View>
           )
         })}
       </View>

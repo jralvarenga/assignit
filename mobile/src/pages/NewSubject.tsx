@@ -74,11 +74,11 @@ const NewSubjectScreen = ({ navigation }: any) => {
             <TextInput
               value={subjectName}
               onChangeText={(value: string) => setSubjectName(value)}
-              style={[styles.font, { width: '80%' }]}
+              style={[styles.font, { width: '80%', borderRadius: 15 }]}
+              underlineColor="transparent"
               ref={subjectNameRef}
               error={error}
               label={titleErrorMessage}
-              mode="outlined"
               theme={{ colors: { primary: subjectColor.color } }}
             />
             <TouchableOpacity
@@ -90,11 +90,11 @@ const NewSubjectScreen = ({ navigation }: any) => {
           <TextInput
             value={subjectLink}
             onChangeText={(value: string) => setSubjectLink(value)}
-            style={[styles.font, { width: '100%', marginTop: 10 }]}
+            style={[styles.font, { width: '100%', marginTop: 10, borderRadius: 15 }]}
+            underlineColor="transparent"
             ref={subjectLinkRef}
             error={error}
             label={t('Subject link')}
-            mode="outlined"
             onSubmitEditing={() => reunionLinkRef.current.focus()}
             returnKeyType="next"
             theme={{ colors: { primary: subjectColor.color } }}
@@ -102,11 +102,11 @@ const NewSubjectScreen = ({ navigation }: any) => {
           <TextInput
             value={reunionLink}
             onChangeText={(value: string) => setReunionLink(value)}
-            style={[styles.font, { width: '100%', marginTop: 10 }]}
+            style={[styles.font, { width: '100%', marginTop: 10, borderRadius: 15 }]}
+            underlineColor="transparent"
             ref={reunionLinkRef}
             error={error}
             label={t("Reunion link")}
-            mode="outlined"
             theme={{ colors: { primary: subjectColor.color } }}
           />
         </View>

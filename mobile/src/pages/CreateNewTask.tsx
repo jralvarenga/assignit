@@ -116,11 +116,11 @@ const CreateNewTask = ({ navigation }: any) => {
 
           <View style={styles.addTitleContainer}>
             <TextInput
-              mode="outlined"
               value={newTaskTitle}
               onChangeText={(value) => setNewTaskTitle(value)}
               label={t("Add task title")}
-              style={{ width: '80%' }}
+              style={{ width: '80%', borderRadius: 15 }}
+              underlineColor="transparent"
               theme={{ colors: { primary: newTaskColor.color == 'text' ? theme.colors.text : newTaskColor.color } }}
             />
             <TouchableOpacity
