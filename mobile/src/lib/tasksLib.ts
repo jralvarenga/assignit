@@ -12,10 +12,13 @@ export const getTasks = async(user: FirebaseAuthTypes.User | null) => {
   getSubjectsInfo.forEach((doc) => {
     const data = doc.data()
     if (data.setTo) {
-      data.setTo = data.setTo.toDate()  
+      data.setTo = data.setTo.toDate()
     }
     if (data.doneDate) {
       data.doneDate = data.doneDate.toDate()  
+    }
+    if (data.repeatDate) {
+      data.repeatDate = data.repeatDate.toDate()  
     }
 
     tasks.push(doc.data())
@@ -47,12 +50,22 @@ export const deleteTask = async(taskId: string, user: FirebaseAuthTypes.User | n
   await tasksRef.delete()
 }
 
-export const filterTasks = (tasks: Task[]) => {
+export const filterTasks = (tasks: Task[], user: FirebaseAuthTypes.User | null) => {
+  const currentDate = new Date()
   let pending: any[] = []
   let done: any[] = []
 
   tasks.map((task) => {
     if (task.done == true) {
+      if (task.repeat) {
+        const getDiff = currentDate.getTime() - task.repeatDate!.getTime()
+        if (getDiff >= task.repeat) {
+          task.done = false
+          setTaskStatus(task.id, false, user)
+          pending.push(task)
+          return
+        }
+      }
       done.push(task)
     } else {
       pending.push(task)
@@ -69,7 +82,7 @@ export const filterTasks = (tasks: Task[]) => {
   return [filterPending, filterDone]
 }
 
-export const setTaskReminder = (reminderType: string, task: Task) => {
+export const setTaskRepeater = (reminderType: string, task: Task) => {
   const getReminderTime = (reminderType: string) => {
     switch (reminderType) {
       case 'hour':

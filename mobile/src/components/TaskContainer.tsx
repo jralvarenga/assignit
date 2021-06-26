@@ -77,9 +77,9 @@ const TaskContainer = ({ tasks, showTask, changeStatus, done }: TaskContainerPro
                       <Text style={[styles.font, { fontSize: 14 }]}>{dateString(task.setTo, t)}</Text>
                     </Chip>
                   )}
-                  {task.reminder && (
+                  {task.repeat && (
                     <Chip>
-                      <Text style={[styles.font, { fontSize: 14 }]}>{t('Remind')}</Text>
+                      <Text style={[styles.font, { fontSize: 14 }]}>{t('Repeat')}</Text>
                     </Chip>
                   )}
                 </View>

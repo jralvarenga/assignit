@@ -71,7 +71,8 @@ export interface ThemeProvider {
 export interface Task {
   title: string,
   id: string
-  reminder?: string,
+  repeat?: number,
+  repeatDate?: Date,
   color: {
     id: string,
     color: string

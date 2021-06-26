@@ -9,7 +9,7 @@ import AppSnackbar from '../components/Snackbar'
 import { createDummyAssignmentId, createNotiId } from '../hooks/createId'
 import { Task, TasksProvider } from '../interface/interfaces'
 import { useTasks } from '../services/TasksProvider'
-import { addNewTask, setTaskReminder } from '../lib/tasksLib'
+import { addNewTask, setTaskRepeater } from '../lib/tasksLib'
 import { dateParams, dateString } from '../hooks/useDateTime'
 import { useTranslation } from 'react-i18next'
 import { localProgamableNoti } from '../lib/notifications'
@@ -26,10 +26,25 @@ const CreateNewTask = ({ navigation }: any) => {
   const [showColorPicker, setShowColorPicker] = useState(false)
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [taskDate, setTaskDate] = useState<Date | undefined>()
-  const [showReminderType, setShowReminderType] = useState(false)
-  const [reminderType, setReminderType] = useState<string | undefined>()
+  const [showrepeatType, setShowrepeatType] = useState(false)
+  const [repeatType, setRepeatType] = useState<string | undefined>()
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackbarText, setSnackbarText] = useState('')
+
+  const getMilisecondsRepeater = (type: string) => {
+    switch (type) {
+      case 'Hour':
+        return 3600000
+      case 'Day':
+        return 86400000
+      case 'Week':
+        return 604800000
+      case 'Month':
+        return  2592000000
+      default:
+        return 0
+    }
+  }
 
   const taskColorHandler = (color: any) => {
     setNewTaskColor(color)
@@ -57,14 +72,16 @@ const CreateNewTask = ({ navigation }: any) => {
       done: false,
       notiId: 0
     }
-    if (reminderType) {
-      const notiId = setTaskReminder(reminderType, taskData)
-      taskData.notiId = notiId
-      taskData.reminder = reminderType
+    if (repeatType) {
+      const repeatDate = new Date()
+      repeatDate.setMinutes( repeatDate.getMinutes() + repeatDate.getTimezoneOffset() )
+      repeatDate.setMinutes(0)
+      //const notiId = setTaskRepeater(repeatType, taskData)
+      //taskData.notiId = notiId
+      taskData.repeat = getMilisecondsRepeater(repeatType)
+      taskData.repeatDate = repeatDate 
     }
-    if (taskDate && !reminderType) {
-      console.log('xd');
-      
+    if (taskDate && !repeatType) {
       const notiId = createNotiId()
       const notiBody = {
         date: taskDate,
@@ -90,9 +107,10 @@ const CreateNewTask = ({ navigation }: any) => {
     navigation.goBack()
   }
 
-  const setReminderTypeHandler = (type: string | undefined) => {
-    setReminderType(type)
-    setShowReminderType(false)
+  const setRepeatTypeHandler = (type: string | undefined) => {
+    setTaskDate(undefined)
+    setRepeatType(type)
+    setShowrepeatType(false)
   }
 
   useLayoutEffect(() => {
@@ -156,25 +174,25 @@ const CreateNewTask = ({ navigation }: any) => {
 
           <View style={styles.selectedDatetime}>
             <Menu
-              visible={showReminderType}
-              onDismiss={() => setShowReminderType(false)}
+              visible={showrepeatType}
+              onDismiss={() => setShowrepeatType(false)}
               anchor={
-                reminderType ? (
-                  <Text onPress={() => setShowReminderType(true)} style={[styles.font, {fontSize: 20}]}>
-                    {t("Remind me every time", { reminder: t(reminderType) })}
+                repeatType ? (
+                  <Text onPress={() => setShowrepeatType(true)} style={[styles.font, {fontSize: 20}]}>
+                    {t("Repeat task every time", { repeat: t(repeatType) })}
                   </Text>
                 ) : (
-                  <Text onPress={() => setShowReminderType(true)} style={[styles.font, { fontSize: 20, marginRight: 20 }]}>
-                    {t('Remind task')}
+                  <Text onPress={() => setShowrepeatType(true)} style={[styles.font, { fontSize: 20, marginRight: 20 }]}>
+                    {t('Repeat task')}
                   </Text>
                 )
               }
             >
-              <Menu.Item onPress={() => setReminderTypeHandler(undefined)} title={t("None")} />
-              <Menu.Item onPress={() => setReminderTypeHandler('Hour')} title={t("Hour")} />
-              <Menu.Item onPress={() => setReminderTypeHandler('Day')} title={t("Day")} />
-              <Menu.Item onPress={() => setReminderTypeHandler('Week')} title={t("Week")} />
-              <Menu.Item onPress={() => setReminderTypeHandler('Month')} title={t("Month")} />
+              <Menu.Item onPress={() => setRepeatTypeHandler(undefined)} title={t("None")} />
+              <Menu.Item onPress={() => setRepeatTypeHandler('Hour')} title={t("Hour")} />
+              <Menu.Item onPress={() => setRepeatTypeHandler('Day')} title={t("Day")} />
+              <Menu.Item onPress={() => setRepeatTypeHandler('Week')} title={t("Week")} />
+              <Menu.Item onPress={() => setRepeatTypeHandler('Month')} title={t("Month")} />
             </Menu>
           </View>
 

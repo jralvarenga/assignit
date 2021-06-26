@@ -6,6 +6,7 @@ import { Text, Button, ActivityIndicator, TouchableRipple, useTheme } from 'reac
 import { useSubjects } from '../hooks/useSubjects'
 import { Subject, Assignment, SubjectProvider, TasksProvider, Task } from '../interface/interfaces'
 import { getGreetingMessage } from '../hooks/useDateTime'
+import auth from '@react-native-firebase/auth'
 import { useSubjectProvider } from '../services/SubjectsProvider'
 import { Animate } from 'react-native-entrance-animation'
 import LottieView from 'lottie-react-native'
@@ -30,6 +31,7 @@ interface AssignmentColor {
 
 const HomeScreen = ({ navigation }: any) => {
   const { t } = useTranslation()
+  const user = auth().currentUser
   const theme = useTheme()
   const styles = styleSheet(theme)
   const { loading, subjects, refreshSubjects }: SubjectProvider = useSubjectProvider()
@@ -45,7 +47,7 @@ const HomeScreen = ({ navigation }: any) => {
     setFullSubjects(subjects!)
     setSubjects(subjects)
     setAssignments(subjects)
-    const [pending, done] = filterTasks(tasks!)
+    const [pending, done] = filterTasks(tasks!, user)
     setPendingTasks(pending)
   }, [subjects, tasks])
 
@@ -137,7 +139,7 @@ const HomeScreen = ({ navigation }: any) => {
               {userSubjects.length == 0 ? (
                 <View style={styles.addSubjects}>
                   <Animate fade delay={50}>
-                    <View style={{ width: '100%', height: 180, backgroundColor: 'red' }}>
+                    <View style={{ width: 300, height: 180 }}>
                       <LottieView
                         source={require('../assets/animations/austronaut.json')}
                         autoPlay

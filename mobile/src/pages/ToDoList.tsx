@@ -33,7 +33,7 @@ const ToDoListScreen = ({ navigation }: any) => {
   const [snackbarText, setSnackbarText] = useState('')
 
   useEffect(() => {
-    const [pending, done] = filterTasks(tasks!)
+    const [pending, done] = filterTasks(tasks!, user)
     setDoneTasks(done)
     setPendingTasks(pending)
   }, [tasks, render])
@@ -196,9 +196,9 @@ const ToDoListScreen = ({ navigation }: any) => {
                 )}
               </View>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
-                {selectedTask?.reminder && (
+                {selectedTask?.repeat && (
                   <Text style={styles.font}>
-                    {t('Remind me every time', { reminder: t(selectedTask?.reminder) })}
+                    {t('Repeat task every time', { repeat: t(`${selectedTask?.repeat}`) })}
                   </Text>
                 )}
               </View>
