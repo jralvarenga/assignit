@@ -19,6 +19,11 @@
       <meta-data android:name="com.dieam.reactnativepushnotification.default_notification_channel_id" android:value="@string/default_notification_channel_id"/>
       <meta-data android:name="com.diem.reactnativepushnotification.default_notification_icon" android:value="@drawable/ic_notification"/>
 
+      <meta-data android:name="com.google.firebase.messaging.notification_foreground" android:value="false"/>
+      <meta-data android:name="com.google.firebase.messaging.notification_color" android:resource="@color/white"/>
+      <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/default_notification_channel_id" />
+      <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:value="@drawable/ic_notification"/>
+
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
@@ -28,7 +33,6 @@
               <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
           </intent-filter>
       </receiver>
-      <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/default_notification_channel_id" />
 
       <service
           android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
