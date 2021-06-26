@@ -40,7 +40,8 @@ export interface SubjectProvider {
   subjects?: Subject[],
   render?: number,
   setRender?: Function,
-  refreshSubjects?: Function
+  refreshSubjects?: Function,
+  setSubjects?: Function
 }
 
 export interface UserDoc {

@@ -12,6 +12,7 @@ import FacebookLogo from '../assets/icons/facebook_icon.svg'
 import { TouchableRipple, Text } from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
 import { theme } from '../services/theme'
+import { FirebaseError } from '../interface/interfaces'
 //import FailedBumpIcon from '../assets/icons/failedbump_logo.svg'
 
 const { height } = Dimensions.get('screen')
@@ -33,7 +34,8 @@ const SignInScreen = () => {
       
       await signIn(googleCredential, accessToken, 'google', t)
       setRender(render + 1)
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setError(error.message)
       } else {
@@ -59,7 +61,8 @@ const SignInScreen = () => {
       const facebookCredential = auth.FacebookAuthProvider.credential(data!.accessToken)
       await signIn(facebookCredential, data!.accessToken, 'facebook', t)
       setRender(render + 1)
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setError(error.message)
       } else {

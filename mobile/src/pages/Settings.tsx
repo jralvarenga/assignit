@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { useAuth } from '../services/AuthProvider'
 import { deleteAllEvent } from '../lib/calendar'
-import { Settings, SubjectProvider, ThemeProvider } from '../interface/interfaces'
+import { FirebaseError, Settings, SubjectProvider, ThemeProvider } from '../interface/interfaces'
 import { useSubjectProvider } from '../services/SubjectsProvider'
 import { deleteAllSubjects } from '../lib/firestore'
 import AntIcons from 'react-native-vector-icons/AntDesign'
@@ -54,7 +54,8 @@ const SettingsScreen = ({ navigation }: any) => {
       await auth().signOut()
       navigation.navigate('Sign In')
       setUser(null)
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setSnackbarText(error.message)
         setShowSnackbar(true)
@@ -76,7 +77,8 @@ const SettingsScreen = ({ navigation }: any) => {
       setLoadDeleteSubjects(false)
       setShowDeleteAllSubjects(false)
       setRender!(render! + 1)
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setSnackbarText(error.message)
         setShowSnackbar(true)

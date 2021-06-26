@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
 import { Button, Text, useTheme } from 'react-native-paper'
 import { dateString, filterAssignments, timeString } from '../hooks/useDateTime'
-import { Subject, Assignment, Settings } from '../interface/interfaces'
+import { Subject, Assignment, Settings, FirebaseError, SubjectProvider } from '../interface/interfaces'
 import { createSubject } from '../lib/firestore'
 import auth from '@react-native-firebase/auth'
 import { createEvent } from '../lib/calendar'
@@ -21,7 +21,7 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
   const styles = styleSheet(theme)
   const user: any = auth().currentUser
   const provider = getUserProvider()
-  const { render, setRender }: any = useSubjectProvider()
+  const { render, setRender }: SubjectProvider = useSubjectProvider()
   let subject: Subject = route.params
   const [assignments, setAssignments] = useState<any>([])
   const [createLoad, setCreateLoad] = useState(false)
@@ -115,11 +115,12 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
         subject.progress = progress
         
         await createSubject(subject, user)
-        setRender(render + 1)
+        setRender!(render! + 1)
 
       setCreateLoad(false)
       navigation.navigate('Home')
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setSnackbarText(error.message)
         setShowSnackbar(true)

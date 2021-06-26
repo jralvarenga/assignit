@@ -38,7 +38,7 @@ export const SubjectProvider: FC = ({ children }) => {
   const refreshSubjects = async() => await getHandler()
 
   return (
-    <SubjectContext.Provider value={{ subjects, loading, render, setRender, refreshSubjects }}>
+    <SubjectContext.Provider value={{ subjects, setSubjects, loading, render, setRender, refreshSubjects }}>
       {children}
     </SubjectContext.Provider>
   )

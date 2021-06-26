@@ -7,7 +7,7 @@ import GoogleLogo from '../assets/icons/google_icon.svg'
 import FacebookLogo from '../assets/icons/facebook_icon.svg'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Settings, SubjectProvider } from '../interface/interfaces'
+import { FirebaseError, Settings, SubjectProvider } from '../interface/interfaces'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { deleteCalendar } from '../lib/calendar'
 import { deleteUserDocument } from '../lib/firestore'
@@ -94,7 +94,8 @@ const AccountScreen = ({ navigation }: any) => {
       setDeleteAccountLoading(false)
       setUser(null)
       navigation.navigate('Sign In')
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setSnackbarText(error.message)
         setShowSnackbar(true)
