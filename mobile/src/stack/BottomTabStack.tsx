@@ -2,11 +2,12 @@ import React from 'react'
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import auth from '@react-native-firebase/auth'
 
 import HomeScreen from '../pages/Home'
 import SettingsScreen from '../pages/Settings'
 import AgendaScreen from '../pages/Agenda'
-import { useTheme } from 'react-native-paper'
+import { Avatar, useTheme } from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
 import ToDoListScreen from '../pages/ToDoList'
 
@@ -14,6 +15,7 @@ const Tab = AnimatedTabBarNavigator()
 
 const BottomTabNavigator = () => {
   const { t } = useTranslation()
+  const user = auth().currentUser
   const theme = useTheme()
 
     return (
@@ -69,8 +71,8 @@ const BottomTabNavigator = () => {
         options={{
           title: t("Settings"),
           tabBarIcon: ({ focused, color }: any) => (
-            <FontAwesome name="gear" size={25} color={focused ? color : theme.colors.textPaper}
-            />
+            <Avatar.Image size={25} source={{ uri: user?.photoURL! }} />
+            //<FontAwesome name="gear" size={25} color={focused ? color : theme.colors.textPaper}
           )
         }}
       />
