@@ -28,8 +28,9 @@ It's builded with React, React Native, Gatsby and Firebase as backend service
 
 ## Branches
 
+- dev  -> Main branch, all changes and new features starts here
 - master -> Production branch (DO NOT TOUCH THIS BRANCH)
-- [activity-name] -> Name of the develop or feature it's been working in the branch
+- [feature-name] -> Name of the develop or feature it's been working in the branch
 
 ## Develop and contribute
 
