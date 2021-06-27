@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View, Dimensions } from 'reac
 import { DatePicker, TimePicker } from '../components/DateTimePicker'
 import { Text, Button, IconButton, TextInput, Checkbox, useTheme } from 'react-native-paper'
 import { dateParams, dateString, timeParams, timeString, useDatetime } from '../hooks/useDateTime'
-import { Assignment, Settings, Subject, SubjectProvider } from '../interface/interfaces'
+import { Assignment, FirebaseError, Settings, Subject, SubjectProvider } from '../interface/interfaces'
 import { addNewAssigments, updateProgress } from '../lib/firestore'
 import auth from '@react-native-firebase/auth'
 import { createEvent } from '../lib/calendar'
@@ -198,7 +198,8 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
       setLoading(false)
       setRender!(render! + 1)
       navigation.navigate('Home')
-    } catch (error) {
+    } catch (e: any) {
+      const error: FirebaseError = e
       if (error.message) {
         setSnackbarText(error.message)
         setShowSnackbar(true)

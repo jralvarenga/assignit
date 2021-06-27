@@ -1,4 +1,4 @@
-import { AppRegistry } from 'react-native'
+import { AppRegistry, Linking } from 'react-native'
 import App from './App'
 import { name as appName } from './app.json'
 import PushNotification from 'react-native-push-notification'
@@ -12,6 +12,10 @@ PushNotification.configure({
   },
   onNotification: (notification) => {
     console.log("NOTIFICATION:", notification)
+
+    if (notification.data['gcm.n.analytics_data']['google.c.a.c_l'] == 'rate_app') {
+      Linking.openURL('https://play.google.com/store/apps/details?id=com.assignit')
+    }
   },
   onAction: (notification) => {
     console.log("ACTION:", notification.action)
