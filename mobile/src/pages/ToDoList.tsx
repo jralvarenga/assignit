@@ -6,7 +6,7 @@ import { Text, IconButton, Button, Badge } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Task, TasksProvider } from '../interface/interfaces'
-import { deleteTask, filterTasks, setTaskStatus } from '../lib/tasksLib'
+import { deleteTask, filterTasks, setNewRepeatDate, setTaskStatus } from '../lib/tasksLib'
 import { useTasks } from '../services/TasksProvider'
 import AppDialog from '../components/AppDialog'
 import AppSnackbar from '../components/Snackbar'
@@ -27,8 +27,6 @@ const ToDoListScreen = ({ navigation }: any) => {
   const [navigatorScreen, setNavigatorScreen] = useState('tasks')
   const [doneTasks, setDoneTasks] = useState<Task[]>([])
   const [pendingTasks, setPendingTasks] = useState<Task[]>([])
-  const [showTask, setShowTask] = useState(false)
-  const [selectedTask, setSelectedTask] = useState<Task>()
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackbarText, setSnackbarText] = useState('')
 
@@ -38,11 +36,6 @@ const ToDoListScreen = ({ navigation }: any) => {
     setPendingTasks(pending)
   }, [tasks, render])
 
-  const showTaskHandler = (task: Task) => {
-    setSelectedTask(task)
-    setShowTask(true)
-  }
-
   const changeTaskStatus = async(id: string, status: boolean) => {
     const taskIndex = tasks!.map((task) => task.id ).indexOf(id)
     tasks![taskIndex].done = status
@@ -51,6 +44,9 @@ const ToDoListScreen = ({ navigation }: any) => {
 
     try {
       await setTaskStatus(id, status, user)
+      if (tasks![taskIndex].repeat && status == true) {
+        setNewRepeatDate(id, user)
+      }
     } catch (error) {
       setSnackbarText('An error has happen')
       setShowSnackbar(true)
@@ -68,12 +64,13 @@ const ToDoListScreen = ({ navigation }: any) => {
       pendingTasks.splice(taskIndex, 1)
       setPendingTasks(pendingTasks)
     }
-    setShowTask(false)
     const task = tasks![index]
     if (task.notiId && task.notiId != 0) {
       console.log('Deleled noti')
       cancelNoti(task.notiId) 
     }
+    setSnackbarText('Task deleted')
+    setShowSnackbar(true)
     try {
       await deleteTask(id, user)
     } catch (error) {
@@ -90,7 +87,8 @@ const ToDoListScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView>
-      <ScrollView style={{ width: '100%', height: '100%' }}
+      <ScrollView
+        style={{ width: '100%', height: '100%' }}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -168,51 +166,12 @@ const ToDoListScreen = ({ navigation }: any) => {
               <TaskContainer
                 tasks={navigatorScreen == 'tasks' ? pendingTasks : doneTasks}
                 changeStatus={changeTaskStatus}
-                showTask={showTaskHandler}
+                deleteTask={deleteTaskHandler}
                 done={navigatorScreen == 'tasks' ? false : true}
               />
             </View>
           </View>
         )}
-
-        <AppDialog
-          visible={showTask}
-          setVisible={setShowTask}
-          title={selectedTask?.title!}
-          body={
-            <View>
-              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                {selectedTask?.done && (
-                  <Text style={styles.font}>
-                    {t('Finished task on', { date: dateString(selectedTask!.doneDate!, t) })}
-                  </Text>
-                )}
-              </View>
-              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
-                {selectedTask?.setTo && (
-                  <Text style={styles.font}>
-                    {t('Set task to', { date: dateString(selectedTask!.setTo!, t) })}
-                  </Text>
-                )}
-              </View>
-              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
-                {selectedTask?.repeat && (
-                  <Text style={styles.font}>
-                    {t('Repeat task every time', { repeat: t(`${selectedTask?.repeat}`) })}
-                  </Text>
-                )}
-              </View>
-            </View>
-          }
-          primaryLabel={
-            <Button
-              uppercase={false}
-              style={[styles.actionButtons, {marginLeft: 15}]}
-              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.accent, letterSpacing: 0}]}
-              onPress={() => deleteTaskHandler(selectedTask!.id, selectedTask!.done)}
-            >{t('Delete')}</Button>
-          }
-        />
 
         <AppSnackbar
           visible={showSnackbar}
