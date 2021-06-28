@@ -20,6 +20,7 @@ const AppSnackbar = ({ visible, setVisible, text, addTheme, addStyles, label }: 
       visible={visible}
       onDismiss={() => setVisible(false)}
       theme={{...theme, ...addTheme}}
+      duration={3000}
       style={{ backgroundColor: theme.colors.accent, ...addStyles }}
       action={{
         label: label ? label : 'Ok',

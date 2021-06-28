@@ -44,6 +44,16 @@ export const setTaskStatus = async(taskId: string, state: boolean, user: Firebas
   })
 }
 
+export const setNewRepeatDate = async(taskId: string, user: FirebaseAuthTypes.User | null) => {
+  const currentDate = new Date()
+  currentDate.setMinutes( currentDate.getMinutes() + currentDate.getTimezoneOffset() )
+  const tasksRef = firestore().collection('data').doc(user?.uid).collection('tasks').doc(taskId)
+
+  await tasksRef.update({
+    repeatDate: currentDate
+  })
+}
+
 export const deleteTask = async(taskId: string, user: FirebaseAuthTypes.User | null) => {
   const tasksRef = firestore().collection('data').doc(user?.uid).collection('tasks').doc(taskId)
 
@@ -59,7 +69,7 @@ export const filterTasks = (tasks: Task[], user: FirebaseAuthTypes.User | null) 
     if (task.done == true) {
       if (task.repeat) {
         const getDiff = currentDate.getTime() - task.repeatDate!.getTime()
-        if (getDiff >= task.repeat) {
+        if (getDiff > task.repeat) {
           task.done = false
           setTaskStatus(task.id, false, user)
           pending.push(task)
