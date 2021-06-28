@@ -51,13 +51,13 @@ const HomePage = () => {
             <img className={classes.logoIcon} src={logo} alt="" />
             <div className={classes.buttonsContainer}>
               <Link to="/app" style={{ textDecoration: 'none' }}>
-                <Button
+                {/*<Button
                   disableElevation
                   color="primary"
                   style={{ textTransform: 'none', borderRadius: 10, marginRight: 30 }}
                   startIcon={<LaunchIcon />}
                 >Open
-                </Button>
+                </Button>*/}
               </Link>
               <Button
                 disableElevation
