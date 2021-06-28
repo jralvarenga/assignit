@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, FlatList, RefreshControl } from 'react-native'
 import { Animate } from 'react-native-entrance-animation'
 import { Checkbox, TouchableRipple, Text, useTheme, Chip } from 'react-native-paper'
 import { SwipeListView } from 'react-native-swipe-list-view'
@@ -8,8 +8,9 @@ import { Theme } from 'react-native-paper/lib/typescript/types'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import LottieView from 'lottie-react-native'
-import { Task } from '../interface/interfaces'
+import { Task, TasksProvider } from '../interface/interfaces'
 import { dateString } from '../hooks/useDateTime'
+import { useTasks } from '../services/TasksProvider'
 
 interface TaskContainerProps {
   tasks: Task[],
@@ -22,6 +23,8 @@ const TaskContainer = ({ tasks, deleteTask, changeStatus, done }: TaskContainerP
   const { t } = useTranslation()
   const theme: any = useTheme()
   const styles = styleSheet(theme)
+  const [refreshing, setRefreshing] = useState(false)
+  const { getTasksHandler }: TasksProvider = useTasks()
 
   const getRepeatTime = (time: number) => {
     switch (time) {
@@ -37,6 +40,12 @@ const TaskContainer = ({ tasks, deleteTask, changeStatus, done }: TaskContainerP
         return t('None')
     }
   }
+
+  const refreshScreen = useCallback( async() => {
+    setRefreshing(true)
+    await getTasksHandler!()
+    setRefreshing(false)
+  }, [])
 
   return (
     tasks.length == 0 ? (
@@ -61,10 +70,19 @@ const TaskContainer = ({ tasks, deleteTask, changeStatus, done }: TaskContainerP
         </View></>
       )
     ) : (
-      <View style={{ width: '100%', marginBottom: 50 }}>
+      <View style={{ width: '100%', height: '100%', marginBottom: 50 }}>
         <SwipeListView
           data={tasks}
           keyExtractor={(item: Task) => item.id}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={refreshScreen}
+              colors={[theme.colors.accent]}
+              tintColor={theme.colors.accent}
+              progressBackgroundColor={theme.colors.surface}
+            />
+          }
           renderItem={({ item }) => (
             <Animate fade>
               <TouchableRipple

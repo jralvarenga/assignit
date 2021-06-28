@@ -21,9 +21,8 @@ const ToDoListScreen = ({ navigation }: any) => {
   const theme: any = useTheme()
   const styles = styleSheet(theme)
   const user = auth().currentUser
-  const [refreshing, setRefreshing] = useState(false)
   const [render, setRender] = useState(0)
-  const { tasks, setTasks, getTasksHandler }: TasksProvider = useTasks()
+  const { tasks }: TasksProvider = useTasks()
   const [navigatorScreen, setNavigatorScreen] = useState('tasks')
   const [doneTasks, setDoneTasks] = useState<Task[]>([])
   const [pendingTasks, setPendingTasks] = useState<Task[]>([])
@@ -79,25 +78,10 @@ const ToDoListScreen = ({ navigation }: any) => {
     }
   }
 
-  const refreshScreen = useCallback( async() => {
-    setRefreshing(true)
-    await getTasksHandler!()
-    setRefreshing(false)
-  }, [])
-
   return (
     <SafeAreaView>
-      <ScrollView
+      <View
         style={{ width: '100%', height: '100%' }}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={refreshScreen}
-            colors={[theme.colors.accent]}
-            tintColor={theme.colors.accent}
-            progressBackgroundColor={theme.colors.surface}
-          />
-        }
       >
       <View style={styles.container}>
         
@@ -180,7 +164,7 @@ const ToDoListScreen = ({ navigation }: any) => {
         />
 
       </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   )
 }
