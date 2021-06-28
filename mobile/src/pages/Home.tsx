@@ -286,6 +286,7 @@ const HomeScreen = ({ navigation }: any) => {
             setVisible={setShowSnackbar}
             text={t("Don't have anything pending")}
           />
+          
         </View>
       </ScrollView>
     </SafeAreaView>

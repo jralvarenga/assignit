@@ -11,10 +11,12 @@ PushNotification.configure({
     console.log("TOKEN:", token)
   },
   onNotification: (notification) => {
-    console.log("NOTIFICATION:", notification)
+    //console.log("NOTIFICATION:", notification)
 
-    if (notification.data['gcm.n.analytics_data']['google.c.a.c_l'] == 'rate_app') {
-      Linking.openURL('https://play.google.com/store/apps/details?id=com.assignit')
+    if (notification.data['gcm.n.analytics_data']) {
+      if (notification.data['gcm.n.analytics_data']['google.c.a.c_l'] == 'rate_app') {
+        Linking.openURL('https://play.google.com/store/apps/details?id=com.assignit') 
+      }
     }
   },
   onAction: (notification) => {
