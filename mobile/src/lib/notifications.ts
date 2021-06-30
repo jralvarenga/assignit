@@ -47,6 +47,7 @@ export const localProgamableNoti = ({ date, body }: ScheduleNotiProps) => {
 export const repeatNotis = (translator: Function) => {
   const currentDate = new Date()
   const startWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()))
+  startWeek.setHours(9, 0, 0)
   const repeatTime = 604800000
 
   const user: any = auth().currentUser

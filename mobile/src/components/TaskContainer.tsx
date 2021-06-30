@@ -31,7 +31,7 @@ const TaskContainer = ({ tasks, deleteTask, changeStatus, done }: TaskContainerP
       case 3600000:
         return t('Hour')
       case 86400000:
-        return t('Week')
+        return t('Day')
       case 604800000:
         return t('Week')
       case 2592000000:

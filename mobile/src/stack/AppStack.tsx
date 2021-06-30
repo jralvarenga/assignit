@@ -161,7 +161,6 @@ const AppStack = () => {
           title: t('Create task'),
           headerShown: true,
           headerLeft: () => null,
-          headerTitleStyle: { ...headerTitleStyle },
           gestureEnabled: true,
           ...TransitionPresets.ModalPresentationIOS
         }}
