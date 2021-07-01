@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { Text, Button, Portal, TextInput, Dialog, useTheme } from 'react-native-paper'
 import ColorPicker from '../components/ColorPicker'
+import { colorIsLightOrDark } from '../hooks/colorIsLightOrDark'
 import { createSubjectId } from '../hooks/createId'
 import { Subject } from '../interface/interfaces'
 
@@ -117,14 +118,7 @@ const NewSubjectScreen = ({ navigation }: any) => {
             onPress={continueToAdd}
             uppercase={false}
             style={[styles.continueButton, {backgroundColor: subjectColor.color}]}
-            labelStyle={[styles.font, {
-              width: '100%',
-              height: 50,
-              marginTop: 10,
-              color: theme.colors.background,
-              fontSize: 16,
-              letterSpacing: 0
-            }]}
+            labelStyle={[styles.font, { letterSpacing: 0, color: colorIsLightOrDark(subjectColor.color)}]}
           >{t("Continue")}</Button>
         </View>
 
@@ -173,10 +167,12 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginTop: 30
   },
   continueButton: {
-    width: 150,
-    height: 50,
+    paddingRight: 10,
+    paddingLeft: 10,
+    padding: 3,
     marginRight: '3%',
     marginBottom: '10%',
+    borderRadius: 15,
     elevation: 0,
   },
 })

@@ -42,7 +42,7 @@ const Index3 = ({ display, setDisplay }: WelcomeProps) => {
       
       <View style={styles.contentContainer}>
         <Animate fade delay={100} containerStyle={{ flex: 2 }}>
-          <Text style={[styles.font, {fontSize: 30, textAlign: 'center'}]}>
+          <Text style={[styles.boldFont, {fontSize: 30, textAlign: 'center'}]}>
             {t("Sync with your Google Calendar")}
           </Text>
         </Animate>
@@ -57,7 +57,7 @@ const Index3 = ({ display, setDisplay }: WelcomeProps) => {
         </Animate>
         <Animate fade delay={200} containerStyle={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity onPress={nextHandler} activeOpacity={0.7} style={styles.nextButton}>
-            <Text style={[styles.font, {fontSize: 16}]}>{t("Next")}</Text>
+            <Text style={[styles.boldFont, {fontSize: 16}]}>{t("Next")}</Text>
           </TouchableOpacity>
         </Animate>
       </View>
@@ -70,8 +70,13 @@ const styleSheet = (theme: any) => StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background
   },
-  font: {
+  boldFont: {
     fontFamily: 'poppins-bold',
+    color: theme.colors.text,
+    fontSize: 16
+  },
+  font: {
+    fontFamily: 'poppins-semibold',
     color: theme.colors.text,
     fontSize: 16
   },
@@ -85,11 +90,9 @@ const styleSheet = (theme: any) => StyleSheet.create({
     alignItems: 'center'
   },
   nextButton: {
-    width: 190,
+    paddingLeft: 65,
+    paddingRight: 65,
     padding: 15,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 100,
     backgroundColor: theme.colors.surface
   },

@@ -225,7 +225,7 @@ const SettingsScreen = ({ navigation }: any) => {
             <Button
               uppercase={false}
               style={[styles.actionButtons]}
-              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
+              labelStyle={[styles.font, { color: theme.colors.primary, letterSpacing: 0}]}
               onPress={() => setShowNotiSettings(false)}
             >Ok</Button>
           </Dialog.Actions>
@@ -247,7 +247,7 @@ const SettingsScreen = ({ navigation }: any) => {
             <Button
               uppercase={false}
               style={[styles.actionButtons, {marginLeft: 15}]}
-              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
+              labelStyle={[styles.font, { color: theme.colors.primary, letterSpacing: 0}]}
               onPress={() => setShowDeleteAllSubjects(false)}
             >{t("Cancel")}</Button>
             <Button
@@ -255,7 +255,7 @@ const SettingsScreen = ({ navigation }: any) => {
               uppercase={false}
               style={[styles.actionButtons]}
               loading={loadDeleteSubjects}
-              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.background, letterSpacing: 0}]}
+              labelStyle={[styles.font, { color: theme.colors.background, letterSpacing: 0}]}
               onPress={deleteAllSubjectsHandler}
             >{t("Delete")}</Button>
           </Dialog.Actions>
@@ -318,8 +318,9 @@ const styleSheet = (theme: any) => StyleSheet.create({
     fontSize: 16
   },
   signOutButton: {
-    width: 160,
-    height: 50,
+    padding: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
     marginRight: '3%',
     marginBottom: '5%',
     elevation: 0
@@ -327,14 +328,12 @@ const styleSheet = (theme: any) => StyleSheet.create({
   singOutLabel: {
     fontFamily: 'poppins-bold',
     color: theme.colors.background,
-    width: '100%',
-    height: 50,
-    marginTop: 10,
     fontSize: 16,
     letterSpacing: 0
   },
   actionButtons: {
-    width: 110,
+    paddingLeft: 15,
+    paddingRight: 15,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

@@ -202,7 +202,7 @@ const AccountScreen = ({ navigation }: any) => {
               uppercase={false}
               style={[styles.actionButtons]}
               loading={deleteAccountLoading}
-              labelStyle={[styles.font, {fontSize: 16, color: theme.colors.background, letterSpacing: 0}]}
+              labelStyle={[styles.font, { color: theme.colors.background, letterSpacing: 0 }]}
               onPress={deleteAccountHandler}
             >{t("Delete")}</Button>
           </Dialog.Actions>
@@ -245,7 +245,8 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginTop: 30
   },
   actionButtons: {
-    width: 110,
+    paddingLeft: 10,
+    paddingRight: 15,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

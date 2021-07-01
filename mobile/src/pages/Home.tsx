@@ -123,7 +123,7 @@ const HomeScreen = ({ navigation }: any) => {
                   style={{ marginTop: 0, marginBottom: 10 }}
                 ><>
                   <Animate fade delay={50}>
-                    <Text style={[styles.font, {marginLeft: 15, fontSize: 25}]}>
+                    <Text style={[styles.boldFont, {marginLeft: 15, fontSize: 25}]}>
                       {t('To Do List')}
                     </Text>
                   </Animate>
@@ -148,7 +148,7 @@ const HomeScreen = ({ navigation }: any) => {
                     </View>
                   </Animate>
                   <Animate fade delay={100}>
-                    <Text style={[styles.font, { fontSize: 25 }]}>
+                    <Text style={[styles.boldFont, { fontSize: 25 }]}>
                       {t("Don't have any subjects😢")}
                     </Text>
                   </Animate>
@@ -158,7 +158,7 @@ const HomeScreen = ({ navigation }: any) => {
                       uppercase={false}
                       onPress={() => navigation.navigate('New Subject')}
                       style={{ backgroundColor: theme.colors.surface, marginTop: 10, elevation: 0 }}
-                      labelStyle={[styles.font, { letterSpacing: 0 }]}
+                      labelStyle={[styles.boldFont, { letterSpacing: 0 }]}
                     >{t("Create subject")}</Button>
                     <Text
                       style={[styles.font, { fontSize: 14, color: theme.colors.textPaper, textAlign: 'center', marginTop: 15 }]}
@@ -171,7 +171,7 @@ const HomeScreen = ({ navigation }: any) => {
                 {/* Subjects container */}
                 <Animate fade delay={50}>
                   <TouchableOpacity onPress={() => navigation.navigate('New Subject')} activeOpacity={0.7} style={{ marginTop: 10 }}>
-                    <Text style={[styles.font, {marginLeft: 15, fontSize: 30}]}>
+                    <Text style={[styles.boldFont, {marginLeft: 15, fontSize: 30}]}>
                       {t('Subjects')}
                     </Text>
                   </TouchableOpacity>
@@ -185,7 +185,7 @@ const HomeScreen = ({ navigation }: any) => {
                         onPress={() => goToSubject(subject.id)}
                         style={styles.touchableSubject}
                       >
-                        <Text style={[styles.font, {fontSize: 16, color: colorIsLightOrDark(subject.color.color)}]}>
+                        <Text style={[styles.boldFont, {fontSize: 16, color: colorIsLightOrDark(subject.color.color)}]}>
                           {subject.name}
                         </Text>
                       </TouchableRipple>
@@ -200,7 +200,7 @@ const HomeScreen = ({ navigation }: any) => {
                 <>
                 <Animate fade delay={50}>
                   <View style={{ marginTop: 10 }}>
-                    <Text style={[styles.font, {marginLeft: 15, fontSize: 30}]}>
+                    <Text style={[styles.boldFont, {marginLeft: 15, fontSize: 30}]}>
                       {t("Late")}
                     </Text>
                   </View>
@@ -238,7 +238,7 @@ const HomeScreen = ({ navigation }: any) => {
                 {/* This week assignments */}
                   <Animate fade delay={50}>
                     <View style={{ marginTop: 10 }}>
-                      <Text style={[styles.font, {marginLeft: 15, fontSize: 30}]}>
+                      <Text style={[styles.boldFont, {marginLeft: 15, fontSize: 30}]}>
                         {t("This week")}
                       </Text>
                     </View>
@@ -261,7 +261,7 @@ const HomeScreen = ({ navigation }: any) => {
                 <>
                 <Animate fade delay={100}>
                   <View style={{ marginTop: 10 }}>
-                    <Text style={[styles.font, {marginLeft: 15, fontSize: 30}]}>
+                    <Text style={[styles.boldFont, {marginLeft: 15, fontSize: 30}]}>
                       {t("Next week")}
                     </Text>
                   </View>
@@ -298,6 +298,16 @@ const styleSheet = (theme: any) => StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background
   },
+  boldFont: {
+    fontFamily: 'poppins-bold',
+    color: theme.colors.text,
+    fontSize: 16
+  },
+  font: {
+    fontFamily: 'poppins-semibold',
+    color: theme.colors.text,
+    fontSize: 16
+  },
   scrollView: {
     width: '100%',
   },
@@ -308,18 +318,12 @@ const styleSheet = (theme: any) => StyleSheet.create({
     paddingRight: '3%',
   },
   contentContainer: {
-    //height: windowHeight * 1,
     padding: '3%',
   },
   greetingMessage: {
     fontFamily: 'poppins-bold',
     color: theme.colors.primary,
     textAlign: 'right'
-  },
-  font: {
-    fontFamily: 'poppins-bold',
-    color: theme.colors.text,
-    fontSize: 16
   },
   subjectsContainer: {
     width: '100%',

@@ -33,7 +33,7 @@ const AssignmentContainer = ({ assignment, goToAssignment, late }: AssignmentCon
       style={[styles.touchableAssignment, { backgroundColor: assignment.color }]}
     >
       <>
-      <Text style={[styles.font, {fontSize: 20, marginLeft: 15, color: colorIsLightOrDark(assignment.color)}]}>
+      <Text style={[styles.boldFont, {fontSize: 20, marginLeft: 15, color: colorIsLightOrDark(assignment.color)}]}>
         {assignment.title}
       </Text>
       {late ? (
@@ -55,8 +55,13 @@ const AssignmentContainer = ({ assignment, goToAssignment, late }: AssignmentCon
 }
 
 const styleSheet = (theme: Theme) => StyleSheet.create({
-  font: {
+  boldFont: {
     fontFamily: 'poppins-bold',
+    color: theme.colors.text,
+    fontSize: 16
+  },
+  font: {
+    fontFamily: 'poppins-semibold',
     color: theme.colors.text,
     fontSize: 16
   },

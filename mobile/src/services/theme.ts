@@ -23,8 +23,8 @@ export const theme = {
     inactivePrimary: '#ffcac4',
     accent: '#ec4242',
     background: '#fff',
-    surface: '#ededed',
-    card: '#ededed',
+    surface: '#dedede',
+    card: '#dedede',
     text: '#353535',
     textPaper: '#636363',
     placeholder: '#636363'

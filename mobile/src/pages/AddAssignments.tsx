@@ -7,6 +7,7 @@ import { Assignment, Subject } from '../interface/interfaces'
 import { createNotiId } from '../hooks/createId'
 import { useTranslation } from 'react-i18next'
 import AppSnackbar from '../components/Snackbar'
+import { colorIsLightOrDark } from '../hooks/colorIsLightOrDark'
 
 const deviceHeight = Dimensions.get('screen').height
 
@@ -166,7 +167,7 @@ const AddAssignmentsScreen = ({ route, navigation }: any) => {
           uppercase={false}
           style={[styles.addButton, { backgroundColor: subject.color.color, marginRight: 15 }]}
           onPress={createSubject}
-          labelStyle={[styles.font, styles.buttonLabel]}
+          labelStyle={[styles.font, {letterSpacing: 0, color: colorIsLightOrDark(subject.color.color)}]}
         >{t("Create")}</Button>
       ),
     })
@@ -241,7 +242,7 @@ const AddAssignmentsScreen = ({ route, navigation }: any) => {
             uppercase={false}
             style={[styles.addButton, { backgroundColor: subject.color.color }]}
             onPress={addAssignment}
-            labelStyle={[styles.font, styles.buttonLabel]}
+            labelStyle={[styles.font, { letterSpacing: 0, color: colorIsLightOrDark(subject.color.color) }]}
           >{t("Add")}</Button>
         </View>
       </View>
@@ -298,14 +299,14 @@ const AddAssignmentsScreen = ({ route, navigation }: any) => {
           <Dialog.Actions>
             <Button
               uppercase={false}
-              labelStyle={[styles.font, {fontSize: 16,letterSpacing: 0}]}
+              labelStyle={[styles.font, {letterSpacing: 0}]}
               onPress={() => setShowGoBack(false)}
             >{t("Cancel")}</Button>
             <Button
               mode="text"
               uppercase={false}
               style={[{marginLeft: 20}]}
-              labelStyle={[styles.font, {fontSize: 16, letterSpacing: 0}]}
+              labelStyle={[styles.font, {letterSpacing: 0}]}
               onPress={confirmGoBack}
             >{t("Go back")}</Button>
           </Dialog.Actions>
@@ -372,14 +373,11 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginTop: 20
   },
   addButton: {
-    width: 100,
-    height: 40,
-    elevation: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 15,
     marginRight: '5%',
+    elevation: 0
   },
   assignmentsContainer: {
     width: '100%',
@@ -400,14 +398,6 @@ const styleSheet = (theme: any) => StyleSheet.create({
     borderRadius: 15,
     marginLeft: '3%'
   },
-  buttonLabel: {
-    width: '100%',
-    marginTop: 20,
-    height: 40,
-    color: theme.colors.background,
-    fontSize: 16,
-    letterSpacing: 0
-  }
 })
 
 export default AddAssignmentsScreen

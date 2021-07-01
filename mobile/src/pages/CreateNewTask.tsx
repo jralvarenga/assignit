@@ -123,7 +123,7 @@ const CreateNewTask = ({ navigation }: any) => {
           loading={createTaskLoad}
           style={[styles.addButton, { backgroundColor: newTaskColor.color == 'text' ? theme.colors.primary : newTaskColor.color, marginRight: 15 }]}
           onPress={createTaskHandler}
-          labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background, width: 100 }]}
+          labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background }]}
         >{t('Add')}</Button>
       ),
     })
@@ -258,14 +258,12 @@ const styleSheet = (theme: Theme) => StyleSheet.create({
     borderRadius: 10,
   },
   addButton: {
-    width: 100,
-    height: 40,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
     backgroundColor: theme.colors.primary,
-    borderRadius: 10,
+    borderRadius: 15,
     marginRight: '5%',
+    elevation: 0
   },
 })
 

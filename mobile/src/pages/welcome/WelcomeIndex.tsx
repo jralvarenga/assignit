@@ -151,28 +151,16 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginRight: '3%'
   },
   indexCircle: {
-    width: 20,
-    height: 20,
+    padding: 10,
     backgroundColor: theme.colors.surface,
     borderRadius: 100,
     marginLeft: 7,
   },
-  nextButton: {
-    width: 190,
-    padding: 15,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 100,
-    backgroundColor: theme.colors.surface
-  },
   skipButton: {
-    width: 100,
+    paddingLeft: 35,
+    paddingRight: 35,
     marginLeft: '3%',
     padding: 5,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 100,
     backgroundColor: theme.colors.surface
   }

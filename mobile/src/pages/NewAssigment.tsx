@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { localProgamableNoti } from '../lib/notifications'
 import { useTranslation } from 'react-i18next'
 import AppSnackbar from '../components/Snackbar'
+import { colorIsLightOrDark } from '../hooks/colorIsLightOrDark'
 
 const deviceHeight = Dimensions.get('screen').height
 
@@ -220,7 +221,7 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
           style={[styles.addButton, { backgroundColor: subject.color.color, marginRight: 15 }]}
           onPress={addNewAssigmentsHandler}
           loading={loading}
-          labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background}]}
+          labelStyle={[styles.font, {letterSpacing: 0, color: colorIsLightOrDark(subject.color.color)}]}
         >{t("Add")}</Button>
       ),
     })
@@ -291,7 +292,7 @@ const NewAssigmentScreen = ({ route, navigation }: any) => {
             uppercase={false}
             style={[styles.addButton, { backgroundColor: subject.color.color }]}
             onPress={addAssignment}
-            labelStyle={[styles.font, {letterSpacing: 0, color: theme.colors.background}]}
+            labelStyle={[styles.font, {letterSpacing: 0, color: colorIsLightOrDark(subject.color.color)}]}
           >{t("Add")}</Button>
         </View>
       </View>
@@ -392,14 +393,11 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginTop: 20
   },
   addButton: {
-    width: 100,
-    height: 40,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
-    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 15,
     marginRight: '5%',
+    elevation: 0
   },
   assignmentsContainer: {
     width: '100%',

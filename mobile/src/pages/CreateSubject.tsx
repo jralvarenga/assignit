@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { localProgamableNoti } from '../lib/notifications'
 import { useTranslation } from 'react-i18next'
 import AppSnackbar from '../components/Snackbar'
+import { colorIsLightOrDark } from '../hooks/colorIsLightOrDark'
 
 const CreateSubjectScreen = ({ route, navigation }: any) => {
   const { t } = useTranslation()
@@ -163,7 +164,7 @@ const CreateSubjectScreen = ({ route, navigation }: any) => {
           loading={createLoad}
           style={[styles.addButton, { backgroundColor: subject.color.color, }]}
           onPress={createSubjectHandler}
-          labelStyle={[styles.font, {fontSize: 16, letterSpacing: 0, color: theme.colors.background}]}
+          labelStyle={[styles.font, { letterSpacing: 0, color: colorIsLightOrDark(subject.color.color) }]}
         >{t("Create subject")}</Button>
       </View>
 
@@ -190,7 +191,8 @@ const styleSheet = (theme: any) => StyleSheet.create({
   },
   font: {
     fontFamily: 'poppins-bold',
-    color: theme.colors.text
+    color: theme.colors.text,
+    fontSize: 16
   },
   colorChooser: {
     width: 45,
@@ -225,13 +227,11 @@ const styleSheet = (theme: any) => StyleSheet.create({
     marginBottom: 60
   },
   addButton: {
-    width: 160,
-    height: 50,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
+    padding: 5,
     backgroundColor: theme.colors.primary,
-    borderRadius: 10,
+    borderRadius: 15,
     marginRight: '5%',
     elevation: 0
   },

@@ -38,14 +38,14 @@ const Index0 = ({ display, goToSignIn }: WelcomeProps) => {
           autoPlay
           loop={false}
         />
-        <Text style={[styles.font, {fontSize: 45, color: theme.colors.primary, textAlign: 'center'}]}>
+        <Text style={[styles.boldFont, {fontSize: 45, color: theme.colors.primary, textAlign: 'center'}]}>
           {t("Start now")}
         </Text>
       </Animate>
       
       <View style={styles.contentContainer}>
         <Animate fade delay={100} containerStyle={{ flex: 1 }}>
-          <Text style={[styles.font, {fontSize: 30, textAlign: 'center'}]}>
+          <Text style={[styles.boldFont, {fontSize: 30, textAlign: 'center'}]}>
             {t("Sign in with")}
           </Text>
           <View style={styles.signInOptions}>
@@ -62,7 +62,7 @@ const Index0 = ({ display, goToSignIn }: WelcomeProps) => {
             rippleColor={theme.colors.surface}
             style={styles.nextButton}
           >
-            <Text style={[styles.font, {fontSize: 16, color: theme.colors.background}]}>
+            <Text style={[styles.boldFont, {fontSize: 16, color: theme.colors.background}]}>
               {t("Start now")}
             </Text>
           </TouchableRipple>
@@ -87,8 +87,13 @@ const styleSheet = (theme: any) => StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background
   },
-  font: {
+  boldFont: {
     fontFamily: 'poppins-bold',
+    color: theme.colors.text,
+    fontSize: 16
+  },
+  font: {
+    fontFamily: 'poppins-semibold',
     color: theme.colors.text,
     fontSize: 16
   },
@@ -102,11 +107,9 @@ const styleSheet = (theme: any) => StyleSheet.create({
     alignItems: 'center'
   },
   nextButton: {
-    width: 190,
+    paddingLeft: 65,
+    paddingRight: 65,
     padding: 15,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 100,
     backgroundColor: theme.colors.primary
   },
