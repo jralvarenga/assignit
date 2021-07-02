@@ -28,6 +28,10 @@ export const localNoti = () => {
 }
 
 export const localProgamableNoti = ({ date, body }: ScheduleNotiProps) => {
+  let notiDiff = 86400000
+  if (date.getHours() == 0) {
+    notiDiff = notiDiff - 32400000
+  }
   const user: any = auth().currentUser
 
   PushNotification.localNotificationSchedule({
@@ -40,7 +44,7 @@ export const localProgamableNoti = ({ date, body }: ScheduleNotiProps) => {
     id: body.id,
     title: body.title,
     message: body.body,
-    date: new Date(date.getTime() - 86400000)
+    date: new Date(date.getTime() - notiDiff)
   })
 }
 

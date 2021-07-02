@@ -10,7 +10,7 @@ export default {
   "Add": "Add",
   "Select date": "Select date",
   "Select time": "Select time",
-  "Check your assignit, you may have something important this week": "Check your Assignit, you may have something important this week",
+  "Check your assignit, you may have something important this week": "Check Assignit, you may have tasks or assignments pending",
 
   // Screens
   "Home": "Home",

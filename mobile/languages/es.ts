@@ -10,7 +10,7 @@ export default {
   "Add": "Agregar",
   "Select date": "Select. fecha",
   "Select time": "Select. hora",
-  "Check your assignit, you may have something important this week": "Revisa Assignit, puedes tener algo importante esta semana",
+  "Check your assignit, you may have something important this week": "Revisa Assignit, puedes tener tareas o actividades pendientes",
 
   // Screens
   "Home": "Inicio",

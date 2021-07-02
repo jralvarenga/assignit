@@ -123,7 +123,6 @@ const SubjectScreen = ({ navigation, route }: any) => {
   }
 
   const newLinkHandler = async() => {
-    setLoading(true)
     try {
       await changeLinks(subject, user, 'link', newLink)
     } catch (error) {
@@ -135,12 +134,10 @@ const SubjectScreen = ({ navigation, route }: any) => {
       ...subject,
       link: newLink
     })
-    setLoading(false)
     setRender!(render! + 1)
   }
 
   const newReunionHandler = async() => {
-    setLoading(true)
     try {
       await changeLinks(subject, user, 'reunion', newReunion)
     } catch (error) {
@@ -152,8 +149,19 @@ const SubjectScreen = ({ navigation, route }: any) => {
       ...subject,
       reunion: newReunion
     })
-    setLoading(false)
     setRender!(render! + 1)
+  }
+
+  const changeLinksHandler = async() => {
+    setLoading(true)
+    if (newLink != '') {
+      await newLinkHandler()
+    }
+    if (newReunion != '') {
+      await newReunionHandler()
+    }
+    setShowAddLinks(false)
+    setLoading(false)
   }
 
   const copyLink = (type: string) => {
@@ -350,10 +358,8 @@ const SubjectScreen = ({ navigation, route }: any) => {
               value={newLink}
               ref={newLinkRef}
               onChangeText={(value: string) => setNewLink(value)}
-              onSubmitEditing={newLinkHandler}
               theme={{ ...theme, colors: { primary: subject.color.color } }}
               label={subject.link!}
-              onBlur={newLinkHandler}
             />
             <Text style={[styles.font, { marginTop: 10 }]}>{t("Reunion link")}</Text>
             <TextInput
@@ -362,10 +368,8 @@ const SubjectScreen = ({ navigation, route }: any) => {
               style={{ width: '100%', backgroundColor: theme.colors.surface }}
               value={newReunion}
               onChangeText={(value: string) => setNewReunion(value)}
-              onSubmitEditing={newReunionHandler}
               theme={{ ...theme, colors: { primary: subject.color.color } }}
               label={subject.reunion!}
-              onBlur={newReunionHandler}
             /></>
           }
           primaryLabel={
@@ -374,7 +378,7 @@ const SubjectScreen = ({ navigation, route }: any) => {
               loading={loading}
               style={[styles.actionButtons]}
               labelStyle={[styles.font, {fontSize: 16, color: theme.colors.primary, letterSpacing: 0}]}
-              onPress={() => setShowAddLinks(false)}
+              onPress={changeLinksHandler}
             >Ok</Button>
           }
         />

@@ -177,18 +177,14 @@ const styleSheet = (theme: any) => StyleSheet.create({
     justifyContent: 'center'
   },
   removeButton: {
-    width: 160,
-    height: 50,
-    marginRight: '3%',
-    marginBottom: '5%',
     elevation: 0
   },
   removeLabel: {
+    padding: 3,
+    paddingLeft: 30,
+    paddingRight: 30,
     fontFamily: 'poppins-bold',
     color: theme.colors.background,
-    width: '100%',
-    height: 50,
-    marginTop: 10,
     fontSize: 16,
     letterSpacing: 0,
   },
