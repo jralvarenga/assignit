@@ -60,3 +60,6 @@ debug.keystore
 
 # ENV
 .env
+
+# Firebase
+google-services.json
