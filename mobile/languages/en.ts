@@ -73,6 +73,7 @@ export default {
   "Create subject": "Create subject",
   "You can go to settings and create it there": "You can go to settings and create it there",
   "Late": "Late",
+  "Today": "Today",
   "Count days late": "{{days}} days late",
   "This week": "This week",
   "Assignment datetime": "{{date}} at {{time}}",

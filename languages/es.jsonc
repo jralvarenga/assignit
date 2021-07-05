@@ -10,7 +10,7 @@
   "Add": "Agregar",
   "Select date": "Select. fecha",
   "Select time": "Select. hora",
-  "Check your assignit, you may have something important this week": "Revisa Assignit, puedes tener algo importante esta semana",
+  "Check your assignit, you may have something important this week": "Revisa Assignit, puedes tener tareas o actividades pendientes",
 
   // Screens
   "Home": "Inicio",
@@ -73,6 +73,7 @@
   "Create subject": "Crear tema",
   "You can go to settings and create it there": "Puedes ir a config. y crearlo ahí",
   "Late": "Tarde",
+  "Today": "Ahora",
   "Count days late": "{{days}} días tarde",
   "This week": "Esta semana",
   "Assignment datetime": "{{date}} a las {{time}}",
@@ -184,16 +185,16 @@
   "Tasks": "Tareas",
   "Finished task on": "Terminada el {{date}}",
   "Set task to": "Para el {{date}}",
-  "Remind me every time": "Recuerdame cada {{reminder}}",
+  "Repeat task every time": "Repite tarea cada {{repeat}}",
   "You've done all your tasks": "Has terminado todas tus tareas💫",
   "Start adding tasks to your list": "Empieza a añadir tareas a tu lista",
-  "Remind": "Recordar",
+  "Repeat": "Repetir",
 
   // Create task screen
   "Create task": "Crear tarea",
   "Add task title": "Agrega un título",
   "Set a date": "Para una fecha",
-  "Remind task": "Recuerdame esta tarea",
+  "Repeat task": "Repite esta tarea",
   "You don't have any task here": "No tienes ninguna tarea aquí😢",
   "Hour": "Hora",
   "Day": "Día",

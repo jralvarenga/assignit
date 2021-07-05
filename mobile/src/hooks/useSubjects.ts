@@ -6,6 +6,7 @@ export const useSubjects = () => {
   const [weekAssigments, setWeekAssigments] = useState<Assignment[]>([])
   const [nextWeekAssigments, setNextWeekAssigments] = useState<Assignment[]>([])
   const [pendingAssigments, setPendingAssigments] = useState<Assignment[]>([])
+  const [todayAssignments, setTodayAssignmets] = useState<Assignment[]>([])
 
   const setOnlySubjects = (subjects: Subject[]) => {
     const only: any[] = subjects.map((subject: Subject) => {
@@ -55,8 +56,23 @@ export const useSubjects = () => {
     })
     const pendingWeekArr: any[] = assigments.map((assigment) => {
       const assigmentDate = assigment.from
+      const assigmentDateString = `${assigment.from.getDay()}-${assigment.from.getMonth()}-${assigment.from.getFullYear()}`
+      const todayDate = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
       const assigmentWeek = getWeekNumber(assigmentDate)
-      if (assigmentDate < date && assigmentWeek <= week) {
+      if (assigmentDateString == todayDate) {
+        return null
+      } else {
+        if (assigmentDate < date && assigmentWeek <= week) {
+          return assigment
+        } else {
+          return null
+        }
+      }
+    })
+    const todayArr: any[] = assigments.map((assigment) => {
+      const assigmentDate = `${assigment.from.getDay()}-${assigment.from.getMonth()}-${assigment.from.getFullYear()}`
+      const todayDate = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
+      if (assigmentDate == todayDate) {
         return assigment
       } else {
         return null
@@ -71,10 +87,14 @@ export const useSubjects = () => {
         return null
       }
     })
+
     const filteredThisWeek: Assignment[] = thisWeekArr.filter((el) => {
       return el != null
     })
     const filteredPending: Assignment[] = pendingWeekArr.filter((el) => {
+      return el != null
+    })
+    const filteredToday: Assignment[] = todayArr.filter((el) => {
       return el != null
     })
     const filteredNextWeek: Assignment[] = nextWeekArr.filter((el) => {
@@ -82,9 +102,10 @@ export const useSubjects = () => {
     })
     const sortedThisWeek = filteredThisWeek.sort(sortByDay)
     const sortedPending = filteredPending.sort(sortByDay)
+    const sortedToday = filteredToday.sort(sortByDay)
     const sortedNextWeek = filteredNextWeek.sort(sortByDay)
 
-    return [sortedThisWeek, sortedNextWeek, sortedPending]
+    return [sortedThisWeek, sortedNextWeek, sortedPending, sortedToday]
   }
 
   const setAssgiments = (subjects: Subject[]) => {
@@ -102,14 +123,15 @@ export const useSubjects = () => {
       return addedSubjectName
     })
     const merged: Assignment[] = [].concat.apply([], assigments)
-    const [onlyThisWeek, nextWeek, late] = groupByWeek(merged)
+    const [onlyThisWeek, nextWeek, late, today] = groupByWeek(merged)
 
     setWeekAssigments(onlyThisWeek)
     setPendingAssigments(late)
     setNextWeekAssigments(nextWeek)
+    setTodayAssignmets(today)
   }
 
-  return [subjects, weekAssigments, nextWeekAssigments, pendingAssigments, setOnlySubjects, setAssgiments]
+  return [subjects, weekAssigments, nextWeekAssigments, pendingAssigments, todayAssignments, setOnlySubjects, setAssgiments]
 }
 
 // Join subjects and assigments

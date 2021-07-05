@@ -10,7 +10,7 @@
   "Add": "Add",
   "Select date": "Select date",
   "Select time": "Select time",
-  "Check your assignit, you may have something important this week": "Check your Assignit, you may have something important this week",
+  "Check your assignit, you may have something important this week": "Check Assignit, you may have tasks or assignments pending",
 
   // Screens
   "Home": "Home",
@@ -73,6 +73,7 @@
   "Create subject": "Create subject",
   "You can go to settings and create it there": "You can go to settings and create it there",
   "Late": "Late",
+  "Today": "Today",
   "Count days late": "{{days}} days late",
   "This week": "This week",
   "Assignment datetime": "{{date}} at {{time}}",
@@ -184,16 +185,16 @@
   "Tasks": "Tasks",
   "Finished task on": "Finished on {{date}}",
   "Set task to": "Set to {{date}}",
-  "Remind me every time": "Remind me every {{reminder}}",
+  "Repeat task every time": "Repeat task every {{repeat}}",
   "You've done all your tasks": "You've done all your tasks💫",
   "Start adding tasks to your list": "Start adding tasks to your list",
-  "Remind": "Remind",
+  "Repeat": "Repeat",
 
   // Create task screen
   "Create task": "Create task",
   "Add task title": "Add task title",
   "Set a date": "Set a date",
-  "Remind task": "Remind task",
+  "Repeat task": "Repeat task",
   "You don't have any task here": "You don't have any task here😢",
   "Hour": "Hour",
   "Day": "Day",

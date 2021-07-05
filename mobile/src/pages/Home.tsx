@@ -38,7 +38,9 @@ const HomeScreen = ({ navigation }: any) => {
   const { tasks }: TasksProvider = useTasks()
   const greetingMessage: string = getGreetingMessage(t)
   const [fullSubjects, setFullSubjects] = useState<Subject[]>([])
-  const [userSubjects, assignments, nextWeekAssignments, pendingAssignments, setSubjects, setAssignments]: any = useSubjects()
+  const [userSubjects, assignments, nextWeekAssignments, pendingAssignments, todayAssignments, setSubjects, setAssignments]: any = useSubjects()
+  //console.log(todayAssignments);
+  
   const [pendingTasks, setPendingTasks] = useState<Task[]>([])
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -196,6 +198,28 @@ const HomeScreen = ({ navigation }: any) => {
               )}
               
               {/* AssignmentS SECTION */}
+              {todayAssignments.length != 0 && (
+                <>
+                <Animate fade delay={50}>
+                  <View style={{ marginTop: 10 }}>
+                    <Text style={[styles.boldFont, {marginLeft: 15, fontSize: 30}]}>
+                      {t("Today")}
+                    </Text>
+                  </View>
+                </Animate>
+                <View style={styles.assignmentsContainer}>
+                  {todayAssignments.map((assignment: AssignmentColor, i: number) => (
+                    <Animate fade delay={50 * i} containerStyle={styles.assignmentBox} key={i}>
+                      <AssignmentContainer
+                        assignment={assignment}
+                        goToAssignment={goToAssignment}
+                      />
+                    </Animate>
+                  ))}
+                </View>
+                </>
+              )}
+
               {pendingAssignments.length != 0 && (
                 <>
                 <Animate fade delay={50}>

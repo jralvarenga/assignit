@@ -73,6 +73,7 @@ export default {
   "Create subject": "Crear tema",
   "You can go to settings and create it there": "Puedes ir a config. y crearlo ahí",
   "Late": "Tarde",
+  "Today": "Ahora",
   "Count days late": "{{days}} días tarde",
   "This week": "Esta semana",
   "Assignment datetime": "{{date}} a las {{time}}",
