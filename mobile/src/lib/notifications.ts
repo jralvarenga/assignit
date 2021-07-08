@@ -88,10 +88,9 @@ export const reminderNoti = (repeatTime: number, body: { title: string, body: st
     smallIcon: "ic_notification",
     title: body.title,
     message: body.body,
-    repeatType: 'time',
-    repeatTime: repeatTime,
     date: new Date(body.date.getTime() + repeatTime)
   })
+  
   return notiId
 }
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, TouchableOpacity, StyleSheet, FlatList, RefreshControl } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, RefreshControl } from 'react-native'
 import { Animate } from 'react-native-entrance-animation'
 import { Checkbox, TouchableRipple, Text, useTheme, Chip } from 'react-native-paper'
 import { SwipeListView } from 'react-native-swipe-list-view'

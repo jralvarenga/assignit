@@ -196,6 +196,7 @@ export default {
   "Set a date": "Para una fecha",
   "Repeat task": "Repite esta tarea",
   "You don't have any task here": "No tienes ninguna tarea aquí😢",
+  "You have a reminder for this task": "Tienes un recordatorio para esta tarea",
   "Hour": "Hora",
   "Day": "Día",
   "Week": "Semana",

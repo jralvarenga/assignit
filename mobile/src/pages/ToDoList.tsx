@@ -1,17 +1,15 @@
-import { useTheme } from '@react-navigation/native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth'
-import { StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
-import { Text, IconButton, Button, Badge } from 'react-native-paper'
+import { useTheme } from '@react-navigation/native'
+import { StyleSheet, View, TouchableOpacity,  } from 'react-native'
+import { Text, IconButton, Badge } from 'react-native-paper'
 import { Theme } from 'react-native-paper/lib/typescript/types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Task, TasksProvider } from '../interface/interfaces'
-import { deleteTask, filterTasks, setNewRepeatDate, setTaskStatus } from '../lib/tasksLib'
+import { deleteTask, filterTasks, setNewRepeatDate, setTaskRepeater, setTaskStatus } from '../lib/tasksLib'
 import { useTasks } from '../services/TasksProvider'
-import AppDialog from '../components/AppDialog'
 import AppSnackbar from '../components/Snackbar'
 import TaskContainer from '../components/TaskContainer'
-import { dateString } from '../hooks/useDateTime'
 import { useTranslation } from 'react-i18next'
 import { cancelNoti } from '../lib/notifications'
 import LottieView from 'lottie-react-native'
@@ -29,6 +27,21 @@ const ToDoListScreen = ({ navigation }: any) => {
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackbarText, setSnackbarText] = useState('')
 
+  const getReminderType = (ms: number) => {
+    switch (ms) {
+      case 3600000:
+        return 'Hour'
+      case 86400000:
+        return 'Day'
+      case 604800000:
+        return 'Week'
+      case 2592000000:
+        return 'Month'
+      default:
+        return 'None'
+    }
+  }
+
   useEffect(() => {
     const [pending, done] = filterTasks(tasks!, user)
     setDoneTasks(done)
@@ -44,6 +57,8 @@ const ToDoListScreen = ({ navigation }: any) => {
     try {
       await setTaskStatus(id, status, user)
       if (tasks![taskIndex].repeat && status == true) {
+        const repeatType = getReminderType(tasks![taskIndex].repeat!)
+        setTaskRepeater(repeatType, tasks![taskIndex], t)
         setNewRepeatDate(id, user)
       }
     } catch (error) {

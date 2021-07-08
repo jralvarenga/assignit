@@ -92,30 +92,45 @@ export const filterTasks = (tasks: Task[], user: FirebaseAuthTypes.User | null) 
   return [filterPending, filterDone]
 }
 
-export const setTaskRepeater = (reminderType: string, task: Task) => {
+export const setTaskRepeater = (reminderType: string, task: Task, translator: Function) => {
+
+  const getRemindDate = (reminderType: string, date: Date): Date => {
+    date.setMinutes( date.getMinutes() + date.getTimezoneOffset() )
+    switch (reminderType) {
+      case 'Hour':
+        date.setMinutes(0, 0, 0)
+      break
+      case 'Day':
+      case 'Week':
+      case 'Month':
+        date.setHours(0, 0, 0)
+      break
+    }
+    return date
+  }
+  
   const getReminderTime = (reminderType: string) => {
     switch (reminderType) {
-      case 'hour':
+      case 'Hour':
         return 3600000
-      case 'day':
+      case 'Day':
         return 86400000
-      case 'week':
+      case 'Week':
         return 604800000
-      case 'month':
+      case 'Month':
         return  2592000000
       default:
         return 0
     }
   }
-
-  const currentDate = new Date()
-  currentDate.setHours(0, 0, 0)
-  const reminderTime: number = getReminderTime(reminderType)  
+  const remindDate: Date = getRemindDate(reminderType, new Date())
+  const reminderTime: number = getReminderTime(reminderType)
+  console.log(reminderTime)
 
   const notiBody = {
     title: `${task.title}`,
-    body: `You have a reminder for this task`,
-    date: currentDate
+    body: translator(`You have a reminder for this task`),
+    date: remindDate
   }
 
   const id = reminderNoti(reminderTime, notiBody)

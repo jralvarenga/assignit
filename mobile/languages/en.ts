@@ -196,6 +196,7 @@ export default {
   "Set a date": "Set a date",
   "Repeat task": "Repeat task",
   "You don't have any task here": "You don't have any task here😢",
+  "You have a reminder for this task": "You have a reminder for this task",
   "Hour": "Hour",
   "Day": "Day",
   "Week": "Week",

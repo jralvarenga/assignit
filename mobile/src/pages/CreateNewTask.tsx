@@ -76,8 +76,8 @@ const CreateNewTask = ({ navigation }: any) => {
       const repeatDate = new Date()
       repeatDate.setMinutes( repeatDate.getMinutes() + repeatDate.getTimezoneOffset() )
       repeatDate.setMinutes(0)
-      //const notiId = setTaskRepeater(repeatType, taskData)
-      //taskData.notiId = notiId
+      const notiId = setTaskRepeater(repeatType, taskData, t)
+      taskData.notiId = notiId
       taskData.repeat = getMilisecondsRepeater(repeatType)
       taskData.repeatDate = repeatDate 
     }
