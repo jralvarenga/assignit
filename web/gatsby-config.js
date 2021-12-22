@@ -3,9 +3,11 @@ module.exports = {
     title: `Assignit`,
     description: `Keep everything organized with Assignit`,
     author: `@failedbump`,
+    siteUrl: `https://assignit.failedbump.com`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
